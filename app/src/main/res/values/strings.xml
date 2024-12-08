@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">CodeForCommunityApp</string>
+    <string name="home_logo">Home Logo</string>
+    <string name="home_title">Home</string>
+    <string name="profile_title">Profile</string>
+    <string name="profile_logo">Profile Logo</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_logo">Settings Logo</string>
+    <string name="app_logo">App Logo</string>
+    <string name="app_logo_name">App Logo Name</string>
 </resources>
