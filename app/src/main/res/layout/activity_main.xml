@@ -122,6 +122,7 @@
         android:layout_height="157dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="108dp"
+        android:contentDescription="@string/announcements_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/announcements" />
@@ -132,7 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="264dp"
-        android:text="Announcements/Forums"
+        android:text="@string/announcements_title"
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -144,6 +145,7 @@
         android:layout_height="163dp"
         android:layout_marginStart="228dp"
         android:layout_marginTop="100dp"
+        android:contentDescription="@string/food_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/food" />
@@ -154,7 +156,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="228dp"
         android:layout_marginTop="264dp"
-        android:text="Community Food Market"
+        android:text="@string/food_title"
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -166,6 +168,7 @@
         android:layout_height="148dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="308dp"
+        android:contentDescription="@string/report_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/emergency" />
@@ -176,7 +179,7 @@
         android:layout_height="24dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="456dp"
-        android:text="Emergency Report"
+        android:text="@string/report_title"
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -188,6 +191,7 @@
         android:layout_height="146dp"
         android:layout_marginStart="232dp"
         android:layout_marginTop="308dp"
+        android:contentDescription="@string/graph_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/graph" />
@@ -198,7 +202,7 @@
         android:layout_height="22dp"
         android:layout_marginStart="232dp"
         android:layout_marginTop="456dp"
-        android:text="Interactive Graph"
+        android:text="@string/graph_title"
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -212,6 +216,7 @@
         android:layout_marginTop="496dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/calendar_logo"
         app:srcCompat="@drawable/calendar" />
 
     <TextView
@@ -220,7 +225,7 @@
         android:layout_height="22dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="632dp"
-        android:text="Event Calendar"
+        android:text="@string/calendar_title"
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -233,6 +238,7 @@
         android:layout_marginStart="232dp"
         android:layout_marginTop="492dp"
         app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="@string/transportation_logo"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/transport" />
 
@@ -242,7 +248,7 @@
         android:layout_height="25dp"
         android:layout_marginStart="232dp"
         android:layout_marginTop="632dp"
-        android:text="Public Transport"
+        android:text="@string/transportation_title"
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
