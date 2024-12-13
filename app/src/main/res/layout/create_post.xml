@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:text="Create Post"
+        android:layout_gravity="center_vertical"
+        android:background="#dde3f1">
+
+        <View
+            android:layout_marginTop="-5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1.7dp"
+            android:background="#000000"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Post"
+            android:padding="5dp"
+            android:background="#06287c"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="22dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose Your Category:"
+            android:paddingLeft="25dp"
+            android:paddingTop="5dp"
+            android:textSize="22dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#80ef80"
+                android:text="Activities"
+                android:textColor="@color/white"
+                android:layout_margin="5dp"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#0096c7"
+                android:text="Academic"
+                android:textColor="@color/white"
+                android:layout_margin="5dp"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#f0102c"
+                android:text="Emergency"
+                android:textColor="@color/white"
+                android:layout_margin="5dp"/>
+        </LinearLayout>
+
+        <EditText
+            android:paddingStart="10dp"
+            android:hint="Post Title"
+            android:id="@+id/titleinput"
+            android:layout_width="400dp"
+            android:layout_gravity="center"
+            android:layout_height="50dp"/>
+
+
+        <LinearLayout
+            android:layout_width="400dp"
+            android:layout_height="200dp"
+            android:background="@drawable/boxbackground"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_gravity="center" >
+
+            <EditText
+                android:paddingStart="10dp"
+                android:gravity="start"
+                android:hint="Description"
+                android:id="@+id/descriptioninput"
+                android:layout_width="400dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="20dp">
+
+            <Button
+                android:id="@+id/submit_button"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:backgroundTint="#06287C"
+                android:shadowColor="#000000"
+                android:text="POST"
+                android:textSize="12dp"
+                android:layout_marginRight="3dp"/>
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:textColor="#ae0606"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:backgroundTint="#DEB4B4"
+                android:shadowColor="#000000"
+                android:text="CANCEL"
+                android:textSize="12dp"
+                android:layout_marginLeft="3dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
+
