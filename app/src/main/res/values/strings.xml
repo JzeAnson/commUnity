@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">commUnity</string>
+    <string-array name="locations_array">
+        <item>Main Gate</item>
+        <item>Library</item>
+        <item>Sports Complex</item>
+        <item>Science Faculty</item>
+        <item>Engineering Faculty</item>
+    </string-array>
+    <string name="title_activity_maps">MapsActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
