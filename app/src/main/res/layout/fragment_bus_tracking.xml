@@ -11,23 +11,23 @@
         android:layout_height="match_parent">
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView4"
+            android:id="@+id/mapsFragment"
             android:name="com.example.community.MapsFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/fragmentContainerView5"
+            app:layout_constraintBottom_toTopOf="@+id/busdetailsFragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView5"
+            android:id="@+id/busdetailsFragment"
             android:name="com.example.community.BusDetailsFragment"
             android:layout_width="0dp"
             android:layout_height="242dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView4" />
+            app:layout_constraintTop_toBottomOf="@+id/mapsFragment" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -92,8 +92,63 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private static final LatLng BangsarSouth = new LatLng(3.108966194507094, 101.66801018876366);
     private static final LatLng NexusBangsarSouth = new LatLng(3.110021328769349, 101.6661533168561);
     private static final LatLng FlatPKNS = new LatLng(3.11229581554081, 101.66209718406036);
-    private static final LatLng userLocation = UMCentral;
-    private static final List<LatLng> MRTLatLng = Arrays.asList(
+    private LatLng userLocation;
+    private LatLng userDestination;
+    private String UserLocation;
+    private String UserDestination;
+    List<BusStop> LRTbusStops = Arrays.asList(
+            new BusStop("LRT Universiti",LRT.latitude, LRT.longitude),
+            new BusStop("Masjid Ar-Rahman",MasjidArRahman.latitude, MasjidArRahman.longitude),
+            new BusStop("Faculty of Law",FacultyLaw.latitude, FacultyLaw.longitude),
+            new BusStop("KK1",KK1.latitude, KK1.longitude),
+            new BusStop("Faculty of Engineering (Utara)",FacultyEngineering_Utara.latitude, FacultyEngineering_Utara.longitude),
+            new BusStop("UM Central",UMCentral.latitude, UMCentral.longitude),
+            new BusStop("Dewan Tunku Canselor", DTC.latitude, DTC.longitude),
+            new BusStop("PASUM",PASUM.latitude, PASUM.longitude),
+            new BusStop("KL Gateway",KLGateway.latitude, KLGateway.longitude),
+            new BusStop("The Vertical",TheVertical.latitude, TheVertical.longitude),
+            new BusStop("Flat Sri Angkasa",FlatSriAngkasa.latitude, FlatSriAngkasa.longitude),
+            new BusStop("Centrio Pantai Hillpark (Utara)",CentrioPantaiHillpark_Utara.latitude, CentrioPantaiHillpark_Utara.longitude),
+            new BusStop("Condominium Andalusia",CondominiumAndalusia.latitude, CondominiumAndalusia.longitude),
+            new BusStop("Pantai Hillpark (Phase 5)",PantaiHillpart_Phase5.latitude, PantaiHillpart_Phase5.longitude),
+            new BusStop("Pusat Komunikasi Lembah Pantai",PusatKomunitiLembahPantai.latitude, PusatKomunitiLembahPantai.longitude),
+            new BusStop("Inwood Residences",InwoodResidences.latitude, InwoodResidences.longitude),
+            new BusStop("Pantai Murni",PantaiMurni.latitude, PantaiMurni.longitude),
+            new BusStop("Centrio Pantai Hillpark (Timur)",CentrioPantaiHillpark_Timur.latitude, CentrioPantaiHillpark_Timur.longitude),
+            new BusStop("Bangsar South",BangsarSouth.latitude, BangsarSouth.longitude),
+            new BusStop("Nexus Bangsar South",NexusBangsarSouth.latitude, NexusBangsarSouth.longitude),
+            new BusStop("Flat PKNS",FlatPKNS.latitude, FlatPKNS.longitude)
+    );
+    List<BusStop> MRTbusStops = Arrays.asList(
+            new BusStop("MRT Pintu A (Departure)",MRT_PintuA_Start.latitude, MRT_PintuA_Start.longitude),
+            new BusStop("Tiara Damansara (Utara)",TiaraDamansara_Utara.latitude, TiaraDamansara_Utara.longitude),
+            new BusStop("Tiara Damanasara (Selatan)",TiaraDamanasara_Selatan.latitude, TiaraDamanasara_Selatan.longitude),
+            new BusStop("UIA PJ (Barat)", UIA_PJ_Barat.latitude, UIA_PJ_Barat.longitude),
+            new BusStop("UIA PJ (Selatan)", UIA_PJ_Selatan.latitude, UIA_PJ_Selatan.longitude),
+            new BusStop("Mahsa University", MahsaUniversity.latitude, MahsaUniversity.longitude),
+            new BusStop("Faculty of Business and Economics",FPE.latitude, FPE.longitude),
+            new BusStop("UM Central",UMCentral.latitude, UMCentral.longitude),
+            new BusStop("Dewan Tunku Canselor", DTC.latitude, DTC.longitude),
+            new BusStop("PASUM",PASUM.latitude, PASUM.longitude),
+            new BusStop("KK12", KK12.latitude, KK12.longitude),
+            new BusStop("KK5",KK5.latitude, KK5.longitude),
+            new BusStop("Pusat Sukan",PusatSukan.latitude, PusatSukan.longitude),
+            new BusStop("Academy of Islamic Studies",AcademyIslamicStudies.latitude, AcademyIslamicStudies.longitude),
+            new BusStop("KK10",KK10.latitude, KK10.longitude),
+            new BusStop("Faculty of Computer Science and Information Technology",FSKTM.latitude, FSKTM.longitude),
+            new BusStop("Academy of Malay Studies",APM.latitude, APM.longitude),
+            new BusStop("KK4",KK4.latitude, KK4.longitude),
+            new BusStop("Faculty of Sains",FacultySains.latitude, FacultySains.longitude),
+            new BusStop("Faculty of Law",FacultyLaw.latitude, FacultyLaw.longitude),
+            new BusStop("KK1",KK1.latitude, KK1.longitude),
+            new BusStop("Faculty of Engineering (Utara)",FacultyEngineering_Utara.latitude, FacultyEngineering_Utara.longitude),
+            new BusStop("Faculty of Engineering (Barat)",FacultyEngineering_Barat.latitude, FacultyEngineering_Barat.longitude),
+            new BusStop("Opposite of Mahsa University",MahsaUniversity_Opposite.latitude, MahsaUniversity_Opposite.longitude),
+            new BusStop("SMK Sultan Abd Samad (Barat)",SMKSultanAbdSamad_Barat.latitude, SMKSultanAbdSamad_Barat.longitude),
+            new BusStop("Pusat Asasi Mahallah Aisyah",PusatAsasiMahallahAisyah.latitude, PusatAsasiMahallahAisyah.longitude),
+            new BusStop("MRT Pintu A (Arrival)",MRT_PintuA_End.latitude, MRT_PintuA_End.longitude)
+    );
+    private final List<LatLng> MRTLatLng = Arrays.asList(
             MRT_PintuA_Start,
             TiaraDamansara_Utara,
             TiaraDamanasara_Selatan,
@@ -124,6 +179,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     );
     private BusDetailsViewModel detailsViewModel;
     private BusEtaViewModel etaViewModel;
+    private BusLineViewModel buslineViewModel;
+    private OriginDestinationViewModel origindestinationViewModel;
+    private String extractedBusLine;
+    private int routeId;
     private Runnable fetchBusDataRunnable = new Runnable() {
         @Override
         public void run() {
@@ -132,16 +191,55 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         }
     };
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            String busline = getArguments().getString("busLine");
+            String origin = getArguments().getString("origin");
+            String destination = getArguments().getString("destination");
+
+            Log.d("MapsFragment", "Bus Line: " + busline + ", Origin: " + origin + ", Destination: " + destination);
+            extractedBusLine = busline;
+            UserLocation = origin;
+            UserDestination = destination;
+        }
+        if (getArguments() == null){
+            Log.d("MapsFragment","Arguments is null");
+        }
+        List<BusStop>BusStopsToCompare = LRTbusStops;
+        if ("T815".equals(extractedBusLine))
+            BusStopsToCompare = MRTbusStops;
+
+        for (BusStop stop : BusStopsToCompare) {
+            Log.d("MapsFragment", "Bus Stop: " + stop.getName() + ",");
+            if (UserLocation.equals(stop.getName())) {
+                userLocation = new LatLng(stop.getLatitude(), stop.getLongitude());
+                Log.d("MapsFragment", "User Location: " + userLocation);
+                break;
+            }
+            if (UserDestination.equals(stop.getName())) {
+                userDestination = new LatLng(stop.getLatitude(), stop.getLongitude());
+                Log.d("MapsFragment", "User Destination: " + userDestination);
+                break;
+            }
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_maps, container, false);
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        origindestinationViewModel = new ViewModelProvider(requireActivity()).get(OriginDestinationViewModel.class);
+        buslineViewModel = new ViewModelProvider(requireActivity()).get(BusLineViewModel.class);
         detailsViewModel = new ViewModelProvider(requireActivity()).get(BusDetailsViewModel.class);
         etaViewModel = new ViewModelProvider(requireActivity()).get(BusEtaViewModel.class);
 
@@ -154,13 +252,33 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             Log.e("MapsFragment", "SupportMapFragment is null");
         }
 
-        // Start periodic updates
-        handler.post(fetchBusDataRunnable);
+        /*
+        buslineViewModel.getBusLine().observe(getViewLifecycleOwner(), busLine -> {
+            if (extractedBusLine != null) {
+                // Use the bus line information, for example, to load bus stops
+                busline = busLine;
+                Log.d("MapsFragment", "Bus Line: " + busLine);
+            }
+            else
+                Log.d("MapsFragment","Bus Line is null");
+        });
+
+        origindestinationViewModel.getOrigin().observe(getViewLifecycleOwner(), origin -> {
+            UserLocation = origin;
+        });
+        origindestinationViewModel.getDestination().observe(getViewLifecycleOwner(), destination -> {
+            UserDestination = destination;
+        });
+
+         */
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
+
+        // Start periodic updates
+        handler.post(fetchBusDataRunnable);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MRT_PintuA_Start, 17));
         mMap.getUiSettings().setZoomControlsEnabled(true);
@@ -171,40 +289,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void initializeMarkers() {
-        // Add static markers for bus stops here
-        List<BusStop> MRTbusStops = Arrays.asList(
-                new BusStop("MRT Pintu A (Departure)",MRT_PintuA_Start.latitude, MRT_PintuA_Start.longitude),
-                new BusStop("Tiara Damansara (Utara)",TiaraDamansara_Utara.latitude, TiaraDamansara_Utara.longitude),
-                new BusStop("Tiara Damanasara (Selatan)",TiaraDamanasara_Selatan.latitude, TiaraDamanasara_Selatan.longitude),
-                new BusStop("UIA PJ (Barat)", UIA_PJ_Barat.latitude, UIA_PJ_Barat.longitude),
-                new BusStop("UIA PJ (Selatan)", UIA_PJ_Selatan.latitude, UIA_PJ_Selatan.longitude),
-                new BusStop("Mahsa University", MahsaUniversity.latitude, MahsaUniversity.longitude),
-                new BusStop("Faculty of Business and Economics",FPE.latitude, FPE.longitude),
-                new BusStop("UM Central",UMCentral.latitude, UMCentral.longitude),
-                new BusStop("Dewan Tunku Canselor", DTC.latitude, DTC.longitude),
-                new BusStop("PASUM",PASUM.latitude, PASUM.longitude),
-                new BusStop("KK12", KK12.latitude, KK12.longitude),
-                new BusStop("KK5",KK5.latitude, KK5.longitude),
-                new BusStop("Pusat Sukan",PusatSukan.latitude, PusatSukan.longitude),
-                new BusStop("Academy of Islamic Studies",AcademyIslamicStudies.latitude, AcademyIslamicStudies.longitude),
-                new BusStop("KK10",KK10.latitude, KK10.longitude),
-                new BusStop("Faculty of Computer Science and Information Technology",FSKTM.latitude, FSKTM.longitude),
-                new BusStop("Academy of Malay Studies",APM.latitude, APM.longitude),
-                new BusStop("KK4",KK4.latitude, KK4.longitude),
-                new BusStop("Faculty of Sains",FacultySains.latitude, FacultySains.longitude),
-                new BusStop("Dewan Tunku Canselor (2)", DTC.latitude, DTC.longitude),
-                new BusStop("Pusat Sukan (2)", PASUM.latitude, PASUM.longitude),
-                new BusStop("Faculty of Law",FacultyLaw.latitude, FacultyLaw.longitude),
-                new BusStop("KK1",KK1.latitude, KK1.longitude),
-                new BusStop("Faculty of Engineering (Utara)",FacultyEngineering_Utara.latitude, FacultyEngineering_Utara.longitude),
-                new BusStop("Faculty of Engineering (Barat)",FacultyEngineering_Barat.latitude, FacultyEngineering_Barat.longitude),
-                new BusStop("Opposite of Mahsa University",MahsaUniversity_Opposite.latitude, MahsaUniversity_Opposite.longitude),
-                new BusStop("SMK Sultan Abd Samad (Barat)",SMKSultanAbdSamad_Barat.latitude, SMKSultanAbdSamad_Barat.longitude),
-                new BusStop("Pusat Asasi Mahallah Aisyah",PusatAsasiMahallahAisyah.latitude, PusatAsasiMahallahAisyah.longitude),
-                new BusStop("MRT Pintu A (Arrival)",MRT_PintuA_End.latitude, MRT_PintuA_End.longitude)
-        );
+        List<BusStop> BusStops=MRTbusStops;
+        if ("T789".equals(extractedBusLine)){
+            BusStops=LRTbusStops;
+        }
 
-        for (BusStop stop : MRTbusStops) {
+        for (BusStop stop : BusStops) {
             LatLng position = new LatLng(stop.getLatitude(), stop.getLongitude());
             mMap.addMarker(new MarkerOptions()
                     .position(position)
@@ -215,8 +305,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private void loadRoutes(GoogleMap googleMap) {
         try {
             mMap = googleMap;
+            routeId = R.raw.mrt_bus_routes;
+            if ("T789".equals(extractedBusLine)){
+                routeId = R.raw.lrt_bus_routes;
+            }
             // Read the JSON file
-            InputStream inputStream = getResources().openRawResource(R.raw.mrt_bus_routes);
+            InputStream inputStream = getResources().openRawResource(routeId);
             byte[] buffer = new byte[inputStream.available()];
             inputStream.read(buffer);
             inputStream.close();
@@ -267,8 +361,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                URL url = new URL("https://api.data.gov.my/gtfs-realtime/vehicle-position/prasarana?category=rapid-bus-mrtfeeder");
-                FeedMessage feed = FeedMessage.parseFrom(url.openStream());
+                URL selectedURL;
+                selectedURL = new URL("https://api.data.gov.my/gtfs-realtime/vehicle-position/prasarana?category=rapid-bus-mrtfeeder");
+                if (extractedBusLine.equals("T789")){
+                     selectedURL = new URL("https://api.data.gov.my/gtfs-realtime/vehicle-position/prasarana?category=rapid-bus-kl");
+                }
+                FeedMessage feed = FeedMessage.parseFrom(selectedURL.openStream());
 
                 for (FeedEntity entity : feed.getEntityList()) {
                     if (entity.hasVehicle()) {
@@ -279,6 +377,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         double speed = entity.getVehicle().getPosition().getSpeed();
 
                         if ("T815".equals(routeId)) {
+                            LatLng position = new LatLng(latitude, longitude);
+                            requireActivity().runOnUiThread(() -> updateBusMarker(licensePlate, position));
+                            requireActivity().runOnUiThread(() ->updateBusDetails(licensePlate, speed));
+                            calculateETA(position, userLocation, MRTLatLng);
+                        }
+
+                        if ("T7890".equals(routeId)) {
                             LatLng position = new LatLng(latitude, longitude);
                             requireActivity().runOnUiThread(() -> updateBusMarker(licensePlate, position));
                             requireActivity().runOnUiThread(() ->updateBusDetails(licensePlate, speed));

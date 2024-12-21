@@ -3,7 +3,9 @@ package com.example.community;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +23,8 @@ public class BusTrackingFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String origin;
+    private String destination;
 
     public BusTrackingFragment() {
         // Required empty public constructor
@@ -49,10 +51,52 @@ public class BusTrackingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //OriginDestinationViewModel origindestinationViewModel = new ViewModelProvider(requireActivity()).get(OriginDestinationViewModel.class);
+
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String busline = getArguments().getString("busLine");
+            String origin = getArguments().getString("origin");
+            String destination = getArguments().getString("destination");
+
+            MapsFragment mapsFragment = (MapsFragment) getChildFragmentManager().findFragmentById(R.id.mapsFragment);
+            if (mapsFragment == null) {
+                mapsFragment = new MapsFragment();
+                Bundle args = new Bundle();
+                args.putString("busLine", busline);
+                args.putString("origin", origin);
+                args.putString("destination", destination);
+                mapsFragment.setArguments(args);
+
+                getChildFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.mapsFragment, mapsFragment)
+                        .commitNow();
+            }
+            else if (mapsFragment != null) {
+                Bundle args = new Bundle();
+                args.putString("busLine", busline);
+                args.putString("origin", origin);
+                args.putString("destination", destination);
+                mapsFragment.setArguments(args);
+
+                // Add the fragment dynamically if it's not already added
+                if (getChildFragmentManager().findFragmentById(R.id.mapsFragment) == null) {
+                    getChildFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.mapsFragment, mapsFragment)
+                            .commitNow();
+                }
+            }
+            else
+                Log.d("Bus tracking Fragment","mapsFragment is null");
+
+            //origindestinationViewModel.setBusLine(busline);
+            //origindestinationViewModel.setOrigin(origin);
+            //origindestinationViewModel.setDestination(destination);
         }
+        else
+            Log.d("Bus tracking Fragment","getArgument() is null");
+
     }
 
     @Override
@@ -61,4 +105,6 @@ public class BusTrackingFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_bus_tracking, container, false);
     }
+
+
 }

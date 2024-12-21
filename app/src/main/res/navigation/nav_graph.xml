@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/DestBusLineSelection">
+
+    <fragment
+        android:id="@+id/DestBusLineSelection"
+        android:name="com.example.community.BusLineSelectionFragment"
+        android:label="fragment_bus_line_selection"
+        tools:layout="@layout/fragment_bus_line_selection" >
+        <action
+            android:id="@+id/action_busLineSelectionFragment_to_originDestinationFragment"
+            app:destination="@id/DestOriginDestination" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DestOriginDestination"
+        android:name="com.example.community.OriginDestinationFragment"
+        android:label="fragment_origin_destination"
+        tools:layout="@layout/fragment_origin_destination">
+        <argument
+            android:name="busLine"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_DestOriginDestination_to_busTrackingFragment"
+            app:destination="@id/busTrackingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/busTrackingFragment"
+        android:name="com.example.community.BusTrackingFragment"
+        android:label="fragment_bus_tracking"
+        tools:layout="@layout/fragment_bus_tracking">
+        <argument
+            android:name="busLine"
+            app:argType="string" />
+        <argument
+            android:name="origin"
+            app:argType="string" />
+        <argument
+            android:name="destination"
+            app:argType="string" />
+    </fragment>
+
+</navigation>
