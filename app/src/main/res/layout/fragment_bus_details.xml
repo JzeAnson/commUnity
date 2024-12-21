@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BusDetailsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/TV_eta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="31dp"
+            android:text="Estimated Time of Arrival:"
+            app:layout_constraintEnd_toStartOf="@+id/eta"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/eta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="81dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/TV_licensePlate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Bus Number Plate:"
+            app:layout_constraintStart_toStartOf="@+id/TV_eta"
+            app:layout_constraintTop_toBottomOf="@+id/TV_eta" />
+
+        <TextView
+            android:id="@+id/bus_number_plate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="@+id/eta"
+            app:layout_constraintTop_toBottomOf="@+id/eta" />
+
+        <TextView
+            android:id="@+id/TV_currentSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Current Speed:"
+            app:layout_constraintStart_toStartOf="@+id/TV_licensePlate"
+            app:layout_constraintTop_toBottomOf="@+id/TV_licensePlate" />
+
+        <TextView
+            android:id="@+id/current_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="@+id/bus_number_plate"
+            app:layout_constraintTop_toBottomOf="@+id/bus_number_plate" />
+
+        <Button
+            android:id="@+id/Button_Reached"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="154dp"
+            android:layout_marginTop="31dp"
+            android:layout_marginEnd="154dp"
+            android:text="Reached"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TV_currentSpeed" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

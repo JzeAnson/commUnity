@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BusLineSelectionFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/t789_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="t789"
+            android:src="@drawable/bus_option_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
+        <ImageButton
+            android:id="@+id/t815_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="69dp"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="t815"
+            android:contextClickable="false"
+            android:src="@drawable/bus_option_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/t789_button" />
+
+        <TextView
+            android:id="@+id/t789_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="T789"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/t789_button"
+            app:layout_constraintEnd_toEndOf="@+id/t789_button"
+            app:layout_constraintStart_toStartOf="@+id/t789_button"
+            app:layout_constraintTop_toTopOf="@+id/t789_button" />
+
+        <TextView
+            android:id="@+id/t815_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="T815"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/t815_button"
+            app:layout_constraintEnd_toEndOf="@+id/t815_button"
+            app:layout_constraintStart_toStartOf="@+id/t815_button"
+            app:layout_constraintTop_toTopOf="@+id/t815_button" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bs_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

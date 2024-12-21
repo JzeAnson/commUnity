@@ -1,26 +1,33 @@
 <resources>
-    <string name="app_name">CommUnity</string>
+    <string name="app_name">commUnity</string>
+    <string-array name="locations_array">
+        <item>Main Gate</item>
+        <item>Library</item>
+        <item>Sports Complex</item>
+        <item>Science Faculty</item>
+        <item>Engineering Faculty</item>
+    </string-array>
+    <string name="title_activity_maps">MapsActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="home_logo">Home Logo</string>
-    <string name="home_title">Home</string>
-    <string name="profile_title">Profile</string>
-    <string name="profile_logo">Profile Logo</string>
-    <string name="settings_title">Settings</string>
-    <string name="settings_logo">Settings Logo</string>
-    <string name="app_logo">App Logo</string>
-    <string name="app_logo_name">App Logo Name</string>
-    <string name="announcements_logo">Announcements/Forums Logo</string>
-    <string name="announcements_title">Announcements/Forums</string>
-    <string name="food_logo">Community Food Market Logo</string>
-    <string name="food_title">Community Food Market</string>
-    <string name="report_logo">Emergency Report Logo</string>
-    <string name="report_title">Emergency Report</string>
-    <string name="graph_logo">Interactive Graph Logo</string>
-    <string name="graph_title">Interactive Graph</string>
-    <string name="calendar_logo">Event Calendar Logo</string>
-    <string name="calendar_title">Event Calendar</string>
-    <string name="transportation_logo">Public Transport Logo</string>
+    <string name="home_logo">Home Logo</string>	
+    <string name="home_title">Home</string>	
+    <string name="profile_title">Profile</string>	
+    <string name="profile_logo">Profile Logo</string>	
+    <string name="settings_title">Settings</string>	
+    <string name="settings_logo">Settings Logo</string>	
+    <string name="app_logo">App Logo</string>	
+    <string name="app_logo_name">App Logo Name</string>	
+    <string name="announcements_logo">Announcements/Forums Logo</string>	
+    <string name="announcements_title">Announcements/Forums</string>	
+    <string name="food_logo">Community Food Market Logo</string>	
+    <string name="food_title">Community Food Market</string>	
+    <string name="report_logo">Emergency Report Logo</string>	
+    <string name="report_title">Emergency Report</string>	
+    <string name="graph_logo">Interactive Graph Logo</string>	
+    <string name="graph_title">Interactive Graph</string>	
+    <string name="calendar_logo">Event Calendar Logo</string>	
+    <string name="calendar_title">Event Calendar</string>	
+    <string name="transportation_logo">Public Transport Logo</string>	
     <string name="transportation_title">Public Transport</string>
-
 </resources>
