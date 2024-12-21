@@ -21,7 +21,6 @@ android {
     }
 
     buildFeatures {
-
         viewBinding = true
     }
 
@@ -41,7 +40,9 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
+    implementation(libs.firebase.ui.database)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
