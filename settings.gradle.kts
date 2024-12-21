@@ -21,6 +21,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "commUnity"
+rootProject.name = "CommUnity"
 include(":app")
  
