@@ -1,6 +1,7 @@
 package com.example.community;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -49,16 +50,27 @@ public class HomeMain extends AppCompatActivity {
                 replaceFragment(new SettingFragment());
                 return true;
 
+            } else if (itemId==R.id.foodlogo){
+                replaceFragment(new FoodFragment());
+                return true;
             }
-
             return false;
         });
     }
 
-    private void replaceFragment(Fragment fragment){
+//    private void replaceFragment(Fragment fragment){
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.frame_layout,fragment);
+//        fragmentTransaction.commit();
+//    }
+
+    private void replaceFragment(Fragment fragment) {
+//        Log.d("HomeMain", "Replacing fragment with: " + fragment.getClass().getSimpleName());
+        Log.i("HomeMain", "Replacing fragment with: " + fragment.getClass().getSimpleName());
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout,fragment);
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
     }
 }
