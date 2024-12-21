@@ -100,6 +100,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.community.databinding.ActivityHomeMainBinding;
+import com.google.firebase.FirebaseApp;
 
 public class HomeMain extends AppCompatActivity {
 
@@ -108,6 +109,7 @@ public class HomeMain extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
         // Inflate the layout using View Binding
         binding = ActivityHomeMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
