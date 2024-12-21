@@ -3,24 +3,24 @@ package com.example.community;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class AddFoodActivity extends AppCompatActivity {
+public class AddFoodFragment extends Fragment {
 
     private EditText foodName, pickupShopName, foodPrice, foodDescription;
     private ImageView foodImage;
@@ -30,23 +30,25 @@ public class AddFoodActivity extends AppCompatActivity {
     private DatabaseReference databaseRef;
     private StorageReference storageRef;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_food);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_add_food, container, false);
 
-        foodName = findViewById(R.id.foodName);
-        pickupShopName = findViewById(R.id.pickupShopName);
-        foodPrice = findViewById(R.id.foodPrice);
-        foodDescription = findViewById(R.id.foodDescription);
-        foodImage = findViewById(R.id.foodImage);
-        submitButton = findViewById(R.id.submitButton);
+        foodName = view.findViewById(R.id.foodName);
+        pickupShopName = view.findViewById(R.id.pickupShopName);
+        foodPrice = view.findViewById(R.id.foodPrice);
+        foodDescription = view.findViewById(R.id.foodDescription);
+        foodImage = view.findViewById(R.id.foodImage);
+        submitButton = view.findViewById(R.id.submitButton);
 
         databaseRef = FirebaseDatabase.getInstance().getReference("FoodItems");
         storageRef = FirebaseStorage.getInstance().getReference("FoodImages");
 
         foodImage.setOnClickListener(v -> openImagePicker());
         submitButton.setOnClickListener(v -> uploadFoodItem());
+
+        return view;
     }
 
     private void openImagePicker() {
@@ -56,9 +58,9 @@ public class AddFoodActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+        if (requestCode == 1 && resultCode == getActivity().RESULT_OK && data != null) {
             imageUri = data.getData();
             foodImage.setImageURI(imageUri);
         }
@@ -79,7 +81,7 @@ public class AddFoodActivity extends AppCompatActivity {
 
                 databaseRef.child(id).setValue(foodItem).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(AddFoodActivity.this, "Food added successfully!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Food added successfully!", Toast.LENGTH_SHORT).show();
                     }
                 });
             }));

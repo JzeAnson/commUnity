@@ -1,14 +1,14 @@
 package com.example.community;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,22 +21,22 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FoodListingActivity extends AppCompatActivity {
+public class FoodListingFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private List<FoodItem> foodList;
     private DatabaseReference databaseRef;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_food_listing);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_food_listing, container, false);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         foodList = new ArrayList<>();
-        FoodAdapter adapter = new FoodAdapter(this, foodList);
+        FoodAdapter adapter = new FoodAdapter(getContext(), foodList);
         recyclerView.setAdapter(adapter);
 
         databaseRef = FirebaseDatabase.getInstance().getReference("FoodItems");
@@ -53,8 +53,10 @@ public class FoodListingActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(FoodListingActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Failed to load data", Toast.LENGTH_SHORT).show();
             }
         });
+
+        return view;
     }
 }

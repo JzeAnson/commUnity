@@ -16,7 +16,7 @@
             android:name=".FoodListingActivity"
             android:exported="false" />
         <activity
-            android:name=".AddFoodActivity"
+            android:name=".AddFoodFragment"
             android:exported="false" />
         <activity
             android:name=".HomeMain"
