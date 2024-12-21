@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -5,46 +6,116 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Image Upload -->
+    <!-- Back Arrow (You'll need to add this image resource) -->
     <ImageView
-        android:id="@+id/foodImage"
+        android:id="@+id/backArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_back_arrow"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Upload Picture Section -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_add"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="wrap_content"
+        android:background="#F5F5F5"
+        android:padding="24dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_plus"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Upload Picture of Food"
+                android:textSize="14sp"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+    </FrameLayout>
 
     <!-- Food Name -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food Name"
+        android:layout_marginTop="16dp"/>
+
     <EditText
         android:id="@+id/foodName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Food Name"
-        android:inputType="text" />
+        android:background="#F5F5F5"
+        android:padding="12dp"
+        android:inputType="text"/>
 
-    <!-- Pickup Shop Name -->
+    <!-- Pick-Up Shop Name -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick-Up Shop Name"
+        android:layout_marginTop="16dp"/>
+
     <EditText
         android:id="@+id/pickupShopName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Pick-Up Shop Name"
-        android:inputType="text" />
+        android:background="#F5F5F5"
+        android:padding="12dp"
+        android:inputType="text"/>
 
     <!-- Food Price -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food Price"
+        android:layout_marginTop="16dp"/>
+
     <EditText
         android:id="@+id/foodPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Food Price (RM)"
-        android:inputType="numberDecimal" />
+        android:background="#F5F5F5"
+        android:padding="12dp"
+        android:inputType="numberDecimal"/>
 
     <!-- Food Description -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food Description (Pickup Time)"
+        android:layout_marginTop="16dp"/>
+
     <EditText
         android:id="@+id/foodDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Food Description (Pickup Time)"
-        android:inputType="text" />
+        android:background="#F5F5F5"
+        android:padding="12dp"
+        android:inputType="text"/>
+
+    <!-- Payment Method -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Payment Method"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cash-On Arrival (Fixed)"
+        android:background="#F5F5F5"
+        android:padding="12dp"/>
 
     <!-- Submit Button -->
     <Button
@@ -52,8 +123,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/green"
-        android:textColor="@android:color/white" />
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#006400"
+        android:textColor="#FFFFFF"
+        android:padding="16dp"/>
 
 </LinearLayout>
