@@ -180,6 +180,6 @@ public class HomeMain extends AppCompatActivity {
      */
     public void pressFood(View v) {
         Log.i("HomeMain", "Food button pressed.");
-        replaceFragment(new FoodFragment());
+        replaceFragment(new FoodListingFragment());
     }
 }
