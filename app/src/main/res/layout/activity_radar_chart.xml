@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".RadarChartActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_bar"
@@ -46,14 +46,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/content_layout"
-        android:layout_width="408dp"
-        android:layout_height="73dp"
+        android:layout_width="411dp"
+        android:layout_height="75dp"
         android:background="#06287C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nav_host_fragment">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/imageView3"
@@ -174,16 +172,24 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:navGraph="@navigation/nav_graph"
-        app:defaultNavHost="true"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/GraphLayout"
+        android:layout_width="409dp"
+        android:layout_height="589dp"
         app:layout_constraintBottom_toTopOf="@+id/content_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/top_bar">
 
+        <com.github.mikephil.charting.charts.RadarChart
+            android:id="@+id/radar_Chart"
+            android:layout_width="409dp"
+            android:layout_height="581dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

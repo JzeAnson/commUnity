@@ -46,14 +46,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/content_layout"
-        android:layout_width="408dp"
-        android:layout_height="73dp"
+        android:layout_width="411dp"
+        android:layout_height="75dp"
         android:background="#06287C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nav_host_fragment">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/imageView3"
@@ -174,16 +173,45 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:navGraph="@navigation/nav_graph"
-        app:defaultNavHost="true"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="409dp"
+        android:layout_height="589dp"
         app:layout_constraintBottom_toTopOf="@+id/content_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/top_bar">
 
+        <TextView
+            android:id="@+id/estimated_time_arrival"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginBottom="10dp"
+            android:text="Estimated Time Arrival:"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/current_location_text"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/map"
+            android:layout_width="359dp"
+            android:layout_height="351dp"
+            android:layout_marginStart="25dp"
+            app:layout_constraintBottom_toTopOf="@+id/estimated_time_arrival"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/campus_map" />
+
+        <TextView
+            android:id="@+id/current_location_text"
+            android:layout_width="166dp"
+            android:layout_height="21dp"
+            android:layout_marginStart="25dp"
+            android:text="Current Location:"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="472dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
