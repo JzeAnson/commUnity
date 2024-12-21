@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
@@ -15,6 +16,14 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        renderscriptTargetApi = 19
+        renderscriptSupportModeEnabled = true
+    }
+
+    buildFeatures {
+
+        viewBinding = true
     }
 
     buildTypes {
@@ -49,6 +58,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:19.0.0")
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
