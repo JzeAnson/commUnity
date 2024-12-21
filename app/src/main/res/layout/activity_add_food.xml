@@ -1,0 +1,59 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Image Upload -->
+    <ImageView
+        android:id="@+id/foodImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_add_image"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Food Name -->
+    <EditText
+        android:id="@+id/foodName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Food Name"
+        android:inputType="text" />
+
+    <!-- Pickup Shop Name -->
+    <EditText
+        android:id="@+id/pickupShopName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Pick-Up Shop Name"
+        android:inputType="text" />
+
+    <!-- Food Price -->
+    <EditText
+        android:id="@+id/foodPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Food Price (RM)"
+        android:inputType="numberDecimal" />
+
+    <!-- Food Description -->
+    <EditText
+        android:id="@+id/foodDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Food Description (Pickup Time)"
+        android:inputType="text" />
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/green"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

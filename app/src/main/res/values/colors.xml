@@ -4,4 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="radio_button_tint">#AE0606</color>
     <color name="dark_blue">#06287C</color>
+    <color name="green">#4CAF50</color>
+    <color name="blue">#2196F3</color>
+    <color name="red">#F44336</color>
 </resources>
