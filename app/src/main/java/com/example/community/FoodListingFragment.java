@@ -1,6 +1,7 @@
 package com.example.community;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class FoodListingFragment extends Fragment {
         FoodAdapter adapter = new FoodAdapter(getContext(), foodList);
         recyclerView.setAdapter(adapter);
 
-        databaseRef = FirebaseDatabase.getInstance().getReference("FoodItems");
+        databaseRef = FirebaseDatabase.getInstance().getReference("foodItems");
         databaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -47,15 +48,19 @@ public class FoodListingFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     FoodItem foodItem = dataSnapshot.getValue(FoodItem.class);
                     foodList.add(foodItem);
+                    // Debug log
+                    Log.d("FirebaseData", "Food Item: " + foodItem.getFoodName());
                 }
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Failed to read data: " + error.getMessage());
                 Toast.makeText(getContext(), "Failed to load data", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         return view;
     }

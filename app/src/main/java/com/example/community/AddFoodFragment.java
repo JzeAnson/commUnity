@@ -3,12 +3,14 @@ package com.example.community;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,9 +24,10 @@ import com.google.firebase.storage.StorageReference;
 
 public class AddFoodFragment extends Fragment {
 
-    private EditText foodName, pickupShopName, foodPrice, foodDescription;
+    private EditText foodName, foodPrice, foodDescription;
     private ImageView foodImage;
     private Button submitButton;
+    private ProgressBar progressBar;
     private Uri imageUri;
 
     private DatabaseReference databaseRef;
@@ -36,17 +39,18 @@ public class AddFoodFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add_food, container, false);
 
         foodName = view.findViewById(R.id.foodName);
-        pickupShopName = view.findViewById(R.id.pickupShopName);
         foodPrice = view.findViewById(R.id.foodPrice);
         foodDescription = view.findViewById(R.id.foodDescription);
         foodImage = view.findViewById(R.id.foodImage);
         submitButton = view.findViewById(R.id.submitButton);
+//        progressBar = view.findViewById(R.id.progressBar); // Assuming a progress bar is in the layout
+        progressBar.setVisibility(View.GONE);
 
-        databaseRef = FirebaseDatabase.getInstance().getReference("FoodItems");
+        databaseRef = FirebaseDatabase.getInstance().getReference("foodItems"); // Updated to match FoodItem
         storageRef = FirebaseStorage.getInstance().getReference("FoodImages");
 
         foodImage.setOnClickListener(v -> openImagePicker());
-        submitButton.setOnClickListener(v -> uploadFoodItem());
+        submitButton.setOnClickListener(v -> validateAndUploadFoodItem());
 
         return view;
     }
@@ -66,25 +70,69 @@ public class AddFoodFragment extends Fragment {
         }
     }
 
-    private void uploadFoodItem() {
-        if (imageUri != null) {
-            StorageReference fileRef = storageRef.child(System.currentTimeMillis() + ".jpg");
-            fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                String id = databaseRef.push().getKey();
-                FoodItem foodItem = new FoodItem(
-                        foodName.getText().toString(),
-                        pickupShopName.getText().toString(),
-                        foodPrice.getText().toString(),
-                        foodDescription.getText().toString(),
-                        uri.toString()
-                );
+    private void validateAndUploadFoodItem() {
+        String name = foodName.getText().toString().trim();
+        String price = foodPrice.getText().toString().trim();
+        String description = foodDescription.getText().toString().trim();
 
-                databaseRef.child(id).setValue(foodItem).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(getActivity(), "Food added successfully!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }));
+        if (TextUtils.isEmpty(name)) {
+            foodName.setError("Food name is required");
+            return;
         }
+        if (TextUtils.isEmpty(price)) {
+            foodPrice.setError("Food price is required");
+            return;
+        }
+        if (TextUtils.isEmpty(description)) {
+            foodDescription.setError("Food description is required");
+            return;
+        }
+        if (imageUri == null) {
+            Toast.makeText(getContext(), "Please select an image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        uploadFoodItem(name, price, description);
+    }
+
+    private void uploadFoodItem(String name, String price, String description) {
+        progressBar.setVisibility(View.VISIBLE);
+
+        StorageReference fileRef = storageRef.child(System.currentTimeMillis() + ".jpg");
+        fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot ->
+                fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                    String id = databaseRef.push().getKey();
+                    FoodItem foodItem = new FoodItem(
+                            name,
+                            price,
+                            description,
+                            uri.toString() // Pass the uploaded image URL
+                    );
+
+                    databaseRef.child(id).setValue(foodItem).addOnCompleteListener(task -> {
+                        progressBar.setVisibility(View.GONE);
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getActivity(), "Food added successfully!", Toast.LENGTH_SHORT).show();
+                            clearFields();
+                        } else {
+                            Toast.makeText(getActivity(), "Failed to add food", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }).addOnFailureListener(e -> {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getContext(), "Failed to upload image", Toast.LENGTH_SHORT).show();
+                })
+        ).addOnFailureListener(e -> {
+            progressBar.setVisibility(View.GONE);
+            Toast.makeText(getContext(), "Image upload failed", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void clearFields() {
+        foodName.setText("");
+        foodPrice.setText("");
+        foodDescription.setText("");
+        foodImage.setImageResource(R.drawable.ic_add); // Use your placeholder image here
+        imageUri = null;
     }
 }

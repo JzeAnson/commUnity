@@ -2,24 +2,21 @@ package com.example.community;
 
 public class FoodItem {
     private String foodName;
-    private String pickupShopName;
     private String foodPrice;
-    private String foodDescription;
-    private String imageUrl;
+    private String foodDesc;
+    private String foodPic;
 
-    public FoodItem() { }
+    public FoodItem() {}
 
-    public FoodItem(String foodName, String pickupShopName, String foodPrice, String foodDescription, String imageUrl) {
+    public FoodItem(String foodName, String foodPrice, String foodDesc, String foodPic) {
         this.foodName = foodName;
-        this.pickupShopName = pickupShopName;
         this.foodPrice = foodPrice;
-        this.foodDescription = foodDescription;
-        this.imageUrl = imageUrl;
+        this.foodDesc = foodDesc;
+        this.foodPic = foodPic;
     }
 
     public String getFoodName() { return foodName; }
-    public String getPickupShopName() { return pickupShopName; }
     public String getFoodPrice() { return foodPrice; }
-    public String getFoodDescription() { return foodDescription; }
-    public String getImageUrl() { return imageUrl; }
+    public String getFoodDesc() { return foodDesc; }
+    public String getFoodPic() { return foodPic; }
 }
