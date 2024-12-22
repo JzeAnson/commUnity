@@ -1,5 +1,7 @@
 package com.example.community;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,10 +15,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,8 +33,9 @@ import java.util.List;
 public class FoodListingFragment extends Fragment {
 
     private EditText searchBar;
-    private ImageButton clearButton, searchButton;
+    private ImageButton clearButton, searchButton, profileButton;
     private RecyclerView recyclerView;
+    private FloatingActionButton fab;
     private List<FoodItem> foodList, filteredList;
     private DatabaseReference databaseRef;
     private FoodAdapter adapter;
@@ -45,7 +50,9 @@ public class FoodListingFragment extends Fragment {
         searchBar = view.findViewById(R.id.searchBar);
         clearButton = view.findViewById(R.id.clearButton);
         searchButton = view.findViewById(R.id.searchButton);
+        profileButton = view.findViewById(R.id.profileButton);
         recyclerView = view.findViewById(R.id.recyclerView);
+        fab = view.findViewById(R.id.addButton);
 
         // Set up RecyclerView
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -64,11 +71,37 @@ public class FoodListingFragment extends Fragment {
         // Set up search functionality
         setupSearchBar();
 
+        // Role-based visibility for FAB
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+        String currentRole = sharedPreferences.getString("userRole", "customer"); // Default role is customer
+        updateUIForRole(currentRole);
+
+        // Profile button click listener to change roles
+        profileButton.setOnClickListener(v -> {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Switch Role")
+                    .setMessage("Select your role:")
+                    .setPositiveButton("Merchant", (dialog, which) -> {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("userRole", "merchant");
+                        editor.apply();
+                        updateUIForRole("merchant");
+                        Toast.makeText(getContext(), "Switched to Merchant", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("Customer", (dialog, which) -> {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("userRole", "customer");
+                        editor.apply();
+                        updateUIForRole("customer");
+                        Toast.makeText(getContext(), "Switched to Customer", Toast.LENGTH_SHORT).show();
+                    })
+                    .show();
+        });
+
         return view;
     }
 
     private void setupSearchBar() {
-        // Add text watcher to search bar for real-time filtering
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -82,16 +115,14 @@ public class FoodListingFragment extends Fragment {
             public void afterTextChanged(Editable s) {}
         });
 
-        // Clear search bar and reset the list when X button is clicked
         clearButton.setOnClickListener(v -> {
-            searchBar.setText(""); // Clear the search bar
-            filterFoodList("");   // Reset the food list to show all items
+            searchBar.setText("");
+            filterFoodList("");
         });
 
-        // Perform search when Search button is clicked
         searchButton.setOnClickListener(v -> {
             String query = searchBar.getText().toString().trim();
-            filterFoodList(query); // Filter the list based on the query
+            filterFoodList(query);
             Toast.makeText(getContext(), "Searching for: " + query, Toast.LENGTH_SHORT).show();
         });
     }
@@ -99,7 +130,7 @@ public class FoodListingFragment extends Fragment {
     private void filterFoodList(String query) {
         filteredList.clear();
         if (query.isEmpty()) {
-            filteredList.addAll(foodList); // Show all items when query is empty
+            filteredList.addAll(foodList);
         } else {
             for (FoodItem item : foodList) {
                 if (item.getFoodName().toLowerCase().contains(query.toLowerCase()) ||
@@ -115,7 +146,7 @@ public class FoodListingFragment extends Fragment {
         databaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                foodList.clear(); // Clear the list before adding new data
+                foodList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     FoodItem foodItem = dataSnapshot.getValue(FoodItem.class);
                     if (foodItem != null) {
@@ -123,7 +154,7 @@ public class FoodListingFragment extends Fragment {
                     }
                 }
                 filteredList.clear();
-                filteredList.addAll(foodList); // Initially show all items
+                filteredList.addAll(foodList);
                 adapter.notifyDataSetChanged();
             }
 
@@ -133,5 +164,13 @@ public class FoodListingFragment extends Fragment {
                 Toast.makeText(getContext(), "Failed to load data", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void updateUIForRole(String role) {
+        if ("merchant".equals(role)) {
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            fab.setVisibility(View.GONE);
+        }
     }
 }
