@@ -15,7 +15,8 @@
         android:roundIcon="@drawable/community"
         android:supportsRtl="true"
         android:theme="@style/Theme.CommUnity"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        android:enableOnBackInvokedCallback="true"> <!-- Add this line -->
 
         <!-- Main Activity -->
         <activity
