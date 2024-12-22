@@ -62,8 +62,8 @@ public class FoodListingFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     FoodItem foodItem = dataSnapshot.getValue(FoodItem.class);
                     if (foodItem != null) {
+                        Log.d("FirebaseData", String.format("Name: %s, Price: RM %.2f", foodItem.getFoodName(), foodItem.getFoodPrice()));
                         foodList.add(foodItem);
-                        Log.d("FirebaseData", "Food Item: " + foodItem.getFoodName() + ", Merchant: " + foodItem.getMerchantName()+ ", Price: "+foodItem.getFoodPrice());
                     }
                 }
                 adapter.notifyDataSetChanged(); // Notify adapter about data changes

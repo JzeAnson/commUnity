@@ -85,37 +85,45 @@ public class AddFoodFragment extends Fragment {
             foodPrice.setError("Food price is required");
             return;
         }
+
+        double foodPriceValue;
+        try {
+            foodPriceValue = Double.parseDouble(price);
+            foodPriceValue = Math.round(foodPriceValue * 100.0) / 100.0; // Ensure 2 decimal places
+        } catch (NumberFormatException e) {
+            foodPrice.setError("Invalid price format");
+            return;
+        }
+
         if (TextUtils.isEmpty(description)) {
             foodDescription.setError("Food description is required");
+            return;
+        }
+        if (TextUtils.isEmpty(location)) {
+            foodLocation.setError("Food location is required");
             return;
         }
         if (imageUri == null) {
             Toast.makeText(getContext(), "Please select an image", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (TextUtils.isEmpty(location)) {
-            foodLocation.setError("Food Location is required");
-            return;
-        }
 
-        uploadFoodItem(name, price, description, location);
+        uploadFoodItem(name, foodPriceValue, description, location);
     }
 
-    private void uploadFoodItem(String name, String price, String description, String location) {
+    private void uploadFoodItem(String name, double price, String description, String location) {
         progressBar.setVisibility(View.VISIBLE);
 
-        // Parse price to double
-        double foodPriceValue = 0;
         StorageReference fileRef = storageRef.child(System.currentTimeMillis() + ".jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot ->
                 fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
                     String id = databaseRef.push().getKey();
                     FoodItem foodItem = new FoodItem(
                             name,
-                            foodPriceValue,
+                            price,
                             description,
-                            location,
-                            uri.toString() // Pass the uploaded image URL
+                            uri.toString(), // Image URL
+                            location
                     );
 
                     databaseRef.child(id).setValue(foodItem).addOnCompleteListener(task -> {
