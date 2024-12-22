@@ -98,13 +98,15 @@ public class AddFoodFragment extends Fragment {
     private void uploadFoodItem(String name, String price, String description) {
         progressBar.setVisibility(View.VISIBLE);
 
+        // Parse price to double
+        double foodPriceValue = 0;
         StorageReference fileRef = storageRef.child(System.currentTimeMillis() + ".jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot ->
                 fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
                     String id = databaseRef.push().getKey();
                     FoodItem foodItem = new FoodItem(
                             name,
-                            price,
+                            foodPriceValue,
                             description,
                             uri.toString() // Pass the uploaded image URL
                     );

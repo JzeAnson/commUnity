@@ -2,13 +2,13 @@ package com.example.community;
 
 public class FoodItem {
     private String foodName;
-    private String foodPrice;
+    private double foodPrice;
     private String foodDesc;
     private String foodPic;
 
     public FoodItem() {}
 
-    public FoodItem(String foodName, String foodPrice, String foodDesc, String foodPic) {
+    public FoodItem(String foodName, double foodPrice, String foodDesc, String foodPic) {
         this.foodName = foodName;
         this.foodPrice = foodPrice;
         this.foodDesc = foodDesc;
@@ -16,7 +16,7 @@ public class FoodItem {
     }
 
     public String getFoodName() { return foodName; }
-    public String getFoodPrice() { return foodPrice; }
+    public double getFoodPrice() { return foodPrice; }
     public String getFoodDesc() { return foodDesc; }
     public String getFoodPic() { return foodPic; }
 }

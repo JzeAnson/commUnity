@@ -32,9 +32,8 @@ public class FoodListingFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_food_listing, container, false);
-
         Log.d("FoodListingFragment", "onCreateView called");
+        View view = inflater.inflate(R.layout.fragment_food_listing, container, false);
 
         // Initialize RecyclerView and set LayoutManager
         recyclerView = view.findViewById(R.id.recyclerView);
