@@ -2,6 +2,7 @@ package com.example.community;
 
 import com.bumptech.glide.Glide;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         FoodItem foodItem = foodList.get(position);
         holder.foodName.setText(foodItem.getFoodName());
         holder.foodPrice.setText("RM " + foodItem.getFoodPrice());
-        holder.foodLocation.setText(foodItem.getMerchantName()); // Set merchant name
+        holder.restaurantName.setText(foodItem.getMerchantName()); // Set merchant name
         Glide.with(context).load(foodItem.getFoodPic()).into(holder.foodImage);
     }
 
@@ -45,7 +46,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     }
 
     public static class FoodViewHolder extends RecyclerView.ViewHolder {
-        TextView foodName, foodPrice, foodLocation;
+        TextView foodName, foodPrice, foodLocation, restaurantName; // Ensure restaurantName is included
         ImageView foodImage;
 
         public FoodViewHolder(@NonNull View itemView) {
@@ -53,7 +54,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             foodName = itemView.findViewById(R.id.foodName);
             foodPrice = itemView.findViewById(R.id.foodPrice);
             foodImage = itemView.findViewById(R.id.foodImage);
-            foodLocation=itemView.findViewById(R.id.pickupShopName);
+            restaurantName = itemView.findViewById(R.id.restaurantName); // Initialize restaurantName
+
+            Log.d("FoodViewHolder", "restaurantName: " + (restaurantName != null));
         }
     }
 }

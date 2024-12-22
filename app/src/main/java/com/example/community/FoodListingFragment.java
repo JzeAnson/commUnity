@@ -55,48 +55,24 @@ public class FoodListingFragment extends Fragment {
     }
 
     private void fetchFoodData() {
-        DatabaseReference merchantsRef = FirebaseDatabase.getInstance("https://community-1f007-default-rtdb.asia-southeast1.firebasedatabase.app")
-                .getReference("merchants");
-
-        // Fetch merchants first
-        merchantsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot merchantsSnapshot) {
-                // Map to hold merchant data
-                HashMap<String, String> merchantMap = new HashMap<>();
-                for (DataSnapshot merchant : merchantsSnapshot.getChildren()) {
-                    String merchantID = merchant.getKey();
-                    String merchantName = merchant.child("merchantName").getValue(String.class);
-                    merchantMap.put(merchantID, merchantName);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                foodList.clear(); // Clear the list before adding new data
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    FoodItem foodItem = dataSnapshot.getValue(FoodItem.class);
+                    if (foodItem != null) {
+                        foodList.add(foodItem);
+                        Log.d("FirebaseData", "Food Item: " + foodItem.getFoodName() + ", Merchant: " + foodItem.getMerchantName()+ ", Price: "+foodItem.getFoodPrice());
+                    }
                 }
-
-                databaseRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        foodList.clear(); // Clear the list before adding new data
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            FoodItem foodItem = dataSnapshot.getValue(FoodItem.class);
-                            if (foodItem != null) {
-                                foodList.add(foodItem);
-                                Log.d("FirebaseData", "Food Item: " + foodItem.getFoodName());
-                            }
-                        }
-                        adapter.notifyDataSetChanged(); // Notify adapter about data changes
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Log.e("FirebaseError", "Failed to read data: " + error.getMessage());
-                        Toast.makeText(getContext(), "Failed to load data", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                adapter.notifyDataSetChanged(); // Notify adapter about data changes
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("FirebaseError", "Failed to read merchants: " + error.getMessage());
-                Toast.makeText(getContext(), "Failed to load merchants", Toast.LENGTH_SHORT).show();
+                Log.e("FirebaseError", "Failed to read data: " + error.getMessage());
+                Toast.makeText(getContext(), "Failed to load data", Toast.LENGTH_SHORT).show();
             }
         });
     }
