@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +35,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         FoodItem foodItem = foodList.get(position);
         holder.foodName.setText(foodItem.getFoodName());
         holder.foodPrice.setText("RM " + foodItem.getFoodPrice());
+        holder.foodLocation.setText(foodItem.getFoodLocation());
         Glide.with(context).load(foodItem.getFoodPic()).into(holder.foodImage);
     }
 
@@ -42,7 +45,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     }
 
     public static class FoodViewHolder extends RecyclerView.ViewHolder {
-        TextView foodName, foodPrice;
+        TextView foodName, foodPrice, foodLocation;
         ImageView foodImage;
 
         public FoodViewHolder(@NonNull View itemView) {
@@ -50,6 +53,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             foodName = itemView.findViewById(R.id.foodName);
             foodPrice = itemView.findViewById(R.id.foodPrice);
             foodImage = itemView.findViewById(R.id.foodImage);
+            foodLocation=itemView.findViewById(R.id.pickupShopName);
         }
     }
 }

@@ -24,7 +24,7 @@ import com.google.firebase.storage.StorageReference;
 
 public class AddFoodFragment extends Fragment {
 
-    private EditText foodName, foodPrice, foodDescription;
+    private EditText foodName, foodPrice, foodDescription, foodLocation;
     private ImageView foodImage;
     private Button submitButton;
     private ProgressBar progressBar;
@@ -42,6 +42,7 @@ public class AddFoodFragment extends Fragment {
         foodPrice = view.findViewById(R.id.foodPrice);
         foodDescription = view.findViewById(R.id.foodDescription);
         foodImage = view.findViewById(R.id.foodImage);
+        foodLocation=view.findViewById(R.id.pickupShopName);
         submitButton = view.findViewById(R.id.submitButton);
 //        progressBar = view.findViewById(R.id.progressBar); // Assuming a progress bar is in the layout
         progressBar.setVisibility(View.GONE);
@@ -74,6 +75,7 @@ public class AddFoodFragment extends Fragment {
         String name = foodName.getText().toString().trim();
         String price = foodPrice.getText().toString().trim();
         String description = foodDescription.getText().toString().trim();
+        String location = foodLocation.getText().toString().trim();
 
         if (TextUtils.isEmpty(name)) {
             foodName.setError("Food name is required");
@@ -91,11 +93,15 @@ public class AddFoodFragment extends Fragment {
             Toast.makeText(getContext(), "Please select an image", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (TextUtils.isEmpty(location)) {
+            foodLocation.setError("Food Location is required");
+            return;
+        }
 
-        uploadFoodItem(name, price, description);
+        uploadFoodItem(name, price, description, location);
     }
 
-    private void uploadFoodItem(String name, String price, String description) {
+    private void uploadFoodItem(String name, String price, String description, String location) {
         progressBar.setVisibility(View.VISIBLE);
 
         // Parse price to double
@@ -108,6 +114,7 @@ public class AddFoodFragment extends Fragment {
                             name,
                             foodPriceValue,
                             description,
+                            location,
                             uri.toString() // Pass the uploaded image URL
                     );
 
@@ -135,6 +142,7 @@ public class AddFoodFragment extends Fragment {
         foodPrice.setText("");
         foodDescription.setText("");
         foodImage.setImageResource(R.drawable.ic_add); // Use your placeholder image here
+        foodLocation.setText("");
         imageUri = null;
     }
 }
