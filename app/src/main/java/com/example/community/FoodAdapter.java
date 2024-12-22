@@ -35,7 +35,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         FoodItem foodItem = foodList.get(position);
         holder.foodName.setText(foodItem.getFoodName());
         holder.foodPrice.setText("RM " + foodItem.getFoodPrice());
-        holder.foodLocation.setText(foodItem.getFoodLocation());
+        holder.foodLocation.setText(foodItem.getMerchantName()); // Set merchant name
         Glide.with(context).load(foodItem.getFoodPic()).into(holder.foodImage);
     }
 

@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FoodListingFragment extends Fragment {
@@ -54,24 +55,48 @@ public class FoodListingFragment extends Fragment {
     }
 
     private void fetchFoodData() {
-        databaseRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference merchantsRef = FirebaseDatabase.getInstance("https://community-1f007-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference("merchants");
+
+        // Fetch merchants first
+        merchantsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                foodList.clear(); // Clear the list before adding new data
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    FoodItem foodItem = dataSnapshot.getValue(FoodItem.class);
-                    if (foodItem != null) {
-                        foodList.add(foodItem);
-                        Log.d("FirebaseData", "Food Item: " + foodItem.getFoodName());
-                    }
+            public void onDataChange(@NonNull DataSnapshot merchantsSnapshot) {
+                // Map to hold merchant data
+                HashMap<String, String> merchantMap = new HashMap<>();
+                for (DataSnapshot merchant : merchantsSnapshot.getChildren()) {
+                    String merchantID = merchant.getKey();
+                    String merchantName = merchant.child("merchantName").getValue(String.class);
+                    merchantMap.put(merchantID, merchantName);
                 }
-                adapter.notifyDataSetChanged(); // Notify adapter about data changes
+
+                databaseRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        foodList.clear(); // Clear the list before adding new data
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            FoodItem foodItem = dataSnapshot.getValue(FoodItem.class);
+                            if (foodItem != null) {
+                                foodList.add(foodItem);
+                                Log.d("FirebaseData", "Food Item: " + foodItem.getFoodName());
+                            }
+                        }
+                        adapter.notifyDataSetChanged(); // Notify adapter about data changes
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("FirebaseError", "Failed to read data: " + error.getMessage());
+                        Toast.makeText(getContext(), "Failed to load data", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("FirebaseError", "Failed to read data: " + error.getMessage());
-                Toast.makeText(getContext(), "Failed to load data", Toast.LENGTH_SHORT).show();
+                Log.e("FirebaseError", "Failed to read merchants: " + error.getMessage());
+                Toast.makeText(getContext(), "Failed to load merchants", Toast.LENGTH_SHORT).show();
             }
         });
     }

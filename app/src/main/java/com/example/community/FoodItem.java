@@ -5,21 +5,23 @@ public class FoodItem {
     private double foodPrice;
     private String foodDesc;
     private String foodPic;
-    private String foodLocation;
+    private String merchantID; // Add merchantID
+    private String merchantName;
 
     public FoodItem() {}
 
-    public FoodItem(String foodName, double foodPrice, String foodDesc, String foodPic, String foodLocation) {
+    public FoodItem(String foodName, double foodPrice, String foodDesc, String foodPic, String merchantID) {
         this.foodName = foodName;
         this.foodPrice = foodPrice;
         this.foodDesc = foodDesc;
         this.foodPic = foodPic;
-        this.foodLocation=foodLocation;
+        this.merchantID = merchantID;
     }
 
     public String getFoodName() { return foodName; }
     public double getFoodPrice() { return foodPrice; }
     public String getFoodDesc() { return foodDesc; }
     public String getFoodPic() { return foodPic; }
-    public String getFoodLocation() { return foodLocation; }
+    public String getMerchantName() { return merchantName; }
+    public void setMerchantName(String merchantName) { this.merchantName = merchantName; }
 }
