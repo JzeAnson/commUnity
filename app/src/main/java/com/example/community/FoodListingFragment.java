@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,14 +24,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import android.widget.EditText;
-import android.widget.ImageButton;
 
 public class FoodListingFragment extends Fragment {
+
     private EditText searchBar;
-    private ImageButton clearButton;
+    private ImageButton clearButton, searchButton;
     private RecyclerView recyclerView;
     private List<FoodItem> foodList, filteredList;
     private DatabaseReference databaseRef;
@@ -44,39 +44,37 @@ public class FoodListingFragment extends Fragment {
         // Initialize UI components
         searchBar = view.findViewById(R.id.searchBar);
         clearButton = view.findViewById(R.id.clearButton);
-
-        // Initialize RecyclerView and set LayoutManager
+        searchButton = view.findViewById(R.id.searchButton);
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-        // Initialize the food list and adapter
+        // Set up RecyclerView
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         foodList = new ArrayList<>();
         filteredList = new ArrayList<>();
-        adapter = new FoodAdapter(getContext(), foodList);
+        adapter = new FoodAdapter(getContext(), filteredList);
         recyclerView.setAdapter(adapter);
 
-        // Initialize Firebase Database reference
-        databaseRef = FirebaseDatabase.getInstance("https://community-1f007-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("foodItems");
-        Log.d("FoodListingFragment", "Database Reference initialized: " + databaseRef);
-        // Fetch data from Firebase
+        // Initialize Firebase database reference
+        databaseRef = FirebaseDatabase.getInstance("https://community-1f007-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .getReference("foodItems");
+
+        // Fetch food data from Firebase
         fetchFoodData();
+
+        // Set up search functionality
+        setupSearchBar();
 
         return view;
     }
 
     private void setupSearchBar() {
-        // Show/Hide clear button based on search bar content
+        // Add text watcher to search bar for real-time filtering
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if (s.length() > 0) {
-//                    clearButton.setVisibility(View.VISIBLE);
-//                } else {
-//                    clearButton.setVisibility(View.GONE);
-//                }
                 filterFoodList(s.toString());
             }
 
@@ -84,10 +82,17 @@ public class FoodListingFragment extends Fragment {
             public void afterTextChanged(Editable s) {}
         });
 
-        // Clear search bar and reset the list when clear button is clicked
+        // Clear search bar and reset the list when X button is clicked
         clearButton.setOnClickListener(v -> {
             searchBar.setText(""); // Clear the search bar
             filterFoodList("");   // Reset the food list to show all items
+        });
+
+        // Perform search when Search button is clicked
+        searchButton.setOnClickListener(v -> {
+            String query = searchBar.getText().toString().trim();
+            filterFoodList(query); // Filter the list based on the query
+            Toast.makeText(getContext(), "Searching for: " + query, Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -114,11 +119,12 @@ public class FoodListingFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     FoodItem foodItem = dataSnapshot.getValue(FoodItem.class);
                     if (foodItem != null) {
-                        Log.d("FirebaseData", String.format("Name: %s, Price: RM %.2f", foodItem.getFoodName(), foodItem.getFoodPrice()));
                         foodList.add(foodItem);
                     }
                 }
-                adapter.notifyDataSetChanged(); // Notify adapter about data changes
+                filteredList.clear();
+                filteredList.addAll(foodList); // Initially show all items
+                adapter.notifyDataSetChanged();
             }
 
             @Override
