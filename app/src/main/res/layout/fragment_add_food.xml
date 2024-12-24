@@ -68,15 +68,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pick-Up Shop Name"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp" />
 
-    <EditText
-        android:id="@+id/pickupShopName"
+    <Spinner
+        android:id="@+id/pickupShopNameSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#F5F5F5"
         android:padding="12dp"
-        android:inputType="text"/>
+        android:spinnerMode="dropdown" />
 
     <!-- Food Price -->
     <TextView

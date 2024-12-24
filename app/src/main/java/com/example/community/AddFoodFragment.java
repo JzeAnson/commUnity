@@ -7,10 +7,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.util.Log;
 
@@ -27,7 +29,8 @@ import com.google.firebase.storage.StorageReference;
 
 public class AddFoodFragment extends Fragment {
 
-    private EditText foodName, foodPrice, foodDescription, foodLocation;
+    private EditText foodName, foodPrice, foodDescription;
+    private Spinner foodLocationSpinner;
     private ImageButton btnBack;
     private ImageView foodImage;
     private Button submitButton, clearButton;
@@ -47,12 +50,28 @@ public class AddFoodFragment extends Fragment {
         foodPrice = view.findViewById(R.id.foodPrice);
         foodDescription = view.findViewById(R.id.foodDescription);
         foodImage = view.findViewById(R.id.foodImage);
-        foodLocation=view.findViewById(R.id.pickupShopName);
+        foodLocationSpinner = view.findViewById(R.id.pickupShopNameSpinner);
         submitButton = view.findViewById(R.id.submitButton);
         clearButton=view.findViewById(R.id.clearButton);
 
         databaseRef = FirebaseDatabase.getInstance().getReference("foodItems"); // Updated to match FoodItem
         storageRef = FirebaseStorage.getInstance().getReference("FoodImages");
+
+        // Set up Spinner options
+        String[] pickupLocations = {
+                "AEON MALL AU2 Setiawangsa",
+                "Dunkin Donuts Aeon Big",
+                "Sushi Combo Set",
+                "Bakers’ Cottage Taman Melawati"
+        };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                pickupLocations
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        foodLocationSpinner.setAdapter(adapter);
 
         foodImage.setOnClickListener(v -> openImagePicker());
         submitButton.setOnClickListener(v -> validateAndUploadFoodItem());
@@ -94,7 +113,7 @@ public class AddFoodFragment extends Fragment {
         String name = foodName.getText().toString().trim();
         String price = foodPrice.getText().toString().trim();
         String description = foodDescription.getText().toString().trim();
-        String location = foodLocation.getText().toString().trim();
+        String location = foodLocationSpinner.getSelectedItem().toString();
 
         if (TextUtils.isEmpty(name)) {
             foodName.setError("Food name is required");
@@ -118,10 +137,7 @@ public class AddFoodFragment extends Fragment {
             foodDescription.setError("Food description is required");
             return;
         }
-        if (TextUtils.isEmpty(location)) {
-            foodLocation.setError("Food location is required");
-            return;
-        }
+
         if (imageUri == null) {
             Toast.makeText(getContext(), "Please select an image", Toast.LENGTH_SHORT).show();
             return;
@@ -164,7 +180,7 @@ public class AddFoodFragment extends Fragment {
         foodPrice.setText("");
         foodDescription.setText("");
         foodImage.setImageResource(R.drawable.ic_add); // Use your placeholder image here
-        foodLocation.setText("");
+        foodLocationSpinner.setSelection(0);
         imageUri = null;
     }
 }
