@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.util.Log;
@@ -16,6 +17,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,6 +28,7 @@ import com.google.firebase.storage.StorageReference;
 public class AddFoodFragment extends Fragment {
 
     private EditText foodName, foodPrice, foodDescription, foodLocation;
+    private ImageButton btnBack;
     private ImageView foodImage;
     private Button submitButton;
     private Uri imageUri;
@@ -38,6 +42,7 @@ public class AddFoodFragment extends Fragment {
         Log.e("AddFoodFragment", "onCreateView called");
         View view = inflater.inflate(R.layout.fragment_add_food, container, false);
 
+        btnBack=view.findViewById(R.id.backArrow);
         foodName = view.findViewById(R.id.foodName);
         foodPrice = view.findViewById(R.id.foodPrice);
         foodDescription = view.findViewById(R.id.foodDescription);
@@ -50,8 +55,30 @@ public class AddFoodFragment extends Fragment {
 
         foodImage.setOnClickListener(v -> openImagePicker());
         submitButton.setOnClickListener(v -> validateAndUploadFoodItem());
+        if (btnBack!=null){
+            btnBack.setOnClickListener(this::pressBack);
+        }else{
+            Log.e("AddFoodFragment", "btnBack is null. Check R.id.btnBack in your layout");
+        }
 
         return view;
+    }
+
+    public void pressBack (View v){
+        Log.i("AddFoodFragment", "Back button pressed.");
+        replaceFragment(new FoodListingFragment());
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        if (fragment == null) {
+            Log.e("FoodListingFragment", "Fragment is null. Cannot replace.");
+            return;
+        }
+        Log.i("FoodListingFragment", "Replacing fragment with: " + fragment.getClass().getSimpleName());
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.commit();
     }
 
     private void openImagePicker() {
