@@ -5,27 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".CommentActivity">
+    tools:context="com.example.community.CommentActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <include
+        layout="@layout/activity_home_main"
+        android:id="@+id/activity_home_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#06287c" />
+        android:layout_height="match_parent"/>
+
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="#06287c" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_above="@id/bottom"
-        android:layout_below="@id/toolbar"
+        android:layout_marginTop="70dp"
+        android:layout_height="520dp"
         tools:listitem="@layout/comment_item" />
 
     <RelativeLayout
         android:id="@+id/bottom"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/recycler_view"
         android:background="@color/light_blue"
         android:padding="8dp">
 

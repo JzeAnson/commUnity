@@ -1,9 +1,4 @@
-package com.example.codeforcommunityapp;
-
-import com.google.firebase.database.IgnoreExtraProperties;
-
-import java.util.HashMap;
-import java.util.Map;
+package com.example.community;
 
 public class Comment {
     private String userName;

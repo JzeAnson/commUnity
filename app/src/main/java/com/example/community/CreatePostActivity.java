@@ -1,4 +1,4 @@
-package com.example.codeforcommunityapp;
+package com.example.community;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,19 +8,15 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
 import com.google.firebase.Timestamp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class CreatePostActivity extends AppCompatActivity {
 

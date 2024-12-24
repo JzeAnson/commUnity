@@ -1,4 +1,4 @@
-package com.example.codeforcommunityapp;
+package com.example.community;
 
 import com.google.firebase.Timestamp;
 import com.google.firebase.database.IgnoreExtraProperties;

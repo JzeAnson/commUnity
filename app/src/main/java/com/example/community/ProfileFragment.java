@@ -1,4 +1,4 @@
-package com.example.codeforcommunityapp;
+package com.example.community;
 
 import android.os.Bundle;
 
@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.example.community.userDocument;
+
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.FirebaseFirestore;
 

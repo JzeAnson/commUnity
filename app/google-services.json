@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1094858845303:android:4ae50629aac400ec11aa72",
         "android_client_info": {
-          "package_name": "com.example.codeforcommunityapp"
+          "package_name": "com.example.community"
         }
       },
       "oauth_client": [],
@@ -28,7 +28,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1094858845303:android:2665c4643fdec59911aa72",
         "android_client_info": {
-          "package_name": "com.example.codeforcommunityapp"
+          "package_name": "com.example.community"
         }
       },
       "oauth_client": [],

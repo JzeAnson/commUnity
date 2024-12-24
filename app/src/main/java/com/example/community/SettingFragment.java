@@ -1,4 +1,4 @@
-package com.example.codeforcommunityapp;
+package com.example.community;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.community.userDocument;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;

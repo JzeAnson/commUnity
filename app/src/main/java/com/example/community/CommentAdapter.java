@@ -1,4 +1,4 @@
-package com.example.codeforcommunityapp;
+package com.example.community;
 
 import android.content.Context;
 import android.view.LayoutInflater;
