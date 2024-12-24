@@ -30,7 +30,7 @@ public class AddFoodFragment extends Fragment {
     private EditText foodName, foodPrice, foodDescription, foodLocation;
     private ImageButton btnBack;
     private ImageView foodImage;
-    private Button submitButton;
+    private Button submitButton, clearButton;
     private Uri imageUri;
 
     private DatabaseReference databaseRef;
@@ -49,6 +49,7 @@ public class AddFoodFragment extends Fragment {
         foodImage = view.findViewById(R.id.foodImage);
         foodLocation=view.findViewById(R.id.pickupShopName);
         submitButton = view.findViewById(R.id.submitButton);
+        clearButton=view.findViewById(R.id.clearButton);
 
         databaseRef = FirebaseDatabase.getInstance().getReference("foodItems"); // Updated to match FoodItem
         storageRef = FirebaseStorage.getInstance().getReference("FoodImages");
@@ -60,7 +61,7 @@ public class AddFoodFragment extends Fragment {
         }else{
             Log.e("AddFoodFragment", "btnBack is null. Check R.id.btnBack in your layout");
         }
-
+        clearButton.setOnClickListener(v -> clearFields()); // Set onClickListener for clearButton
         return view;
     }
 
