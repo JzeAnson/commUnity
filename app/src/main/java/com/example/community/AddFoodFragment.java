@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.util.Log;
 
@@ -28,7 +27,6 @@ public class AddFoodFragment extends Fragment {
     private EditText foodName, foodPrice, foodDescription, foodLocation;
     private ImageView foodImage;
     private Button submitButton;
-    private ProgressBar progressBar;
     private Uri imageUri;
 
     private DatabaseReference databaseRef;
@@ -46,8 +44,6 @@ public class AddFoodFragment extends Fragment {
         foodImage = view.findViewById(R.id.foodImage);
         foodLocation=view.findViewById(R.id.pickupShopName);
         submitButton = view.findViewById(R.id.submitButton);
-//        progressBar = view.findViewById(R.id.progressBar); // Assuming a progress bar is in the layout
-        progressBar.setVisibility(View.GONE);
 
         databaseRef = FirebaseDatabase.getInstance().getReference("foodItems"); // Updated to match FoodItem
         storageRef = FirebaseStorage.getInstance().getReference("FoodImages");
@@ -114,8 +110,6 @@ public class AddFoodFragment extends Fragment {
     }
 
     private void uploadFoodItem(String name, double price, String description, String location) {
-        progressBar.setVisibility(View.VISIBLE);
-
         StorageReference fileRef = storageRef.child(System.currentTimeMillis() + ".jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot ->
                 fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -129,7 +123,6 @@ public class AddFoodFragment extends Fragment {
                     );
 
                     databaseRef.child(id).setValue(foodItem).addOnCompleteListener(task -> {
-                        progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                             Toast.makeText(getActivity(), "Food added successfully!", Toast.LENGTH_SHORT).show();
                             clearFields();
@@ -138,11 +131,9 @@ public class AddFoodFragment extends Fragment {
                         }
                     });
                 }).addOnFailureListener(e -> {
-                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Failed to upload image", Toast.LENGTH_SHORT).show();
                 })
         ).addOnFailureListener(e -> {
-            progressBar.setVisibility(View.GONE);
             Toast.makeText(getContext(), "Image upload failed", Toast.LENGTH_SHORT).show();
         });
     }
