@@ -2,21 +2,150 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".HomeFragment">
+
+
+    <ImageButton
+        android:id="@+id/announcementslogo"
+        android:layout_width="150dp"
+        android:layout_height="157dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="0dp"
+        android:contentDescription="@string/announcements_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/button_border"
+        app:srcCompat="@drawable/announcements" />
 
     <TextView
-        android:id="@+id/text_home"
-        android:layout_width="match_parent"
+        android:id="@+id/announcementstitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
+        android:text="@string/announcements_title"
         android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/announcementslogo" />
+
+    <ImageButton
+        android:id="@+id/foodlogo"
+        android:layout_width="152dp"
+        android:layout_height="163dp"
+        android:layout_marginStart="228dp"
+        android:background="@drawable/button_border"
+        android:contentDescription="@string/food_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/food" />
+
+    <TextView
+        android:id="@+id/foodtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="228dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/food_title"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodlogo" />
+
+    <ImageButton
+        android:id="@+id/reportlogo"
+        android:layout_width="142dp"
+        android:layout_height="148dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="258dp"
+        android:contentDescription="@string/report_logo"
+        android:background="@drawable/button_border"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/emergency" />
+
+    <TextView
+        android:id="@+id/reporttitle"
+        android:layout_width="145dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="32dp"
+        android:text="@string/report_title"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reportlogo" />
+
+    <ImageButton
+        android:id="@+id/graphlogo"
+        android:layout_width="153dp"
+        android:layout_height="146dp"
+        android:layout_marginStart="232dp"
+        android:layout_marginTop="258dp"
+        android:background="@drawable/button_border"
+        android:contentDescription="@string/graph_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/graph" />
+
+    <TextView
+        android:id="@+id/graphtitle"
+        android:layout_width="151dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="232dp"
+        android:layout_marginTop="2dp"
+        android:text="@string/graph_title"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/graphlogo" />
+
+    <ImageButton
+        android:id="@+id/calendarlogo"
+        android:layout_width="145dp"
+        android:layout_height="138dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="496dp"
+        android:background="@drawable/button_border"
+        android:contentDescription="@string/calendar_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/calendar" />
+
+    <TextView
+        android:id="@+id/calendartitle"
+        android:layout_width="150dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="28dp"
+        android:text="@string/calendar_title"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarlogo" />
+
+    <ImageButton
+        android:id="@+id/transportlogo"
+        android:layout_width="150dp"
+        android:layout_height="142dp"
+        android:layout_marginTop="492dp"
+        android:contentDescription="@string/transportation_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/button_border"
+        app:layout_constraintHorizontal_bias="0.888"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/transport" />
+
+    <TextView
+        android:id="@+id/transporttitle"
+        android:layout_width="150dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="232dp"
+        android:text="@string/transportation_title"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/transportlogo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
