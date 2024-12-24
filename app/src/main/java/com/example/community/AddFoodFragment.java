@@ -64,21 +64,14 @@ public class AddFoodFragment extends Fragment {
         return view;
     }
 
-    public void pressBack (View v){
+    public void pressBack(View v) {
         Log.i("AddFoodFragment", "Back button pressed.");
-        replaceFragment(new FoodListingFragment());
-    }
-
-    private void replaceFragment(Fragment fragment) {
-        if (fragment == null) {
-            Log.e("FoodListingFragment", "Fragment is null. Cannot replace.");
-            return;
-        }
-        Log.i("FoodListingFragment", "Replacing fragment with: " + fragment.getClass().getSimpleName());
         FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
-        fragmentTransaction.commit();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        // Replace the current fragment with FoodListingFragment
+        transaction.replace(R.id.frame_layout, new FoodListingFragment());
+        transaction.commit();
     }
 
     private void openImagePicker() {
