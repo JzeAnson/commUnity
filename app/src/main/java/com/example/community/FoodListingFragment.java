@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -96,6 +98,51 @@ public class FoodListingFragment extends Fragment {
                         Toast.makeText(getContext(), "Switched to Customer", Toast.LENGTH_SHORT).show();
                     })
                     .show();
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("FoodListingFragment", "FAB clicked - BEFORE everything"); // Add this line first
+
+                try {
+                    Log.e("FoodListingFragment", "Inside try block"); // Add this too
+
+                    // Verify AddFoodFragment exists
+                    if (!isAdded()) {
+                        Log.e("FoodListingFragment", "Fragment not added to activity");
+                        return;
+                    }
+
+                    AddFoodFragment fragment = new AddFoodFragment();
+                    Log.e("FoodListingFragment", "Created AddFoodFragment instance");
+
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    Log.e("FoodListingFragment", "Got FragmentManager");
+
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    Log.e("FoodListingFragment", "Created FragmentTransaction");
+
+                    fragmentTransaction.replace(R.id.frame_layout, fragment);
+                    Log.e("FoodListingFragment", "Added replace command");
+
+                    fragmentTransaction.addToBackStack(null);
+                    Log.e("FoodListingFragment", "Added to back stack");
+
+                    fragmentTransaction.commit();
+                    Log.e("FoodListingFragment", "Committed transaction");
+
+                } catch (Exception e) {
+                    Log.e("FoodListingFragment", "Error in FAB click: " + e.getMessage());
+                    e.printStackTrace();
+
+                    if (getContext() != null) {
+                        Toast.makeText(getContext(),
+                                "Error: " + e.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
         });
 
         return view;
