@@ -148,6 +148,25 @@ public class AddFoodFragment extends Fragment {
     }
 
     private void uploadFoodItem(String name, double price, String description, String location) {
+        String merchantAddress;
+
+        switch (location) {
+            case "AEON MALL AU2 Setiawangsa":
+                merchantAddress = "No.6 Jalan Taman Setiawangsa (Jalan 37/56), AU2, Taman Keramat, 54200 Kuala Lumpur";
+                break;
+            case "Dunkin Donuts Aeon Big":
+                merchantAddress = "Level 1, Lot F1-62, Section 5, Jalan 8/27a, Wangsa Maju, 53300 Kuala Lumpur, Wilayah Persekutuan";
+                break;
+            case "Sushi Combo Set":
+                merchantAddress = "Lot G-23A, Melawati Mall, 355 Jalan Bandar, Taman Melawati, 53100 Kuala Lumpur, Wilayah Persekutuan";
+                break;
+            case "Bakers’ Cottage Taman Melawati":
+                merchantAddress = "No. 15 Jalan Bandar 12, Taman Melawati, 53100 Kuala Lumpur, Wilayah Persekutuan";
+                break;
+            default:
+                merchantAddress = "Unknown Location";
+        }
+
         StorageReference fileRef = storageRef.child(System.currentTimeMillis() + ".jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(taskSnapshot ->
                 fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -157,7 +176,9 @@ public class AddFoodFragment extends Fragment {
                             price,
                             description,
                             uri.toString(), // Image URL
-                            location
+                            location,
+                            merchantAddress,
+                            "Available" // Default status
                     );
 
                     databaseRef.child(id).setValue(foodItem).addOnCompleteListener(task -> {
