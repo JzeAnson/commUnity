@@ -55,6 +55,11 @@ public class FoodListingFragment extends Fragment {
         profileButton = view.findViewById(R.id.profileButton);
         recyclerView = view.findViewById(R.id.recyclerView);
         fab = view.findViewById(R.id.addButton);
+        if (fab!=null){
+            fab.setOnClickListener(this::pressAdd);
+        }else{
+            Log.e("FoodListingFragment", "fab is null. Check R.id.addButton in your layout");
+        }
 
         // Set up RecyclerView
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -100,52 +105,19 @@ public class FoodListingFragment extends Fragment {
                     .show();
         });
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("FoodListingFragment", "FAB clicked - BEFORE everything"); // Add this line first
-
-                try {
-                    Log.e("FoodListingFragment", "Inside try block"); // Add this too
-
-                    // Verify AddFoodFragment exists
-                    if (!isAdded()) {
-                        Log.e("FoodListingFragment", "Fragment not added to activity");
-                        return;
-                    }
-
-                    AddFoodFragment fragment = new AddFoodFragment();
-                    Log.e("FoodListingFragment", "Created AddFoodFragment instance");
-
-                    FragmentManager fragmentManager = getParentFragmentManager();
-                    Log.e("FoodListingFragment", "Got FragmentManager");
-
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    Log.e("FoodListingFragment", "Created FragmentTransaction");
-
-                    fragmentTransaction.replace(R.id.frame_layout, fragment);
-                    Log.e("FoodListingFragment", "Added replace command");
-
-                    fragmentTransaction.addToBackStack(null);
-                    Log.e("FoodListingFragment", "Added to back stack");
-
-                    fragmentTransaction.commit();
-                    Log.e("FoodListingFragment", "Committed transaction");
-
-                } catch (Exception e) {
-                    Log.e("FoodListingFragment", "Error in FAB click: " + e.getMessage());
-                    e.printStackTrace();
-
-                    if (getContext() != null) {
-                        Toast.makeText(getContext(),
-                                "Error: " + e.getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-        });
-
         return view;
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        if (fragment == null) {
+            Log.e("FoodListingFragment", "Fragment is null. Cannot replace.");
+            return;
+        }
+        Log.i("FoodListingFragment", "Replacing fragment with: " + fragment.getClass().getSimpleName());
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.commit();
     }
 
     private void setupSearchBar() {
@@ -219,5 +191,10 @@ public class FoodListingFragment extends Fragment {
         } else {
             fab.setVisibility(View.GONE);
         }
+    }
+
+    public void pressAdd (View v){
+        Log.i("FoodListingFragment", "Add button pressed.");
+        replaceFragment(new AddFoodFragment());
     }
 }

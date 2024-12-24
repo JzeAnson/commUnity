@@ -67,5 +67,6 @@
         android:src="@drawable/ic_add"
         app:backgroundTint="#FF0000"
         app:tint="@android:color/white"
+        android:onClick="pressAdd"
         android:visibility="gone"/>
 </RelativeLayout>
