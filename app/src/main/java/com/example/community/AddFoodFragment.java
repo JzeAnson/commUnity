@@ -28,6 +28,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class AddFoodFragment extends Fragment {
+    private static final int PICK_IMAGE_REQUEST = 1;
 
     private EditText foodName, foodPrice, foodDescription;
     private Spinner foodLocationSpinner;
@@ -97,15 +98,15 @@ public class AddFoodFragment extends Fragment {
     private void openImagePicker() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == getActivity().RESULT_OK && data != null) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data != null) {
             imageUri = data.getData();
-            foodImage.setImageURI(imageUri);
+            foodImage.setImageURI(imageUri); // Display selected image
         }
     }
 
