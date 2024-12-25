@@ -1,65 +1,93 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="#F5F5F5">
 
     <!-- Back Button -->
     <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_back_arrow"
-        android:layout_margin="8dp" />
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_back_arrow" />
 
-    <!-- Food Image -->
-    <ImageView
-        android:id="@+id/foodDetailImage"
+    <!-- Food Details Container -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:layout_below="@id/backButton" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <!-- Food Name -->
-    <TextView
-        android:id="@+id/foodDetailName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/foodDetailImage"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        <!-- Food Image -->
+        <ImageView
+            android:id="@+id/foodImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop" />
 
-    <!-- Food Price -->
-    <TextView
-        android:id="@+id/foodDetailPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/foodDetailName"
-        android:textSize="16sp"
-        android:textColor="#FF0000" />
+        <!-- Food Name -->
+        <TextView
+            android:id="@+id/foodName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <!-- Merchant Name -->
-    <TextView
-        android:id="@+id/merchantName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/foodDetailPrice"
-        android:textSize="14sp" />
+        <!-- Price -->
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#FF0000"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp" />
 
-    <!-- Pickup Address -->
-    <TextView
-        android:id="@+id/pickupAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/merchantName"
-        android:textSize="14sp" />
+        <!-- Pickup Address Label -->
+        <TextView
+            android:id="@+id/pickupAddressLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Pick Up Address:"
+            android:textStyle="bold" />
 
-    <!-- Food Description -->
-    <TextView
-        android:id="@+id/foodDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pickupAddress"
-        android:textSize="14sp" />
+        <!-- Payment Method -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/paymentMethodLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Payment Method: "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/paymentMethod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cash-on Arrival" />
+        </LinearLayout>
+
+        <!-- Food Description -->
+        <TextView
+            android:id="@+id/foodDescriptionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Food Description (Pickup Time):"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <!-- Reserve Button -->
     <Button
@@ -67,7 +95,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#FF0000"
-        android:textColor="@android:color/white"
-        android:text="Reserve" />
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#FF0000"
+        android:text="Reserve"
+        android:textColor="#FFFFFF"
+        android:textAllCaps="false"
+        app:cornerRadius="24dp" />
+
 </RelativeLayout>
