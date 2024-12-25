@@ -61,7 +61,7 @@ Its emphasis on public transport, food sharing, and emergency services ensures a
 
 ---
 
-## Team Roles and Contributions
+## Team Members' Roles and Contributions
 
 | Name                      | Roles                                           | Description                                                                                                                                                                                              |
 |---------------------------|-------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
