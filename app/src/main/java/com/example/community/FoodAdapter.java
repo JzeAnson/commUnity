@@ -49,12 +49,20 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.restaurantName.setText(foodItem.getMerchantName()); // Set merchant name
         Glide.with(context).load(foodItem.getFoodPic()).into(holder.foodImage);
 
-        // Pass both the FoodItem and its key to the listener
-        holder.itemView.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onFoodItemClick(foodItem, foodKey);
-            }
-        });
+        // Check if the item is reserved
+        if ("Reserved".equalsIgnoreCase(foodItem.getStatus())) {
+            holder.reservedOverlay.setVisibility(View.VISIBLE);
+            holder.reservedLabel.setVisibility(View.VISIBLE);
+            holder.itemView.setOnClickListener(null); // Disable clicks
+        } else {
+            holder.reservedOverlay.setVisibility(View.GONE);
+            holder.reservedLabel.setVisibility(View.GONE);
+            holder.itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onFoodItemClick(foodItem, foodKey);
+                }
+            });
+        }
     }
 
     @Override
@@ -65,6 +73,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     public static class FoodViewHolder extends RecyclerView.ViewHolder {
         TextView foodName, foodPrice, restaurantName; // Ensure restaurantName is included
         ImageView foodImage;
+        View reservedOverlay;
+        TextView reservedLabel;
 
         public FoodViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,6 +82,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             foodPrice = itemView.findViewById(R.id.foodPrice);
             foodImage = itemView.findViewById(R.id.foodImage);
             restaurantName = itemView.findViewById(R.id.restaurantName); // Initialize restaurantName
+            reservedOverlay = itemView.findViewById(R.id.reservedOverlay);
+            reservedLabel = itemView.findViewById(R.id.reservedLabel);
 
             Log.d("FoodViewHolder", "restaurantName: " + (restaurantName != null));
         }
