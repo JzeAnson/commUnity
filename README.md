@@ -1,2 +1,9 @@
-# commUnity
-commUnity new Repo for MAD
+# Team Roles and Contributions
+
+| Name                      | Roles                                           | Description                                                                                                                                                                                              |
+|---------------------------|-------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Lee Jian Wen**          | Project Manager, Programmer, UI/UX Designer     | - Backend coding for Public Buses Information module and Informative Graph for Public Data module. <br> - UI designing for Public Buses Information module and Informative Graph for Public Data module. <br> - Facilitate teamwork collaboration among members and oversee the overall working process. |
+| **Muhammad Amir Izzan**   | Programmer, UI/UX Designer, Debugger            | - Backend coding for Emergency Reporting and Alerts module, Event Calendar module. <br> - UI designing for Emergency Reporting and Alerts module, Event Calendar module. <br> - Responsible for guiding the team in debugging the application. |
+| **Yeah Jing Ze**          | Programmer, Database Developer, Lead UI/UX Designer | - Backend coding for Authentication module, bottom navigation bar. <br> - Lead in app navigation flow analysis. <br> - Created UI template with detailed color codes and themes, UI designing for Authentication module. <br> - Initiate database development with the team. |
+| **Jonathan Siew Zunxian** | Programmer, UI/UX Designer, Program Tester      | - Backend coding for Community Food Market module, application’s home page. <br> - UI designing for Community Food Market module, application’s home page. <br> - Responsible to test the application during deployment and implementation. |
+| **Ng Sean Sean**          | Programmer, UI/UX Designer, Program Tester      | - Backend coding for Forum module. <br> - UI designing for Forum module. <br> - Responsible to test the application during deployment and implementation. |
