@@ -1,5 +1,9 @@
 # CommUnity Project
 
+**WIA2007 Mobile Application Development**  
+**Occurrence:** Occ 2  
+**Lecturer:** Dr. Nur Nasuha binti Mohd Daud  
+
 CommUnity is a mobile application designed to foster sustainability and community engagement, aligning with the UN Sustainable Development Goals (SDGs), specifically **SDG 11 (Sustainable Cities and Communities)** and **SDG 16 (Peace, Justice, and Strong Institutions)**. This project targets university students and residents in urban areas, addressing common challenges like public transport accessibility, food sharing, emergency reporting, and community communication.
 
 The application was developed using **Android Studio**, leveraging its robust development environment for creating intuitive and responsive user interfaces. **Firebase** serves as the backend, providing real-time database functionalities, user authentication, and seamless data synchronization.
