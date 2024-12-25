@@ -1,0 +1,3 @@
+:busTrackingModule::debug;Capability: group='commUnity', name='busTrackingModule'
+com.google.protobuf:protobuf-java;Capability: group='com.google.protobuf', name='protobuf-java'
+org.mobilitydata:gtfs-realtime-bindings;Capability: group='org.mobilitydata', name='gtfs-realtime-bindings'

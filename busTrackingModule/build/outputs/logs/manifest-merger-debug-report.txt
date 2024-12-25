@@ -1,0 +1,49 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:2:1-21:12
+INJECTED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:2:1-21:12
+	package
+		INJECTED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml
+	xmlns:dist
+		ADDED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:3:5-61
+	android:versionCode
+		INJECTED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:2:11-69
+dist:module
+ADDED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:5:5-13:19
+	dist:instant
+		ADDED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:6:9-29
+	dist:title
+		ADDED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:7:9-53
+dist:delivery
+ADDED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:8:9-10:25
+dist:on-demand
+ADDED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:9:13-31
+dist:fusing
+ADDED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:12:9-44
+	dist:include
+		ADDED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:12:22-41
+application
+ADDED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:15:5-19:19
+INJECTED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:15:5-19:19
+	android:extractNativeLibs
+		INJECTED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml
+activity#com.example.bustrackingmodule.BusTrackingMainActivity
+ADDED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:16:9-18:40
+	android:exported
+		ADDED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:18:13-37
+	android:name
+		ADDED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml:17:13-52
+uses-sdk
+INJECTED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\Jian Wen Lee\Desktop\Year 2\WIA2007 MAD\commUnity\busTrackingModule\src\main\AndroidManifest.xml

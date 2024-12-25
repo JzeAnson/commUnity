@@ -1,0 +1,21 @@
+-keep class com.example.bustrackingmodule.BusTrackingMainActivity { <init>(); }
+-keep class androidx.constraintlayout.widget.ConstraintLayout { <init>(android.content.Context, android.util.AttributeSet); }
+
+-keep class androidx.fragment.app.FragmentContainerView { <init>(android.content.Context, android.util.AttributeSet); }
+
+-keep class androidx.navigation.fragment.NavHostFragment { <init>(); }
+
+-keep class com.example.bustrackingmodule.BusDetailsFragment { <init>(); }
+
+-keep class com.example.bustrackingmodule.BusLineSelectionFragment { <init>(...); }
+
+-keep class com.example.bustrackingmodule.BusTrackingFragment { <init>(...); }
+
+-keep class com.example.bustrackingmodule.CarbonEmissionSavedFragment { <init>(...); }
+
+-keep class com.example.bustrackingmodule.MapsFragment { <init>(); }
+
+-keep class com.example.bustrackingmodule.OriginDestinationFragment { <init>(...); }
+
+-keep class com.google.android.gms.maps.SupportMapFragment { <init>(); }
+

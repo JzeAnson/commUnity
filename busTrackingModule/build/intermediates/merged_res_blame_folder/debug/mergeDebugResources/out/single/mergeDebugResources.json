@@ -1,0 +1,74 @@
+[
+    {
+        "merged": "com.example.bustrackingmodule.busTrackingModule-debug-4:/layout_fragment_bus_details.xml.flat",
+        "source": "com.example.bustrackingmodule.busTrackingModule-main-6:/layout/fragment_bus_details.xml"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\layout_fragment_bus_tracking.xml.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\layout\\fragment_bus_tracking.xml"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\layout_fragment_bus_line_selection.xml.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\layout\\fragment_bus_line_selection.xml"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\drawable_bus_icon.png.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\drawable\\bus_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\layout_activity_bus_tracking_main.xml.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\layout\\activity_bus_tracking_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\layout_fragment_origin_destination.xml.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\layout\\fragment_origin_destination.xml"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\raw_mrt_bus_routes.json.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\raw\\mrt_bus_routes.json"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\drawable_bus_option_button.png.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\drawable\\bus_option_button.png"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\drawable_plant_right.png.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\drawable\\plant_right.png"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\navigation_bus_nav_graph.xml.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\navigation\\bus_nav_graph.xml"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\drawable_plant_left.png.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\drawable\\plant_left.png"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\layout_fragment_carbon_emission_saved.xml.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\layout\\fragment_carbon_emission_saved.xml"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\drawable_od_header.png.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\drawable\\od_header.png"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\layout_fragment_maps.xml.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\layout\\fragment_maps.xml"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\raw_lrt_bus_routes.json.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\raw\\lrt_bus_routes.json"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\drawable_bs_header.png.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\drawable\\bs_header.png"
+    },
+    {
+        "merged": "com.example.bustrackingmodule.busTrackingModule-debug-4:/layout_fragment_bus_tracking.xml.flat",
+        "source": "com.example.bustrackingmodule.busTrackingModule-main-6:/layout/fragment_bus_tracking.xml"
+    },
+    {
+        "merged": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-debug-4:\\layout_fragment_bus_details.xml.flat",
+        "source": "C:\\Users\\Jian Wen Lee\\.gradle\\daemon\\8.9\\com.example.bustrackingmodule.busTrackingModule-main-6:\\layout\\fragment_bus_details.xml"
+    }
+]
