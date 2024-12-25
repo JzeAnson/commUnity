@@ -56,22 +56,18 @@ public class FoodListingFragment extends Fragment {
         profileButton = view.findViewById(R.id.profileButton);
         recyclerView = view.findViewById(R.id.recyclerView);
         fab = view.findViewById(R.id.addButton);
-        if (fab!=null){
+
+        if (fab != null) {
             fab.setOnClickListener(this::pressAdd);
-        }else{
-            Log.e("FoodListingFragment", "fab is null. Check R.id.addButton in your layout");
+        } else {
+            Log.e("FoodListingFragment", "FAB is null. Check R.id.addButton in your layout.");
         }
 
         // Set up RecyclerView
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         foodList = new ArrayList<>();
         filteredList = new ArrayList<>();
-        adapter = new FoodAdapter(getContext(), foodList, foodKeys, new FoodAdapter.OnFoodItemClickListener() {
-            @Override
-            public void onFoodItemClick(FoodItem foodItem, String foodKey) {
-                openFoodDetail(foodItem, foodKey);
-            }
-        });
+        adapter = new FoodAdapter(getContext(), foodList, foodKeys, (foodItem, foodKey) -> openFoodDetail(foodItem, foodKey));
         recyclerView.setAdapter(adapter);
 
         // Initialize Firebase database reference
@@ -133,63 +129,77 @@ public class FoodListingFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.d("SearchBar", "onTextChanged: query = " + s.toString());
                 filterFoodList(s.toString());
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+                Log.d("SearchBar", "afterTextChanged: query = " + s.toString());
+            }
         });
 
         clearButton.setOnClickListener(v -> {
             searchBar.setText("");
             filterFoodList("");
+            Log.d("SearchBar", "Clear button clicked. SearchBar text cleared.");
         });
 
         searchButton.setOnClickListener(v -> {
             String query = searchBar.getText().toString().trim();
+            Log.d("SearchBar", "Search button clicked. Query = " + query);
             filterFoodList(query);
             Toast.makeText(getContext(), "Searching for: " + query, Toast.LENGTH_SHORT).show();
         });
     }
 
     private void filterFoodList(String query) {
+        Log.d("Filter", "Filtering list with query: " + query);
         filteredList.clear();
         if (query.isEmpty()) {
             filteredList.addAll(foodList);
+            Log.d("Filter", "Query is empty. Showing all items.");
         } else {
             for (FoodItem item : foodList) {
                 if (item.getFoodName().toLowerCase().contains(query.toLowerCase()) ||
                         item.getFoodDesc().toLowerCase().contains(query.toLowerCase())) {
                     filteredList.add(item);
+                    Log.d("Filter", "Item matched: " + item.getFoodName());
                 }
             }
         }
+
+        if (filteredList.isEmpty()) {
+            Log.d("Filter", "No items match the query.");
+        }
+
         adapter.notifyDataSetChanged();
+        Log.d("Filter", "Adapter notified. Filtered list size: " + filteredList.size());
     }
 
     private void fetchFoodData() {
+        Log.d("Firebase", "Fetching food data from Firebase...");
         databaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 foodList.clear();
-                List<String> foodKeys = new ArrayList<>(); // Create a list to store food keys
+                foodKeys = new ArrayList<>();
+                Log.d("Firebase", "Data snapshot received. Child count: " + snapshot.getChildrenCount());
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     FoodItem foodItem = dataSnapshot.getValue(FoodItem.class);
-                    String foodKey = dataSnapshot.getKey(); // Get the unique key
+                    String foodKey = dataSnapshot.getKey();
                     if (foodItem != null && foodKey != null) {
                         foodList.add(foodItem);
-                        foodKeys.add(foodKey); // Add the key to the list
+                        foodKeys.add(foodKey);
+                        Log.d("Firebase", "Added item: " + foodItem.getFoodName() + " with key: " + foodKey);
+                    } else {
+                        Log.e("Firebase", "Null item or key found in snapshot.");
                     }
                 }
 
-                // Update the adapter with foodList and foodKeys
-                adapter = new FoodAdapter(getContext(), foodList, foodKeys, new FoodAdapter.OnFoodItemClickListener() {
-                    public void onFoodItemClick(FoodItem foodItem, String foodKey) {
-                        openFoodDetail(foodItem, foodKey); // Pass both foodItem and foodKey
-                    }
-                });
-                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                Log.d("Firebase", "Adapter updated with " + foodList.size() + " items.");
             }
 
             @Override
@@ -208,7 +218,7 @@ public class FoodListingFragment extends Fragment {
         }
     }
 
-    public void pressAdd (View v){
+    public void pressAdd(View v) {
         Log.i("FoodListingFragment", "Add button pressed.");
         replaceFragment(new AddFoodFragment());
     }
@@ -221,13 +231,13 @@ public class FoodListingFragment extends Fragment {
         args.putString("foodImage", foodItem.getFoodPic());
         args.putString("merchantName", foodItem.getMerchantName());
         args.putString("foodDescription", foodItem.getFoodDesc());
-        args.putString("foodKey", foodKey); // Pass the food key
+        args.putString("foodKey", foodKey);
         foodDetailFragment.setArguments(args);
 
         getParentFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frame_layout, foodDetailFragment)
-                .addToBackStack(null) // Add to back stack for proper back navigation
+                .addToBackStack(null)
                 .commit();
     }
 }
