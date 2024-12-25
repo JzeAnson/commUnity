@@ -56,27 +56,30 @@
             android:text="Pick Up Address:"
             android:textStyle="bold" />
 
-        <!-- Payment Method -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/pickupAddress"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="4dp" />
 
-            <TextView
-                android:id="@+id/paymentMethodLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Payment Method: "
-                android:textStyle="bold" />
+        <!-- Payment Method -->
+        <TextView
+            android:id="@+id/paymentMethodLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Payment Method:"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/paymentMethod"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cash-on Arrival" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/paymentMethod"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:text="Cash-on Arrival" />
 
         <!-- Food Description -->
         <TextView
@@ -87,6 +90,14 @@
             android:layout_marginTop="16dp"
             android:text="Food Description (Pickup Time):"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/foodDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp" />
+
     </LinearLayout>
 
     <!-- Reserve Button -->
