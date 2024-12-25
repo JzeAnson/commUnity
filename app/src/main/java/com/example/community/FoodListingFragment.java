@@ -39,9 +39,9 @@ public class FoodListingFragment extends Fragment {
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
     private List<FoodItem> foodList, filteredList;
+    private List<String> foodKeys; // List to hold keys for food items
     private DatabaseReference databaseRef;
     private FoodAdapter adapter;
-    private List<String> foodKeys;
 
     @Nullable
     @Override
@@ -66,7 +66,10 @@ public class FoodListingFragment extends Fragment {
         // Set up RecyclerView
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         foodList = new ArrayList<>();
+        foodKeys = new ArrayList<>();
         filteredList = new ArrayList<>();
+
+        // Initialize adapter with empty lists
         adapter = new FoodAdapter(getContext(), foodList, foodKeys, (foodItem, foodKey) -> openFoodDetail(foodItem, foodKey));
         recyclerView.setAdapter(adapter);
 
@@ -110,16 +113,38 @@ public class FoodListingFragment extends Fragment {
         return view;
     }
 
-    private void replaceFragment(Fragment fragment) {
-        if (fragment == null) {
-            Log.e("FoodListingFragment", "Fragment is null. Cannot replace.");
-            return;
-        }
-        Log.i("FoodListingFragment", "Replacing fragment with: " + fragment.getClass().getSimpleName());
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
-        fragmentTransaction.commit();
+    private void fetchFoodData() {
+        Log.d("Firebase", "Fetching food data from Firebase...");
+        databaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                foodList.clear();
+                foodKeys.clear();
+
+                Log.d("Firebase", "Data snapshot received. Child count: " + snapshot.getChildrenCount());
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    FoodItem foodItem = dataSnapshot.getValue(FoodItem.class);
+                    String foodKey = dataSnapshot.getKey();
+
+                    if (foodItem != null && foodKey != null) {
+                        foodList.add(foodItem);
+                        foodKeys.add(foodKey);
+                        Log.d("Firebase", "Added item: " + foodItem.getFoodName() + " with key: " + foodKey);
+                    } else {
+                        Log.e("Firebase", "Null item or key found in snapshot.");
+                    }
+                }
+
+                adapter.notifyDataSetChanged(); // Notify adapter after data change
+                Log.d("Firebase", "Adapter updated with " + foodList.size() + " items.");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FirebaseError", "Failed to read data: " + error.getMessage());
+                Toast.makeText(getContext(), "Failed to load data", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setupSearchBar() {
@@ -134,9 +159,7 @@ public class FoodListingFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-                Log.d("SearchBar", "afterTextChanged: query = " + s.toString());
-            }
+            public void afterTextChanged(Editable s) {}
         });
 
         clearButton.setOnClickListener(v -> {
@@ -154,60 +177,19 @@ public class FoodListingFragment extends Fragment {
     }
 
     private void filterFoodList(String query) {
-        Log.d("Filter", "Filtering list with query: " + query);
         filteredList.clear();
         if (query.isEmpty()) {
             filteredList.addAll(foodList);
-            Log.d("Filter", "Query is empty. Showing all items.");
         } else {
             for (FoodItem item : foodList) {
                 if (item.getFoodName().toLowerCase().contains(query.toLowerCase()) ||
                         item.getFoodDesc().toLowerCase().contains(query.toLowerCase())) {
                     filteredList.add(item);
-                    Log.d("Filter", "Item matched: " + item.getFoodName());
                 }
             }
         }
-
-        if (filteredList.isEmpty()) {
-            Log.d("Filter", "No items match the query.");
-        }
-
-        adapter.notifyDataSetChanged();
-        Log.d("Filter", "Adapter notified. Filtered list size: " + filteredList.size());
-    }
-
-    private void fetchFoodData() {
-        Log.d("Firebase", "Fetching food data from Firebase...");
-        databaseRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                foodList.clear();
-                foodKeys = new ArrayList<>();
-                Log.d("Firebase", "Data snapshot received. Child count: " + snapshot.getChildrenCount());
-
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    FoodItem foodItem = dataSnapshot.getValue(FoodItem.class);
-                    String foodKey = dataSnapshot.getKey();
-                    if (foodItem != null && foodKey != null) {
-                        foodList.add(foodItem);
-                        foodKeys.add(foodKey);
-                        Log.d("Firebase", "Added item: " + foodItem.getFoodName() + " with key: " + foodKey);
-                    } else {
-                        Log.e("Firebase", "Null item or key found in snapshot.");
-                    }
-                }
-
-                adapter.notifyDataSetChanged();
-                Log.d("Firebase", "Adapter updated with " + foodList.size() + " items.");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("FirebaseError", "Failed to read data: " + error.getMessage());
-                Toast.makeText(getContext(), "Failed to load data", Toast.LENGTH_SHORT).show();
-            }
-        });
+        Log.d("Filter", "Filtered list size: " + filteredList.size());
+        adapter.notifyDataSetChanged(); // Notify adapter of changes
     }
 
     private void updateUIForRole(String role) {
@@ -239,5 +221,17 @@ public class FoodListingFragment extends Fragment {
                 .replace(R.id.frame_layout, foodDetailFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        if (fragment == null) {
+            Log.e("FoodListingFragment", "Fragment is null. Cannot replace.");
+            return;
+        }
+        Log.i("FoodListingFragment", "Replacing fragment with: " + fragment.getClass().getSimpleName());
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.commit();
     }
 }
