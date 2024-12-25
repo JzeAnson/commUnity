@@ -73,7 +73,7 @@ public class FoodDetailFragment extends Fragment {
             // Create and show a confirmation dialog
             new androidx.appcompat.app.AlertDialog.Builder(requireContext())
                     .setTitle("Reservation Confirmation")
-                    .setMessage("To complete your reservation, please confirm that you can pick up the item at the specified time and location.\n\n⚠️ Important:\nFailure to claim the item for 3 times may result in a penalty, including a temporary suspension of your reservation privileges.")
+                    .setMessage("To complete your reservation, please confirm your ability to pick up the item at the specified time and location.\n\n⚠️ Important:\nFailure to claim your order within the stipulated time may result in the merchant canceling your order.")
                     .setPositiveButton("Agree", (dialog, which) -> {
                         // Get the foodKey from arguments
                         String foodKey = getArguments().getString("foodKey");
