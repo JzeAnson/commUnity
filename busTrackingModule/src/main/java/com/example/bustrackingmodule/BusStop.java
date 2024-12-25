@@ -1,4 +1,4 @@
-package com.example.community;
+package com.example.bustrackingmodule;
 
 public class BusStop {
 

@@ -1,14 +1,20 @@
-package com.example.community;
+package com.example.bustrackingmodule;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -105,6 +111,30 @@ public class BusTrackingFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_bus_tracking, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        TravelDistanceViewModel travelDistanceViewModel = new ViewModelProvider(requireActivity()).get(TravelDistanceViewModel.class);
+
+        travelDistanceViewModel.getDistanceTravelled().observe(getViewLifecycleOwner(), distance -> {
+            if (distance != null) {
+                Log.d("BusTrackingFragment", "Distance received: " + distance);
+
+                Button reachedButton = view.findViewById(R.id.btn_reached);
+
+                reachedButton.setOnClickListener(v -> {
+                    //buslineViewModel.setBusLine("T789");
+                    NavController navController = Navigation.findNavController(v);
+                    Bundle args = new Bundle();
+                    args.putInt("travelDistance", distance);
+                    navController.navigate(R.id.action_busTrackingFragment_to_carbonEmissionSavedFragment, args);
+                });
+            }
+        });
+    }
+
 
 
 }

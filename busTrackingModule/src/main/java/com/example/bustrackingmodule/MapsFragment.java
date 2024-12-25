@@ -1,4 +1,4 @@
-package com.example.community;
+package com.example.bustrackingmodule;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -181,6 +181,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     private BusEtaViewModel etaViewModel;
     private BusLineViewModel buslineViewModel;
     private OriginDestinationViewModel origindestinationViewModel;
+    private TravelDistanceViewModel travelDistanceViewModel;
     private String extractedBusLine;
     private int routeId;
     private Runnable fetchBusDataRunnable = new Runnable() {
@@ -217,7 +218,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             if (UserLocation.equals(stop.getName())) {
                 userLocation = new LatLng(stop.getLatitude(), stop.getLongitude());
                 Log.d("MapsFragment", "User Location: " + userLocation);
-                break;
             }
             if (UserDestination.equals(stop.getName())) {
                 userDestination = new LatLng(stop.getLatitude(), stop.getLongitude());
@@ -225,6 +225,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 break;
             }
         }
+        calculateRouteDistance(userLocation,userDestination);
     }
 
     @Nullable
@@ -242,6 +243,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         buslineViewModel = new ViewModelProvider(requireActivity()).get(BusLineViewModel.class);
         detailsViewModel = new ViewModelProvider(requireActivity()).get(BusDetailsViewModel.class);
         etaViewModel = new ViewModelProvider(requireActivity()).get(BusEtaViewModel.class);
+        travelDistanceViewModel = new ViewModelProvider(requireActivity()).get(TravelDistanceViewModel.class);
 
         // Initialize the SupportMapFragment
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
@@ -548,6 +550,92 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
             }
         }.execute();
     }
+
+    private void updateDistanceView (int distanceMeters) {
+        travelDistanceViewModel.setDistanceTravelled(distanceMeters);
+    }
+    private void calculateRouteDistance(LatLng origin, LatLng destination) {
+        new AsyncTask<Void, Void, Integer>() {
+            @Override
+            protected Integer doInBackground(Void... voids) {
+                try {
+                    // Prepare the API request
+                    URL url = new URL(ROUTES_API_URL);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setRequestProperty("X-Goog-Api-Key", API_KEY);
+                    conn.setRequestProperty("X-Goog-FieldMask", "routes.distanceMeters");
+                    conn.setDoOutput(true);
+
+                    // Build the JSON payload
+                    JSONObject payload = new JSONObject();
+
+                    // Origin
+                    JSONObject originLocation = new JSONObject();
+                    originLocation.put("latitude", origin.latitude);
+                    originLocation.put("longitude", origin.longitude);
+                    payload.put("origin", new JSONObject()
+                            .put("location", new JSONObject()
+                                    .put("latLng", originLocation)));
+
+                    // Destination
+                    JSONObject destinationLocation = new JSONObject();
+                    destinationLocation.put("latitude", destination.latitude);
+                    destinationLocation.put("longitude", destination.longitude);
+                    payload.put("destination", new JSONObject()
+                            .put("location", new JSONObject()
+                                    .put("latLng", destinationLocation)));
+
+                    // Additional preferences
+                    payload.put("travelMode", "DRIVE");
+                    payload.put("units", "METRIC");
+
+                    // Write the payload to the connection
+                    OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
+                    writer.write(payload.toString());
+                    writer.flush();
+
+                    // Read the response
+                    if (conn.getResponseCode() == 200) {
+                        StringBuilder response = new StringBuilder();
+                        try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                response.append(line);
+                            }
+                        }
+
+                        // Parse the response to extract distance
+                        JSONObject jsonResponse = new JSONObject(response.toString());
+                        JSONArray routes = jsonResponse.getJSONArray("routes");
+
+                        if (routes.length() > 0) {
+                            JSONObject route = routes.getJSONObject(0);
+                            int distanceMeters = route.getInt("distanceMeters");
+                            return distanceMeters;
+                        }
+                    } else {
+                        Log.e("MapsFragment", "API Request Failed: " + conn.getResponseMessage());
+                    }
+                } catch (Exception e) {
+                    Log.e("MapsFragment", "Error calculating distance: " + e.getMessage());
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Integer distanceMeters) {
+                if (distanceMeters != null) {
+                    Log.d("MapsFragment", "Total Route Distance: " + distanceMeters + " meters");
+
+                    // You can update the UI or pass the value to a ViewModel if needed
+                    updateDistanceView(distanceMeters);
+                }
+            }
+        }.execute();
+    }
+
 
 
 }

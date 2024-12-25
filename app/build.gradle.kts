@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -36,6 +37,7 @@ android {
     buildFeatures {
         buildConfig = true
     }
+    dynamicFeatures += setOf(":busTrackingModule")
 }
 
 dependencies {
@@ -49,13 +51,15 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:19.0.0")
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation ("com.google.maps.android:android-maps-utils:3.4.0")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("org.mobilitydata:gtfs-realtime-bindings:0.0.8")
+    implementation("com.google.android.play:core-ktx:1.8.1")
+    implementation("com.google.android.play:core:1.10.3")
 
 }
 

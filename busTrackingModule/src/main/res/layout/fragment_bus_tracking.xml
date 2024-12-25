@@ -12,7 +12,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mapsFragment"
-            android:name="com.example.community.MapsFragment"
+            android:name="com.example.bustrackingmodule.MapsFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/busdetailsFragment"
@@ -22,12 +22,22 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/busdetailsFragment"
-            android:name="com.example.community.BusDetailsFragment"
+            android:name="com.example.bustrackingmodule.BusDetailsFragment"
             android:layout_width="0dp"
             android:layout_height="242dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mapsFragment" />
+
+        <Button
+            android:id="@+id/btn_reached"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="144dp"
+            android:layout_marginEnd="152dp"
+            android:text="Reached"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mapsFragment" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
