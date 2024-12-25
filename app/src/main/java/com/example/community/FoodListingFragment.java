@@ -41,6 +41,7 @@ public class FoodListingFragment extends Fragment {
     private List<FoodItem> foodList, filteredList;
     private DatabaseReference databaseRef;
     private FoodAdapter adapter;
+    private List<String> foodKeys;
 
     @Nullable
     @Override
@@ -65,7 +66,12 @@ public class FoodListingFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         foodList = new ArrayList<>();
         filteredList = new ArrayList<>();
-        adapter = new FoodAdapter(getContext(), filteredList, this::openFoodDetail);
+        adapter = new FoodAdapter(getContext(), foodList, foodKeys, new FoodAdapter.OnFoodItemClickListener() {
+            @Override
+            public void onFoodItemClick(FoodItem foodItem, String foodKey) {
+                openFoodDetail(foodItem, foodKey);
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         // Initialize Firebase database reference
@@ -166,15 +172,24 @@ public class FoodListingFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 foodList.clear();
+                List<String> foodKeys = new ArrayList<>(); // Create a list to store food keys
+
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     FoodItem foodItem = dataSnapshot.getValue(FoodItem.class);
-                    if (foodItem != null) {
+                    String foodKey = dataSnapshot.getKey(); // Get the unique key
+                    if (foodItem != null && foodKey != null) {
                         foodList.add(foodItem);
+                        foodKeys.add(foodKey); // Add the key to the list
                     }
                 }
-                filteredList.clear();
-                filteredList.addAll(foodList);
-                adapter.notifyDataSetChanged();
+
+                // Update the adapter with foodList and foodKeys
+                adapter = new FoodAdapter(getContext(), foodList, foodKeys, new FoodAdapter.OnFoodItemClickListener() {
+                    public void onFoodItemClick(FoodItem foodItem, String foodKey) {
+                        openFoodDetail(foodItem, foodKey); // Pass both foodItem and foodKey
+                    }
+                });
+                recyclerView.setAdapter(adapter);
             }
 
             @Override
@@ -198,7 +213,7 @@ public class FoodListingFragment extends Fragment {
         replaceFragment(new AddFoodFragment());
     }
 
-    private void openFoodDetail(FoodItem foodItem) {
+    private void openFoodDetail(FoodItem foodItem, String foodKey) {
         FoodDetailFragment foodDetailFragment = new FoodDetailFragment();
         Bundle args = new Bundle();
         args.putString("foodName", foodItem.getFoodName());
@@ -206,6 +221,7 @@ public class FoodListingFragment extends Fragment {
         args.putString("foodImage", foodItem.getFoodPic());
         args.putString("merchantName", foodItem.getMerchantName());
         args.putString("foodDescription", foodItem.getFoodDesc());
+        args.putString("foodKey", foodKey); // Pass the food key
         foodDetailFragment.setArguments(args);
 
         getParentFragmentManager()

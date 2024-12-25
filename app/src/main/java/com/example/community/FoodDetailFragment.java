@@ -8,12 +8,15 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class FoodDetailFragment extends Fragment {
 
@@ -69,9 +72,26 @@ public class FoodDetailFragment extends Fragment {
                     .setTitle("Reservation Confirmation")
                     .setMessage("To complete your reservation, please confirm that you can pick up the item at the specified time and location.\n\n⚠️ Important:\nFailure to claim the item for 3 times may result in a penalty, including a temporary suspension of your reservation privileges.")
                     .setPositiveButton("Agree", (dialog, which) -> {
-                        // Handle confirmation
-                        // Add logic here to finalize the reservation
-                        // For example, redirect to a new screen or show a success message
+                        // Get the foodKey from arguments
+                        String foodKey = getArguments().getString("foodKey");
+
+                        if (foodKey != null) {
+                            // Reference the Firebase node for the food item
+                            DatabaseReference foodRef = FirebaseDatabase.getInstance("https://community-1f007-default-rtdb.asia-southeast1.firebasedatabase.app")
+                                    .getReference("foodItems")
+                                    .child(foodKey);
+
+                            // Update the status to "Reserved"
+                            foodRef.child("status").setValue("Reserved")
+                                    .addOnSuccessListener(aVoid -> {
+                                        Toast.makeText(getContext(), "Reservation Successful!", Toast.LENGTH_SHORT).show();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(getContext(), "Failed to update status: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    });
+                        } else {
+                            Toast.makeText(getContext(), "Error: Food item key is missing.", Toast.LENGTH_SHORT).show();
+                        }
                     })
                     .setNegativeButton("Cancel", (dialog, which) -> {
                         // Handle cancellation

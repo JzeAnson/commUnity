@@ -17,16 +17,18 @@ import java.util.List;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
     private List<FoodItem> foodList;
+    private List<String> foodKeys; // Add a list of keys
     private Context context;
     private OnFoodItemClickListener listener;
 
     public interface OnFoodItemClickListener {
-        void onFoodItemClick(FoodItem foodItem);
+        void onFoodItemClick(FoodItem foodItem, String foodKey); // Ensure foodKey is part of the interface
     }
 
-    public FoodAdapter(Context context, List<FoodItem> foodList, OnFoodItemClickListener listener) {
+    public FoodAdapter(Context context, List<FoodItem> foodList, List<String> foodKeys, OnFoodItemClickListener listener) {
         this.context = context;
         this.foodList = foodList;
+        this.foodKeys = foodKeys; // Initialize keys
         this.listener = listener;
     }
 
@@ -40,14 +42,17 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     @Override
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
         FoodItem foodItem = foodList.get(position);
+        String foodKey = foodKeys.get(position); // Get the corresponding key
+
         holder.foodName.setText(foodItem.getFoodName());
         holder.foodPrice.setText(String.format("RM %.2f", foodItem.getFoodPrice()));
         holder.restaurantName.setText(foodItem.getMerchantName()); // Set merchant name
         Glide.with(context).load(foodItem.getFoodPic()).into(holder.foodImage);
 
+        // Pass both the FoodItem and its key to the listener
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onFoodItemClick(foodItem);
+                listener.onFoodItemClick(foodItem, foodKey);
             }
         });
     }
