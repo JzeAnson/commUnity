@@ -51,15 +51,18 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
         // Check if the item is reserved
         if ("Reserved".equalsIgnoreCase(foodItem.getStatus())) {
+            // Show reserved overlay and label
             holder.reservedOverlay.setVisibility(View.VISIBLE);
             holder.reservedLabel.setVisibility(View.VISIBLE);
-            holder.itemView.setOnClickListener(null); // Disable clicks
+            holder.itemView.setClickable(false); // Disable clicks
         } else {
+            // Hide reserved overlay and label
             holder.reservedOverlay.setVisibility(View.GONE);
             holder.reservedLabel.setVisibility(View.GONE);
+            holder.itemView.setClickable(true);
             holder.itemView.setOnClickListener(v -> {
                 if (listener != null) {
-                    listener.onFoodItemClick(foodItem, foodKey);
+                    listener.onFoodItemClick(foodItem, foodKeys.get(position));
                 }
             });
         }
