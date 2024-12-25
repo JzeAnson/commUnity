@@ -5,16 +5,21 @@ import android.content.ContentValues;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -27,19 +32,25 @@ import com.github.mikephil.charting.interfaces.datasets.IRadarDataSet;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-public class RadarChartActivity extends AppCompatActivity {
+public class RadarGraphFragment extends Fragment {
 
     private static final int REQUEST_WRITE_STORAGE = 112;
     private RadarChart radarChart;
-    private Button btnDownload;
+    private ImageButton btnDownload;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_radar_graph, container, false);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_radar_chart);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        radarChart = findViewById(R.id.radar_graph);
-        btnDownload = findViewById(R.id.btn_download);
+        radarChart = view.findViewById(R.id.radar_graph);
+        btnDownload = view.findViewById(R.id.btn_download_graph);
 
         // Initialize the radar chart
         setupRadarChart();
@@ -94,13 +105,12 @@ public class RadarChartActivity extends AppCompatActivity {
             return true;
         }
         // Check for WRITE_EXTERNAL_STORAGE for Android 9 and below
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        return ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestStoragePermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
         }
     }
 
@@ -116,20 +126,19 @@ public class RadarChartActivity extends AppCompatActivity {
                 values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
                 values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/RadarCharts");
 
-                fos = getContentResolver().openOutputStream(
-                        getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values));
+                fos = requireContext().getContentResolver().openOutputStream(
+                        requireContext().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values));
             } else {
-                // Use legacy storage for Android 9 and below
-                fos = getContentResolver().openOutputStream(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                fos = requireContext().getContentResolver().openOutputStream(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             }
 
             if (fos != null) {
                 chartBitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                 fos.close();
-                Toast.makeText(this, "Chart saved to gallery!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Chart saved to gallery!", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Error saving chart: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Error saving chart: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -138,11 +147,9 @@ public class RadarChartActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_WRITE_STORAGE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, save the chart
                 saveChartToGallery();
             } else {
-                // Permission denied
-                Toast.makeText(this, "Permission denied. Unable to save chart.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Permission denied. Unable to save chart.", Toast.LENGTH_SHORT).show();
             }
         }
     }

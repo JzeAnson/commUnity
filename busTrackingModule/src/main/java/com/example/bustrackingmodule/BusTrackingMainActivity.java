@@ -2,6 +2,7 @@ package com.example.bustrackingmodule;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,11 @@ public class BusTrackingMainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        ImageButton btnCloseModule = findViewById(R.id.close_button);
+        btnCloseModule.setOnClickListener(v -> {
+            finish(); // Close the current activity and return to the previous one
         });
     }
 
