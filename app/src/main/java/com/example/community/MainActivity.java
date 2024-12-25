@@ -19,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+
 public class MainActivity extends AppCompatActivity {
 
     Button btn_login;
@@ -130,4 +131,82 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+/*
+    Button btn_busTracking;
+    ProgressDialog progressDialog;
+    SplitInstallManager splitInstallManager;
+    private int mySessionId;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        splitInstallManager = SplitInstallManagerFactory.create(this);
+        progressDialog = new ProgressDialog(this);
+
+        btn_busTracking = findViewById(R.id.btn_bustrackingmodule);
+
+        btn_busTracking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startDownloading();
+            }
+        });
+
+    }
+
+    private void startDownloading() {
+        SplitInstallRequest request = SplitInstallRequest.newBuilder().addModule("busTrackingModule").build();
+        SplitInstallStateUpdatedListener listener = splitInstallState -> {
+            if (splitInstallState.sessionId() == mySessionId) {
+                switch (splitInstallState.status()) {
+                    case SplitInstallSessionStatus.DOWNLOADING:
+                        progressDialog.setMessage("Downloading");
+                        progressDialog.show();
+                        break;
+                    case SplitInstallSessionStatus.INSTALLED:
+                        Intent intent = new Intent();
+                        intent.setClassName(BuildConfig.APPLICATION_ID, "com.example.bustrackingmodule.BusTrackingMainActivity");
+                        startActivity(intent);
+                    case SplitInstallSessionStatus.CANCELED:
+                        Toast.makeText(this,"Canceled",Toast.LENGTH_SHORT).show();
+                        break;
+                    case SplitInstallSessionStatus.CANCELING:
+                        progressDialog.setMessage("Cancelling");
+                        progressDialog.show();
+                        break;
+                    case SplitInstallSessionStatus.DOWNLOADED:
+                        break;
+                    case SplitInstallSessionStatus.FAILED:
+                        break;
+                    case SplitInstallSessionStatus.INSTALLING:
+                        progressDialog.setMessage("Installing");
+                        progressDialog.show();
+                        break;
+                    case SplitInstallSessionStatus.PENDING:
+                        progressDialog.setMessage("Pending");
+                        progressDialog.show();
+                        break;
+                    case SplitInstallSessionStatus.REQUIRES_USER_CONFIRMATION:
+                        break;
+                    case SplitInstallSessionStatus.UNKNOWN:
+                        break;
+                }
+
+            }
+        };
+
+        splitInstallManager.registerListener(listener);
+
+        splitInstallManager.startInstall(request)
+                .addOnFailureListener(e ->
+                        Log.e("MainActivity", "Error installing module", e)
+                )
+                .addOnSuccessListener(sessionId -> mySessionId = sessionId);
+
+    }
+
+ */
+
 }
