@@ -64,7 +64,20 @@ public class FoodDetailFragment extends Fragment {
 
         // Handle reserve button
         reserveButton.setOnClickListener(v -> {
-            // Add your logic for the "Reserve" button here
+            // Create and show a confirmation dialog
+            new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                    .setTitle("Reservation Confirmation")
+                    .setMessage("To complete your reservation, please confirm that you can pick up the item at the specified time and location.\n\n⚠️ Important:\nFailure to claim the item for 3 times may result in a penalty, including a temporary suspension of your reservation privileges.")
+                    .setPositiveButton("Agree", (dialog, which) -> {
+                        // Handle confirmation
+                        // Add logic here to finalize the reservation
+                        // For example, redirect to a new screen or show a success message
+                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> {
+                        // Handle cancellation
+                        dialog.dismiss();
+                    })
+                    .show();
         });
 
         return view;
