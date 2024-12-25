@@ -42,9 +42,13 @@ public class FoodDetailFragment extends Fragment {
             String name = getArguments().getString("foodName");
             double foodPrice = getArguments().getDouble("foodPrice");
             String imageUrl = getArguments().getString("foodImage");
-            String location = getArguments().getString("merchantName"); // Using "merchantName" as location
+            String merchantName = getArguments().getString("merchantName");
             String description = getArguments().getString("foodDescription");
             String payment = getArguments().getString("paymentMethod", "Cash-on Arrival");
+
+            // Combine merchant name and address
+            String merchantAddress = getMerchantAddress(merchantName);
+            String combinedAddress = merchantName + "\n" + merchantAddress;
 
             // Populate static fields
             foodName.setText(name);
@@ -52,10 +56,7 @@ public class FoodDetailFragment extends Fragment {
             foodDescription.setText(description);
             paymentMethod.setText(payment);
             Glide.with(this).load(imageUrl).into(foodImage);
-
-            // Set pickup address based on location using switch case
-            String merchantAddress = getMerchantAddress(location);
-            pickupAddress.setText(merchantAddress);
+            pickupAddress.setText(combinedAddress); // Updated field
         }
 
         // Handle back button
@@ -75,7 +76,7 @@ public class FoodDetailFragment extends Fragment {
                 return "No.6 Jalan Taman Setiawangsa (Jalan 37/56), AU2, Taman Keramat, 54200 Kuala Lumpur";
             case "Dunkin Donuts Aeon Big":
                 return "Level 1, Lot F1-62, Section 5, Jalan 8/27a, Wangsa Maju, 53300 Kuala Lumpur, Wilayah Persekutuan";
-            case "Sushi Combo Set":
+            case "Empire Sushi Melawati Mall":
                 return "Lot G-23A, Melawati Mall, 355 Jalan Bandar, Taman Melawati, 53100 Kuala Lumpur, Wilayah Persekutuan";
             case "Bakers’ Cottage Taman Melawati":
                 return "No. 15 Jalan Bandar 12, Taman Melawati, 53100 Kuala Lumpur, Wilayah Persekutuan";
