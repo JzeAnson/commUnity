@@ -23,4 +23,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "CommUnity"
 include(":app")
- 
+include(":busTrackingModule")
