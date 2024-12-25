@@ -42,19 +42,20 @@ public class FoodDetailFragment extends Fragment {
             String name = getArguments().getString("foodName");
             double foodPrice = getArguments().getDouble("foodPrice");
             String imageUrl = getArguments().getString("foodImage");
-            String address = getArguments().getString("pickupAddress");
+            String location = getArguments().getString("merchantName"); // Using "merchantName" as location
             String description = getArguments().getString("foodDescription");
-            String payment = getArguments().getString("paymentMethod", "Cash-on Arrival"); // Default value
+            String payment = getArguments().getString("paymentMethod", "Cash-on Arrival");
 
-            // Populate data into the UI
+            // Populate static fields
             foodName.setText(name);
             price.setText(String.format("RM %.2f", foodPrice));
-            pickupAddress.setText(address);
-            paymentMethod.setText(payment);
             foodDescription.setText(description);
-
-            // Load image with Glide
+            paymentMethod.setText(payment);
             Glide.with(this).load(imageUrl).into(foodImage);
+
+            // Set pickup address based on location using switch case
+            String merchantAddress = getMerchantAddress(location);
+            pickupAddress.setText(merchantAddress);
         }
 
         // Handle back button
@@ -62,9 +63,24 @@ public class FoodDetailFragment extends Fragment {
 
         // Handle reserve button
         reserveButton.setOnClickListener(v -> {
-            // Add your logic for the "Reserve" button here (e.g., navigate to a reservation fragment or show a confirmation dialog)
+            // Add your logic for the "Reserve" button here
         });
 
         return view;
+    }
+
+    private String getMerchantAddress(String location) {
+        switch (location) {
+            case "AEON MALL AU2 Setiawangsa":
+                return "No.6 Jalan Taman Setiawangsa (Jalan 37/56), AU2, Taman Keramat, 54200 Kuala Lumpur";
+            case "Dunkin Donuts Aeon Big":
+                return "Level 1, Lot F1-62, Section 5, Jalan 8/27a, Wangsa Maju, 53300 Kuala Lumpur, Wilayah Persekutuan";
+            case "Sushi Combo Set":
+                return "Lot G-23A, Melawati Mall, 355 Jalan Bandar, Taman Melawati, 53100 Kuala Lumpur, Wilayah Persekutuan";
+            case "Bakers’ Cottage Taman Melawati":
+                return "No. 15 Jalan Bandar 12, Taman Melawati, 53100 Kuala Lumpur, Wilayah Persekutuan";
+            default:
+                return "Unknown Location";
+        }
     }
 }
