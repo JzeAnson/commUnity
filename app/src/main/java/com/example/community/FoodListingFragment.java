@@ -178,8 +178,9 @@ public class FoodListingFragment extends Fragment {
 
     private void filterFoodList(String query) {
         filteredList.clear();
+
         if (query.isEmpty()) {
-            filteredList.addAll(foodList);
+            filteredList.addAll(foodList); // Show all items if query is empty
         } else {
             for (FoodItem item : foodList) {
                 if (item.getFoodName().toLowerCase().contains(query.toLowerCase()) ||
@@ -188,8 +189,12 @@ public class FoodListingFragment extends Fragment {
                 }
             }
         }
+
         Log.d("Filter", "Filtered list size: " + filteredList.size());
-        adapter.notifyDataSetChanged(); // Notify adapter of changes
+
+        // Update the adapter with the filtered data
+        adapter = new FoodAdapter(getContext(), filteredList, foodKeys, (foodItem, foodKey) -> openFoodDetail(foodItem, foodKey));
+        recyclerView.setAdapter(adapter); // Rebind the adapter to update the UI
     }
 
     private void updateUIForRole(String role) {
