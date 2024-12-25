@@ -65,7 +65,7 @@ public class FoodListingFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         foodList = new ArrayList<>();
         filteredList = new ArrayList<>();
-        adapter = new FoodAdapter(getContext(), filteredList);
+        adapter = new FoodAdapter(getContext(), filteredList, this::openFoodDetail);
         recyclerView.setAdapter(adapter);
 
         // Initialize Firebase database reference
@@ -196,5 +196,22 @@ public class FoodListingFragment extends Fragment {
     public void pressAdd (View v){
         Log.i("FoodListingFragment", "Add button pressed.");
         replaceFragment(new AddFoodFragment());
+    }
+
+    private void openFoodDetail(FoodItem foodItem) {
+        FoodDetailFragment foodDetailFragment = new FoodDetailFragment();
+        Bundle args = new Bundle();
+        args.putString("foodName", foodItem.getFoodName());
+        args.putDouble("foodPrice", foodItem.getFoodPrice());
+        args.putString("foodImage", foodItem.getFoodPic());
+        args.putString("merchantName", foodItem.getMerchantName());
+        args.putString("foodDescription", foodItem.getFoodDesc());
+        foodDetailFragment.setArguments(args);
+
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout, foodDetailFragment)
+                .addToBackStack(null) // Add to back stack for proper back navigation
+                .commit();
     }
 }

@@ -18,10 +18,16 @@ import java.util.List;
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
     private List<FoodItem> foodList;
     private Context context;
+    private OnFoodItemClickListener listener;
 
-    public FoodAdapter(Context context, List<FoodItem> foodList) {
+    public interface OnFoodItemClickListener {
+        void onFoodItemClick(FoodItem foodItem);
+    }
+
+    public FoodAdapter(Context context, List<FoodItem> foodList, OnFoodItemClickListener listener) {
         this.context = context;
         this.foodList = foodList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -38,6 +44,12 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.foodPrice.setText(String.format("RM %.2f", foodItem.getFoodPrice()));
         holder.restaurantName.setText(foodItem.getMerchantName()); // Set merchant name
         Glide.with(context).load(foodItem.getFoodPic()).into(holder.foodImage);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onFoodItemClick(foodItem);
+            }
+        });
     }
 
     @Override
@@ -46,7 +58,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     }
 
     public static class FoodViewHolder extends RecyclerView.ViewHolder {
-        TextView foodName, foodPrice, foodLocation, restaurantName; // Ensure restaurantName is included
+        TextView foodName, foodPrice, restaurantName; // Ensure restaurantName is included
         ImageView foodImage;
 
         public FoodViewHolder(@NonNull View itemView) {
