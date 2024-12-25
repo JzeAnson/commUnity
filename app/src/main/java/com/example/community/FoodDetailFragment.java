@@ -1,6 +1,7 @@
 package com.example.community;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
@@ -85,6 +88,13 @@ public class FoodDetailFragment extends Fragment {
                             foodRef.child("status").setValue("Reserved")
                                     .addOnSuccessListener(aVoid -> {
                                         Toast.makeText(getContext(), "Reservation Successful!", Toast.LENGTH_SHORT).show();
+                                        Log.i("FoodDetailFragment", "Agree button pressed.");
+                                        FragmentManager fragmentManager = getParentFragmentManager();
+                                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+                                        // Replace the current fragment with FoodListingFragment
+                                        transaction.replace(R.id.frame_layout, new FoodListingFragment());
+                                        transaction.commit();
                                     })
                                     .addOnFailureListener(e -> {
                                         Toast.makeText(getContext(), "Failed to update status: " + e.getMessage(), Toast.LENGTH_SHORT).show();
