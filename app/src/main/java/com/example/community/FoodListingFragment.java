@@ -123,6 +123,15 @@ public class FoodListingFragment extends Fragment {
         });
 
         Log.d("FoodListingFragment", "onCreateView completed.");
+
+        // Listen for refresh signal
+        getParentFragmentManager().setFragmentResultListener("requestKey", this, (requestKey, bundle) -> {
+            boolean shouldRefresh = bundle.getBoolean("refresh", false);
+            if (shouldRefresh) {
+                fetchFoodData(); // Fetch data again to refresh the view
+            }
+        });
+        
         return view;
     }
 
