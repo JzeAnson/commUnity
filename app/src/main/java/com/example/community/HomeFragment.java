@@ -4,7 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +32,7 @@ import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 public class HomeFragment extends Fragment {
 
     ImageButton btn_busTracking;
+    ImageButton btn_graphSelection;
     private int mySessionId;
 
     @Override
@@ -35,8 +40,15 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        // Inflate the layout for this fragment
+        return rootView;
+    }
 
-        btn_busTracking = rootView.findViewById(R.id.transportlogo);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        btn_busTracking = view.findViewById(R.id.transportlogo);
 
         btn_busTracking.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,8 +57,19 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // Inflate the layout for this fragment
-        return rootView;
+        btn_graphSelection = view.findViewById(R.id.graphlogo);
+
+        btn_graphSelection.setOnClickListener(v -> {
+            // Create a new instance of RadarGraphFragment
+            Fragment graphSelectionFragment = new GraphSelectionFragment();
+
+            // Perform the fragment transaction
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, graphSelectionFragment);
+            transaction.addToBackStack(null); // Optional: allows back navigation
+            transaction.commit();
+        });
+
     }
     private void startDownloading() {
         SplitInstallManager splitInstallManager = SplitInstallManagerFactory.create(requireContext());

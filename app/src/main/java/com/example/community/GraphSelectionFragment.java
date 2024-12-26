@@ -2,11 +2,16 @@ package com.example.community;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,4 +66,15 @@ public class GraphSelectionFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_graph_selection, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ImageButton btnPublicTransport = view.findViewById(R.id.transportusability_button);
+        ImageButton btnPopularity = view.findViewById(R.id.popularity_button);
+        ImageButton btnGreenInitiative = view.findViewById(R.id.greeninitiative_button);
+        ImageButton btnFoodWaste = view.findViewById(R.id.foodprevention_button);
+    }
+
 }

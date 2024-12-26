@@ -2,13 +2,18 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation">
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/graphSelectionFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.community.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_graphSelectionFragment"
+            app:destination="@id/graphSelectionFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/settingFragment"
@@ -20,5 +25,19 @@
         android:name="com.example.community.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/graphSelectionFragment"
+        android:name="com.example.community.GraphSelectionFragment"
+        android:label="fragment_graph_selection"
+        tools:layout="@layout/fragment_graph_selection" >
+        <action
+            android:id="@+id/action_graphSelectionFragment_to_radarGraphFragment"
+            app:destination="@id/radarGraphFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/radarGraphFragment"
+        android:name="com.example.community.RadarGraphFragment"
+        android:label="fragment_radar_graph"
+        tools:layout="@layout/fragment_radar_graph" />
 
 </navigation>
