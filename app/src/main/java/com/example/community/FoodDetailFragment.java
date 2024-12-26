@@ -66,7 +66,15 @@ public class FoodDetailFragment extends Fragment {
         }
 
         // Handle back button
-        backButton.setOnClickListener(v -> getParentFragmentManager().popBackStack());
+        backButton.setOnClickListener(v -> {
+            // Notify the FoodListingFragment to refresh
+            Bundle result = new Bundle();
+            result.putBoolean("refresh", true);
+            getParentFragmentManager().setFragmentResult("requestKey", result);
+
+            // Navigate back to the previous fragment
+            getParentFragmentManager().popBackStack();
+        });
 
         // Handle reserve button
         reserveButton.setOnClickListener(v -> {
