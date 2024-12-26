@@ -101,13 +101,53 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp" />
 
-        <!-- Price -->
+        <!-- Quantity Label -->
+        <TextView
+            android:id="@+id/quantityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:text="Quantity:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_below="@id/paymentMethodLabel" />
 
-        <!-- Pickup Address Label -->
+        <!-- Quantity Selector -->
+        <LinearLayout
+            android:id="@+id/quantitySelector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:layout_below="@id/quantityLabel">
 
-        <!-- Payment Method -->
+            <ImageButton
+                android:id="@+id/decrementButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_minus" />
 
-        <!-- Food Description -->
+            <TextView
+                android:id="@+id/quantityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:text="1"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/incrementButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_plus" />
+        </LinearLayout>
 
     </LinearLayout>
 
