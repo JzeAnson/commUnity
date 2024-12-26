@@ -24,9 +24,12 @@ import com.google.firebase.database.FirebaseDatabase;
 public class FoodDetailFragment extends Fragment {
 
     private ImageView foodImage;
-    private TextView foodName, price, pickupAddress, paymentMethod, foodDescription;
-    private ImageButton backButton;
+    private TextView foodName, price, pickupAddress, paymentMethod, foodDescription, quantityTextView;
+    private ImageButton backButton, incrementButton, decrementButton;
     private Button reserveButton;
+
+    private int quantity = 1; // Default quantity
+    private int availableQuantity = 0; // Default available quantity
 
     @Nullable
     @Override
@@ -42,6 +45,9 @@ public class FoodDetailFragment extends Fragment {
         foodDescription = view.findViewById(R.id.foodDescription);
         backButton = view.findViewById(R.id.backButton);
         reserveButton = view.findViewById(R.id.reserveButton);
+        incrementButton = view.findViewById(R.id.incrementButton); // Initialize increment button
+        decrementButton = view.findViewById(R.id.decrementButton); // Initialize decrement button
+        quantityTextView = view.findViewById(R.id.quantityTextView); // Quantity display
 
         // Get data from arguments
         if (getArguments() != null) {
@@ -51,6 +57,7 @@ public class FoodDetailFragment extends Fragment {
             String merchantName = getArguments().getString("merchantName");
             String description = getArguments().getString("foodDescription");
             String payment = getArguments().getString("paymentMethod", "Cash-on Arrival");
+            availableQuantity = getArguments().getInt("availableQuantity", 0); // Get available quantity
 
             // Combine merchant name and address
             String merchantAddress = getMerchantAddress(merchantName);
@@ -62,8 +69,29 @@ public class FoodDetailFragment extends Fragment {
             foodDescription.setText(description);
             paymentMethod.setText(payment);
             Glide.with(this).load(imageUrl).into(foodImage);
-            pickupAddress.setText(combinedAddress); // Updated field
+            pickupAddress.setText(combinedAddress);
+            quantityTextView.setText(String.valueOf(quantity)); // Set initial quantity
         }
+
+        // Handle increment button
+        incrementButton.setOnClickListener(v -> {
+            if (quantity < availableQuantity) { // Enforce maximum limit
+                quantity++;
+                quantityTextView.setText(String.valueOf(quantity));
+            } else {
+                Toast.makeText(getContext(), "Maximum quantity available is " + availableQuantity, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Handle decrement button
+        decrementButton.setOnClickListener(v -> {
+            if (quantity > 1) { // Enforce minimum limit
+                quantity--;
+                quantityTextView.setText(String.valueOf(quantity));
+            } else {
+                Toast.makeText(getContext(), "Minimum quantity is 1", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Handle back button
         backButton.setOnClickListener(v -> {
@@ -77,29 +105,25 @@ public class FoodDetailFragment extends Fragment {
 
         // Handle reserve button
         reserveButton.setOnClickListener(v -> {
-            // Create and show a confirmation dialog
             new androidx.appcompat.app.AlertDialog.Builder(requireContext())
                     .setTitle("Reservation Confirmation")
-                    .setMessage("To complete your reservation, please confirm your ability to pick up the item at the specified time and location.\n\n⚠️ Important:\nFailure to claim your order within the stipulated time may result in the merchant canceling your order.")
+                    .setMessage("You are reserving " + quantity + " item(s).\n\n⚠️ Important:\nFailure to claim your order within the stipulated time may result in the merchant canceling your order.")
                     .setPositiveButton("Agree", (dialog, which) -> {
-                        // Get the foodKey from arguments
                         String foodKey = getArguments().getString("foodKey");
 
                         if (foodKey != null) {
-                            // Reference the Firebase node for the food item
                             DatabaseReference foodRef = FirebaseDatabase.getInstance("https://community-1f007-default-rtdb.asia-southeast1.firebasedatabase.app")
                                     .getReference("foodItems")
                                     .child(foodKey);
 
-                            // Update the status to "Reserved"
+                            // Update reserved quantity and reduce available quantity
+                            foodRef.child("reservedQuantity").setValue(quantity);
+                            foodRef.child("quantity").setValue(availableQuantity - quantity);
                             foodRef.child("status").setValue("Reserved")
                                     .addOnSuccessListener(aVoid -> {
                                         Toast.makeText(getContext(), "Reservation Successful!", Toast.LENGTH_SHORT).show();
-                                        Log.i("FoodDetailFragment", "Agree button pressed.");
                                         FragmentManager fragmentManager = getParentFragmentManager();
                                         FragmentTransaction transaction = fragmentManager.beginTransaction();
-
-                                        // Replace the current fragment with FoodListingFragment
                                         transaction.replace(R.id.frame_layout, new FoodListingFragment());
                                         transaction.commit();
                                     })
@@ -110,10 +134,7 @@ public class FoodDetailFragment extends Fragment {
                             Toast.makeText(getContext(), "Error: Food item key is missing.", Toast.LENGTH_SHORT).show();
                         }
                     })
-                    .setNegativeButton("Cancel", (dialog, which) -> {
-                        // Handle cancellation
-                        dialog.dismiss();
-                    })
+                    .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                     .show();
         });
 

@@ -131,7 +131,7 @@ public class FoodListingFragment extends Fragment {
                 fetchFoodData(); // Fetch data again to refresh the view
             }
         });
-        
+
         return view;
     }
 
@@ -241,6 +241,7 @@ public class FoodListingFragment extends Fragment {
         args.putString("merchantName", foodItem.getMerchantName());
         args.putString("foodDescription", foodItem.getFoodDesc());
         args.putString("foodKey", foodKey);
+        args.putInt("availableQuantity", foodItem.getQuantity()); // Pass available quantity here
         foodDetailFragment.setArguments(args);
 
         getParentFragmentManager()
