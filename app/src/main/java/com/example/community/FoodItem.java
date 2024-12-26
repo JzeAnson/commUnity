@@ -2,27 +2,27 @@ package com.example.community;
 
 public class FoodItem {
     private String foodName;
-    private double foodPrice; // Changed to double
+    private double foodPrice;
     private String foodDesc;
     private String foodPic;
-    private String pickupLocation;
     private String merchantName;
+    private String merchantAddress;
     private String status;
     private int quantity;
 
-    // No-argument constructor (required for Firebase)
+    // No-argument constructor
     public FoodItem() {
     }
 
-    // Constructor
+    // Constructor with parameters
     public FoodItem(String foodName, double foodPrice, String foodDesc, String foodPic,
-                    String pickupLocation, String merchantName, String status, int quantity) {
+                    String merchantName, String merchantAddress, String status, int quantity) {
         this.foodName = foodName;
-        this.foodPrice = foodPrice; // Accept double
+        this.foodPrice = foodPrice;
         this.foodDesc = foodDesc;
         this.foodPic = foodPic;
-        this.pickupLocation = pickupLocation;
         this.merchantName = merchantName;
+        this.merchantAddress = merchantAddress;
         this.status = status;
         this.quantity = quantity;
     }
@@ -32,60 +32,60 @@ public class FoodItem {
         return foodName;
     }
 
-    public double getFoodPrice() {
-        return foodPrice;
-    }
-
-    public String getFoodDesc() {
-        return foodDesc;
-    }
-
-    public String getFoodPic() {
-        return foodPic;
-    }
-
-    public String getPickupLocation() {
-        return pickupLocation;
-    }
-
-    public String getMerchantName() {
-        return merchantName;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
     public void setFoodName(String foodName) {
         this.foodName = foodName;
+    }
+
+    public double getFoodPrice() {
+        return foodPrice;
     }
 
     public void setFoodPrice(double foodPrice) {
         this.foodPrice = foodPrice;
     }
 
+    public String getFoodDesc() {
+        return foodDesc;
+    }
+
     public void setFoodDesc(String foodDesc) {
         this.foodDesc = foodDesc;
+    }
+
+    public String getFoodPic() {
+        return foodPic;
     }
 
     public void setFoodPic(String foodPic) {
         this.foodPic = foodPic;
     }
 
-    public void setPickupLocation(String pickupLocation) {
-        this.pickupLocation = pickupLocation;
+    public String getMerchantName() {
+        return merchantName;
     }
 
     public void setMerchantName(String merchantName) {
         this.merchantName = merchantName;
     }
 
+    public String getMerchantAddress() {
+        return merchantAddress;
+    }
+
+    public void setMerchantAddress(String merchantAddress) {
+        this.merchantAddress = merchantAddress;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 
     public void setQuantity(int quantity) {

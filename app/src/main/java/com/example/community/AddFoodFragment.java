@@ -63,7 +63,7 @@ public class AddFoodFragment extends Fragment {
         String[] pickupLocations = {
                 "AEON MALL AU2 Setiawangsa",
                 "Dunkin Donuts Aeon Big",
-                "Sushi Combo Set",
+                "Empire Sushi Melawati Mall",
                 "Bakers’ Cottage Taman Melawati"
         };
 
@@ -161,17 +161,17 @@ public class AddFoodFragment extends Fragment {
         uploadFoodItem(name, foodPriceValue, description, quantity, location);
     }
 
-    private void uploadFoodItem(String name, double price, String description, int quantity, String location) {
+    private void uploadFoodItem(String name, double price, String description, int quantity, String merchantName) {
+        // Mapping merchantName to merchantAddress
         String merchantAddress;
-
-        switch (location) {
+        switch (merchantName) {
             case "AEON MALL AU2 Setiawangsa":
                 merchantAddress = "No.6 Jalan Taman Setiawangsa (Jalan 37/56), AU2, Taman Keramat, 54200 Kuala Lumpur";
                 break;
             case "Dunkin Donuts Aeon Big":
                 merchantAddress = "Level 1, Lot F1-62, Section 5, Jalan 8/27a, Wangsa Maju, 53300 Kuala Lumpur, Wilayah Persekutuan";
                 break;
-            case "Sushi Combo Set":
+            case "Empire Sushi Melawati Mall":
                 merchantAddress = "Lot G-23A, Melawati Mall, 355 Jalan Bandar, Taman Melawati, 53100 Kuala Lumpur, Wilayah Persekutuan";
                 break;
             case "Bakers’ Cottage Taman Melawati":
@@ -181,6 +181,7 @@ public class AddFoodFragment extends Fragment {
                 merchantAddress = "Unknown Location";
         }
 
+        // Uploading image to Firebase Storage
         StorageReference fileRef = storageRef.child(System.currentTimeMillis() + ".jpg");
         fileRef.putFile(imageUri)
                 .addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl()
@@ -188,15 +189,16 @@ public class AddFoodFragment extends Fragment {
                             String id = databaseRef.push().getKey();
                             FoodItem foodItem = new FoodItem(
                                     name,
-                                    price, // Pass price as double
+                                    price,
                                     description,
-                                    uri.toString(), // Image URL
-                                    location,
-                                    merchantAddress,
+                                    uri.toString(), // Food image URL
+                                    merchantName, // Store merchantName
+                                    merchantAddress, // Store merchantAddress
                                     "Available", // Default status
-                                    quantity // Add quantity
+                                    quantity // Store quantity
                             );
 
+                            // Upload food item to Firebase
                             databaseRef.child(id).setValue(foodItem)
                                     .addOnCompleteListener(task -> {
                                         if (task.isSuccessful()) {
