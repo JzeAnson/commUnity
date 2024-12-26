@@ -47,9 +47,11 @@ public class FoodListingFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d("FoodListingFragment", "onCreateView called");
+
         View view = inflater.inflate(R.layout.fragment_food_listing, container, false);
 
         // Initialize UI components
+        Log.d("FoodListingFragment", "Initializing UI components...");
         searchBar = view.findViewById(R.id.searchBar);
         clearButton = view.findViewById(R.id.clearButton);
         searchButton = view.findViewById(R.id.searchButton);
@@ -58,12 +60,14 @@ public class FoodListingFragment extends Fragment {
         fab = view.findViewById(R.id.addButton);
 
         if (fab != null) {
+            Log.d("FoodListingFragment", "Setting up FAB click listener.");
             fab.setOnClickListener(this::pressAdd);
         } else {
             Log.e("FoodListingFragment", "FAB is null. Check R.id.addButton in your layout.");
         }
 
         // Set up RecyclerView
+        Log.d("FoodListingFragment", "Setting up RecyclerView...");
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         foodList = new ArrayList<>();
         foodKeys = new ArrayList<>();
@@ -72,24 +76,30 @@ public class FoodListingFragment extends Fragment {
         // Initialize adapter with empty lists
         adapter = new FoodAdapter(getContext(), foodList, foodKeys, (foodItem, foodKey) -> openFoodDetail(foodItem, foodKey));
         recyclerView.setAdapter(adapter);
+        Log.d("FoodListingFragment", "RecyclerView adapter set.");
 
         // Initialize Firebase database reference
+        Log.d("FoodListingFragment", "Initializing Firebase database reference...");
         databaseRef = FirebaseDatabase.getInstance("https://community-1f007-default-rtdb.asia-southeast1.firebasedatabase.app")
                 .getReference("foodItems");
 
         // Fetch food data from Firebase
+        Log.d("FoodListingFragment", "Fetching food data from Firebase...");
         fetchFoodData();
 
         // Set up search functionality
+        Log.d("FoodListingFragment", "Setting up search bar functionality...");
         setupSearchBar();
 
         // Role-based visibility for FAB
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
         String currentRole = sharedPreferences.getString("userRole", "customer"); // Default role is customer
+        Log.d("FoodListingFragment", "Current user role: " + currentRole);
         updateUIForRole(currentRole);
 
         // Profile button click listener to change roles
         profileButton.setOnClickListener(v -> {
+            Log.d("FoodListingFragment", "Profile button clicked. Showing role switch dialog.");
             new AlertDialog.Builder(getContext())
                     .setTitle("Switch Role")
                     .setMessage("Select your role:")
@@ -97,6 +107,7 @@ public class FoodListingFragment extends Fragment {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("userRole", "merchant");
                         editor.apply();
+                        Log.d("FoodListingFragment", "Role switched to Merchant.");
                         updateUIForRole("merchant");
                         Toast.makeText(getContext(), "Switched to Merchant", Toast.LENGTH_SHORT).show();
                     })
@@ -104,12 +115,14 @@ public class FoodListingFragment extends Fragment {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("userRole", "customer");
                         editor.apply();
+                        Log.d("FoodListingFragment", "Role switched to Customer.");
                         updateUIForRole("customer");
                         Toast.makeText(getContext(), "Switched to Customer", Toast.LENGTH_SHORT).show();
                     })
                     .show();
         });
 
+        Log.d("FoodListingFragment", "onCreateView completed.");
         return view;
     }
 

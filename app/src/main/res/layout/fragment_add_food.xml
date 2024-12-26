@@ -5,16 +5,16 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Back Arrow (You'll need to add this image resource) -->
+    <!-- Back Arrow -->
     <ImageButton
         android:id="@+id/backArrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_back_arrow"
-        android:onClick="pressBack"
+        android:contentDescription="Back"
         android:layout_marginBottom="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Back"/>
+        android:onClick="pressBack" />
 
     <!-- Upload Picture Section -->
     <FrameLayout
@@ -34,7 +34,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
-                android:contentDescription="food"
+                android:contentDescription="Food Image"
                 android:src="@drawable/ic_add" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_gravity="center"
                 android:text="Upload Picture of Food"
                 android:textSize="14sp"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp" />
         </LinearLayout>
     </FrameLayout>
 
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Food Name"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp" />
 
     <EditText
         android:id="@+id/foodName"
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:background="#F5F5F5"
         android:padding="12dp"
-        android:inputType="text"/>
+        android:inputType="text" />
 
     <!-- Pick-Up Shop Name -->
     <TextView
@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Food Price"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp" />
 
     <EditText
         android:id="@+id/foodPrice"
@@ -90,14 +90,14 @@
         android:layout_height="wrap_content"
         android:background="#F5F5F5"
         android:padding="12dp"
-        android:inputType="numberDecimal"/>
+        android:inputType="numberDecimal" />
 
     <!-- Quantity -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Quantity"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp" />
 
     <EditText
         android:id="@+id/foodQuantity"
@@ -105,14 +105,14 @@
         android:layout_height="wrap_content"
         android:background="#F5F5F5"
         android:padding="12dp"
-        android:inputType="number"/>
+        android:inputType="number" />
 
     <!-- Food Description -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pickup Time"
-        android:layout_marginTop="16dp"/>
+        android:text="Food Description"
+        android:layout_marginTop="16dp" />
 
     <EditText
         android:id="@+id/foodDescription"
@@ -120,22 +120,9 @@
         android:layout_height="wrap_content"
         android:background="#F5F5F5"
         android:padding="12dp"
-        android:inputType="text"/>
+        android:inputType="text" />
 
-    <!-- Payment Method -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Payment Method"
-        android:layout_marginTop="16dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cash-On Arrival (Fixed)"
-        android:background="#F5F5F5"
-        android:padding="12dp"/>
-
+    <!-- Submit and Clear Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -164,7 +151,6 @@
             android:textColor="#FFFFFF"
             android:padding="16dp"
             android:layout_marginStart="8dp" />
-
     </LinearLayout>
 
 </LinearLayout>

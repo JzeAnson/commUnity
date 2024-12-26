@@ -1,22 +1,24 @@
+package com.example.community;
+
 public class FoodItem {
     private String foodName;
     private double foodPrice; // Changed to double
     private String foodDesc;
     private String foodPic;
     private String pickupLocation;
-    private String merchantAddress;
+    private String merchantName;
     private String status;
     private int quantity;
 
     // Constructor
     public FoodItem(String foodName, double foodPrice, String foodDesc, String foodPic,
-                    String pickupLocation, String merchantAddress, String status, int quantity) {
+                    String pickupLocation, String merchantName, String status, int quantity) {
         this.foodName = foodName;
         this.foodPrice = foodPrice; // Accept double
         this.foodDesc = foodDesc;
         this.foodPic = foodPic;
         this.pickupLocation = pickupLocation;
-        this.merchantAddress = merchantAddress;
+        this.merchantName = merchantName;
         this.status = status;
         this.quantity = quantity;
     }
@@ -42,8 +44,8 @@ public class FoodItem {
         return pickupLocation;
     }
 
-    public String getMerchantAddress() {
-        return merchantAddress;
+    public String getMerchantName() {
+        return merchantName;
     }
 
     public String getStatus() {
@@ -74,8 +76,8 @@ public class FoodItem {
         this.pickupLocation = pickupLocation;
     }
 
-    public void setMerchantAddress(String merchantAddress) {
-        this.merchantAddress = merchantAddress;
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
     }
 
     public void setStatus(String status) {
