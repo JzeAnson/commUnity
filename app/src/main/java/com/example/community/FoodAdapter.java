@@ -47,19 +47,18 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.foodName.setText(foodItem.getFoodName());
         holder.foodPrice.setText(String.format("RM %.2f", foodItem.getFoodPrice()));
         holder.restaurantName.setText(foodItem.getMerchantName()); // Set merchant name
-        holder.foodQuantity.setText("Quantity Available: " + foodItem.getQuantity());
         Glide.with(context).load(foodItem.getFoodPic()).into(holder.foodImage);
 
         // Update quantity display with conditional formatting
         int quantity = foodItem.getQuantity();
-        holder.foodQuantity.setText("Stock: " + quantity);
+        holder.foodQuantity.setText("Quantity Available: " + quantity);
 
         if (quantity <= 2) {
             holder.foodQuantity.setTextColor(context.getResources().getColor(android.R.color.holo_red_dark));
-            holder.foodQuantity.setBackgroundColor(context.getResources().getColor(android.R.color.holo_red_light));
+            holder.foodQuantity.setTypeface(null, android.graphics.Typeface.BOLD);
         } else {
             holder.foodQuantity.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
-            holder.foodQuantity.setBackgroundColor(context.getResources().getColor(android.R.color.holo_green_light));
+            holder.foodQuantity.setTypeface(null, android.graphics.Typeface.BOLD);
         }
 
         // Check if the item is reserved

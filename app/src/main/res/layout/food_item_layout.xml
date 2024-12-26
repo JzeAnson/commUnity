@@ -67,7 +67,6 @@
                 android:text="Quantity Available: 0"
                 android:textSize="12sp"
                 android:layout_marginTop="4dp"
-                android:background="#E8F5E9"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="2dp"
                 android:layout_marginBottom="4dp" />
