@@ -47,7 +47,20 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         holder.foodName.setText(foodItem.getFoodName());
         holder.foodPrice.setText(String.format("RM %.2f", foodItem.getFoodPrice()));
         holder.restaurantName.setText(foodItem.getMerchantName()); // Set merchant name
+        holder.foodQuantity.setText("Quantity Available: " + foodItem.getQuantity());
         Glide.with(context).load(foodItem.getFoodPic()).into(holder.foodImage);
+
+        // Update quantity display with conditional formatting
+        int quantity = foodItem.getQuantity();
+        holder.foodQuantity.setText("Stock: " + quantity);
+
+        if (quantity <= 2) {
+            holder.foodQuantity.setTextColor(context.getResources().getColor(android.R.color.holo_red_dark));
+            holder.foodQuantity.setBackgroundColor(context.getResources().getColor(android.R.color.holo_red_light));
+        } else {
+            holder.foodQuantity.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
+            holder.foodQuantity.setBackgroundColor(context.getResources().getColor(android.R.color.holo_green_light));
+        }
 
         // Check if the item is reserved
         if ("Reserved".equalsIgnoreCase(foodItem.getStatus())) {
@@ -74,7 +87,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     }
 
     public static class FoodViewHolder extends RecyclerView.ViewHolder {
-        TextView foodName, foodPrice, restaurantName; // Ensure restaurantName is included
+        TextView foodName, foodPrice, restaurantName, foodQuantity; // Ensure restaurantName is included
         ImageView foodImage;
         View reservedOverlay;
         TextView reservedLabel;
@@ -85,6 +98,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             foodPrice = itemView.findViewById(R.id.foodPrice);
             foodImage = itemView.findViewById(R.id.foodImage);
             restaurantName = itemView.findViewById(R.id.restaurantName); // Initialize restaurantName
+            foodQuantity=itemView.findViewById(R.id.foodQuantity);
             reservedOverlay = itemView.findViewById(R.id.reservedOverlay);
             reservedLabel = itemView.findViewById(R.id.reservedLabel);
 

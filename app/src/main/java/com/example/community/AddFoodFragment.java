@@ -30,7 +30,7 @@ import com.google.firebase.storage.StorageReference;
 public class AddFoodFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 1;
 
-    private EditText foodName, foodPrice, foodDescription;
+    private EditText foodName, foodPrice, foodDescription, foodQuantity; // Added quantity input
     private Spinner foodLocationSpinner;
     private ImageButton btnBack;
     private ImageView foodImage;
@@ -46,14 +46,15 @@ public class AddFoodFragment extends Fragment {
         Log.e("AddFoodFragment", "onCreateView called");
         View view = inflater.inflate(R.layout.fragment_add_food, container, false);
 
-        btnBack=view.findViewById(R.id.backArrow);
+        btnBack = view.findViewById(R.id.backArrow);
         foodName = view.findViewById(R.id.foodName);
         foodPrice = view.findViewById(R.id.foodPrice);
         foodDescription = view.findViewById(R.id.foodDescription);
+        foodQuantity = view.findViewById(R.id.foodQuantity); // Initialize quantity input
         foodImage = view.findViewById(R.id.foodImage);
         foodLocationSpinner = view.findViewById(R.id.pickupShopNameSpinner);
         submitButton = view.findViewById(R.id.submitButton);
-        clearButton=view.findViewById(R.id.clearButton);
+        clearButton = view.findViewById(R.id.clearButton);
 
         databaseRef = FirebaseDatabase.getInstance().getReference("foodItems"); // Updated to match FoodItem
         storageRef = FirebaseStorage.getInstance().getReference("FoodImages");
@@ -76,12 +77,9 @@ public class AddFoodFragment extends Fragment {
 
         foodImage.setOnClickListener(v -> openImagePicker());
         submitButton.setOnClickListener(v -> validateAndUploadFoodItem());
-        if (btnBack!=null){
-            btnBack.setOnClickListener(this::pressBack);
-        }else{
-            Log.e("AddFoodFragment", "btnBack is null. Check R.id.btnBack in your layout");
-        }
+        btnBack.setOnClickListener(this::pressBack);
         clearButton.setOnClickListener(v -> clearFields()); // Set onClickListener for clearButton
+
         return view;
     }
 
@@ -116,62 +114,54 @@ public class AddFoodFragment extends Fragment {
         String name = foodName.getText().toString().trim();
         String price = foodPrice.getText().toString().trim();
         String description = foodDescription.getText().toString().trim();
+        String quantityStr = foodQuantity.getText().toString().trim(); // Get quantity input
         String location = foodLocationSpinner.getSelectedItem().toString();
 
         // Validate food name
         if (TextUtils.isEmpty(name)) {
-            Log.e("validateAndUpload", "Food name is empty.");
             foodName.setError("Food name is required");
             return;
-        } else {
-            Log.d("validateAndUpload", "Food name: " + name);
         }
 
         // Validate food price
-        if (TextUtils.isEmpty(price)) {
-            Log.e("validateAndUpload", "Food price is empty.");
-            foodPrice.setError("Food price is required");
-            return;
-        }
-
         double foodPriceValue;
         try {
             foodPriceValue = Double.parseDouble(price);
-            foodPriceValue = Math.round(foodPriceValue * 100.0) / 100.0; // Ensure 2 decimal places
-            Log.d("validateAndUpload", "Food price: " + foodPriceValue);
         } catch (NumberFormatException e) {
-            Log.e("validateAndUpload", "Invalid food price format: " + price, e);
             foodPrice.setError("Invalid price format");
             return;
         }
 
         // Validate food description
         if (TextUtils.isEmpty(description)) {
-            Log.e("validateAndUpload", "Food description is empty.");
             foodDescription.setError("Food description is required");
             return;
-        } else {
-            Log.d("validateAndUpload", "Food description: " + description);
+        }
+
+        // Validate quantity
+        int quantity;
+        try {
+            quantity = Integer.parseInt(quantityStr);
+            if (quantity <= 0) {
+                foodQuantity.setError("Quantity must be greater than 0");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            foodQuantity.setError("Invalid quantity format");
+            return;
         }
 
         // Validate image URI
         if (imageUri == null) {
-            Log.e("validateAndUpload", "Image URI is null. No image selected.");
             Toast.makeText(getContext(), "Please select an image", Toast.LENGTH_SHORT).show();
             return;
-        } else {
-            Log.d("validateAndUpload", "Image URI: " + imageUri.toString());
         }
 
-        // Log location
-        Log.d("validateAndUpload", "Selected location: " + location);
-
         // Call the upload function
-        Log.d("validateAndUpload", "Validation successful. Starting upload...");
-        uploadFoodItem(name, foodPriceValue, description, location);
+        uploadFoodItem(name, foodPriceValue, description, quantity, location);
     }
 
-    private void uploadFoodItem(String name, double price, String description, String location) {
+    private void uploadFoodItem(String name, double price, String description, int quantity, String location) {
         String merchantAddress;
 
         switch (location) {
@@ -191,54 +181,42 @@ public class AddFoodFragment extends Fragment {
                 merchantAddress = "Unknown Location";
         }
 
-        Log.d("uploadFoodItem", "Uploading image to Firebase Storage...");
-
         StorageReference fileRef = storageRef.child(System.currentTimeMillis() + ".jpg");
         fileRef.putFile(imageUri)
-                .addOnSuccessListener(taskSnapshot -> {
-                    Log.d("uploadFoodItem", "Image upload successful. Retrieving download URL...");
-                    fileRef.getDownloadUrl()
-                            .addOnSuccessListener(uri -> {
-                                Log.d("uploadFoodItem", "Download URL retrieved: " + uri.toString());
-                                String id = databaseRef.push().getKey();
-                                FoodItem foodItem = new FoodItem(
-                                        name,
-                                        price,
-                                        description,
-                                        uri.toString(), // Image URL
-                                        location,
-                                        merchantAddress,
-                                        "Available" // Default status
-                                );
+                .addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl()
+                        .addOnSuccessListener(uri -> {
+                            String id = databaseRef.push().getKey();
+                            FoodItem foodItem = new FoodItem(
+                                    name,
+                                    price, // Pass price as double
+                                    description,
+                                    uri.toString(), // Image URL
+                                    location,
+                                    merchantAddress,
+                                    "Available", // Default status
+                                    quantity // Add quantity
+                            );
 
-                                databaseRef.child(id).setValue(foodItem)
-                                        .addOnCompleteListener(task -> {
-                                            if (task.isSuccessful()) {
-                                                Log.d("uploadFoodItem", "Food item added to database successfully.");
-                                                Toast.makeText(getActivity(), "Food added successfully!", Toast.LENGTH_SHORT).show();
-                                                clearFields();
-                                            } else {
-                                                Log.e("uploadFoodItem", "Failed to add food item to database.", task.getException());
-                                                Toast.makeText(getActivity(), "Failed to add food", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                            })
-                            .addOnFailureListener(e -> {
-                                Log.e("uploadFoodItem", "Failed to retrieve download URL.", e);
-                                Toast.makeText(getContext(), "Failed to upload image", Toast.LENGTH_SHORT).show();
-                            });
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("uploadFoodItem", "Image upload failed.", e);
-                    Toast.makeText(getContext(), "Image upload failed", Toast.LENGTH_SHORT).show();
-                });
+                            databaseRef.child(id).setValue(foodItem)
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(getActivity(), "Food added successfully!", Toast.LENGTH_SHORT).show();
+                                            clearFields();
+                                        } else {
+                                            Toast.makeText(getActivity(), "Failed to add food", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        })
+                        .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to upload image", Toast.LENGTH_SHORT).show()))
+                .addOnFailureListener(e -> Toast.makeText(getContext(), "Image upload failed", Toast.LENGTH_SHORT).show());
     }
 
     private void clearFields() {
         foodName.setText("");
         foodPrice.setText("");
         foodDescription.setText("");
-        foodImage.setImageResource(R.drawable.ic_add); // Use your placeholder image here
+        foodQuantity.setText(""); // Clear quantity field
+        foodImage.setImageResource(R.drawable.ic_add); // Placeholder image
         foodLocationSpinner.setSelection(0);
         imageUri = null;
     }
