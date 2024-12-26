@@ -10,6 +10,10 @@ public class FoodItem {
     private String status;
     private int quantity;
 
+    // No-argument constructor (required for Firebase)
+    public FoodItem() {
+    }
+
     // Constructor
     public FoodItem(String foodName, double foodPrice, String foodDesc, String foodPic,
                     String pickupLocation, String merchantName, String status, int quantity) {
