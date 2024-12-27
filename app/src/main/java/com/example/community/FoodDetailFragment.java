@@ -18,8 +18,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class FoodDetailFragment extends Fragment {
 
@@ -112,23 +120,26 @@ public class FoodDetailFragment extends Fragment {
                         String foodKey = getArguments().getString("foodKey");
 
                         if (foodKey != null) {
-                            DatabaseReference foodRef = FirebaseDatabase.getInstance("https://community-1f007-default-rtdb.asia-southeast1.firebasedatabase.app")
-                                    .getReference("foodItems")
-                                    .child(foodKey);
+                            // Fetch user data from Firestore
+                            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+                            String documentID = userDocument.getInstance().getDocumentId();
 
-                            // Update reserved quantity and reduce available quantity
-                            foodRef.child("reservedQuantity").setValue(quantity);
-                            foodRef.child("quantity").setValue(availableQuantity - quantity);
-                            foodRef.child("status").setValue("Reserved")
-                                    .addOnSuccessListener(aVoid -> {
-                                        Toast.makeText(getContext(), "Reservation Successful!", Toast.LENGTH_SHORT).show();
-                                        FragmentManager fragmentManager = getParentFragmentManager();
-                                        FragmentTransaction transaction = fragmentManager.beginTransaction();
-                                        transaction.replace(R.id.frame_layout, new FoodListingFragment());
-                                        transaction.commit();
+                            firestore.collection("users").document(documentID)
+                                    .get()
+                                    .addOnSuccessListener(documentSnapshot -> {
+                                        if (documentSnapshot.exists()) {
+                                            String customerName = documentSnapshot.getString("userName");
+                                            String customerPhone = documentSnapshot.getString("userPhoneNo");
+
+                                            // Proceed to create the order in Realtime Database
+                                            createOrder(foodKey, quantity, customerName, customerPhone);
+                                        } else {
+                                            Toast.makeText(getContext(), "User not found in Firestore", Toast.LENGTH_LONG).show();
+                                        }
                                     })
                                     .addOnFailureListener(e -> {
-                                        Toast.makeText(getContext(), "Failed to update status: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Log.e("Firestore", "Error fetching user data", e);
+                                        Toast.makeText(getContext(), "Failed to fetch user data", Toast.LENGTH_SHORT).show();
                                     });
                         } else {
                             Toast.makeText(getContext(), "Error: Food item key is missing.", Toast.LENGTH_SHORT).show();
@@ -139,6 +150,64 @@ public class FoodDetailFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void createOrder(String foodKey, int quantity, String customerName, String customerPhone) {
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance()
+                .getReference();
+
+        String orderKey = databaseRef.child("orders").push().getKey();
+
+        Map<String, Object> orderData = new HashMap<>();
+        orderData.put("orderID", orderKey);
+        orderData.put("foodID", foodKey);
+        orderData.put("customerName", customerName);
+        orderData.put("customerPhone", customerPhone);
+        orderData.put("quantity", quantity);
+        orderData.put("orderStatus", "Pending");
+
+        // Create the order
+        databaseRef.child("orders").child(orderKey).setValue(orderData)
+                .addOnSuccessListener(aVoid -> {
+                    // Update food quantity
+                    updateFoodQuantity(foodKey, quantity);
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Failed to create order", Toast.LENGTH_SHORT).show();
+                    Log.e("RealtimeDB", "Error creating order", e);
+                });
+    }
+
+    private void updateFoodQuantity(String foodKey, int quantity) {
+        DatabaseReference foodRef = FirebaseDatabase.getInstance()
+                .getReference("foodItems").child(foodKey);
+
+        foodRef.runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                Integer currentQuantity = mutableData.child("quantity").getValue(Integer.class);
+                if (currentQuantity == null || currentQuantity < quantity) {
+                    return Transaction.abort();
+                }
+                mutableData.child("quantity").setValue(currentQuantity - quantity);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean committed, DataSnapshot dataSnapshot) {
+                if (committed) {
+                    Toast.makeText(getContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                    // Navigate back to FoodListingFragment
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.frame_layout, new FoodListingFragment());
+                    transaction.commit();
+                } else {
+                    Toast.makeText(getContext(), "Not enough stock available", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private String getMerchantAddress(String location) {
