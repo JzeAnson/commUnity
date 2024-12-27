@@ -26,11 +26,21 @@ public class PastOrdersFragment extends Fragment {
         Button btnPastOrders = view.findViewById(R.id.btn_past_orders);
 
         // Set click listeners for navigation
-        btnFoodListing.setOnClickListener(v -> replaceFragment(new FoodListingFragment()));
+        btnFoodListing.setOnClickListener(v -> {
+            btnFoodListing.setSelected(true);
+            btnPastOrders.setSelected(false);
+            replaceFragment(new FoodListingFragment());
+        });
+
         btnPastOrders.setOnClickListener(v -> {
-            // No need to reload the current fragment; simply log or show a message
+            btnFoodListing.setSelected(false);
+            btnPastOrders.setSelected(true);
             Log.i("PastOrdersFragment", "Already on Past Orders fragment");
         });
+
+// Set initial state
+        btnFoodListing.setSelected(false);
+        btnPastOrders.setSelected(true);
 
         return view;
     }

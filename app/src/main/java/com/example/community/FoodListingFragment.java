@@ -137,8 +137,21 @@ public class FoodListingFragment extends Fragment {
         });
 
         // Set click listeners for navigation
-        btnFoodListing.setOnClickListener(v -> replaceFragment(new FoodListingFragment()));
-        btnPastOrders.setOnClickListener(v -> replaceFragment(new PastOrdersFragment()));
+        btnFoodListing.setOnClickListener(v -> {
+            btnFoodListing.setSelected(true);
+            btnPastOrders.setSelected(false);
+            replaceFragment(new FoodListingFragment());
+        });
+
+        btnPastOrders.setOnClickListener(v -> {
+            btnFoodListing.setSelected(false);
+            btnPastOrders.setSelected(true);
+            replaceFragment(new PastOrdersFragment());
+        });
+
+        // Set initial state
+        btnFoodListing.setSelected(true);
+        btnPastOrders.setSelected(false);
 
         return view;
     }

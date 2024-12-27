@@ -86,7 +86,7 @@
             android:layout_weight="1"
             android:text="Food Listing"
             android:textColor="@android:color/white"
-            android:background="@android:color/holo_blue_dark"/>
+            android:backgroundTint="@drawable/button_background_selector"/>
 
         <Button
             android:id="@+id/btn_past_orders"
@@ -95,6 +95,6 @@
             android:layout_weight="1"
             android:text="Past Orders"
             android:textColor="@android:color/white"
-            android:background="@android:color/holo_red_dark"/>
+            android:backgroundTint="@drawable/button_background_selector"/>
     </LinearLayout>
 </RelativeLayout>
