@@ -135,37 +135,12 @@ public class PastOrdersFragment extends Fragment {
     }
 
     private void updateUIForRole(String role) {
+        // No need to handle updateStatusButton here, as each order has its own button
         if ("merchant".equals(role)) {
-            updateStatusButton.setVisibility(View.VISIBLE);
-            updateStatusButton.setOnClickListener(v -> showUpdateStatusDialog());
+            // If additional merchant-specific logic is required, implement it here
+            Log.d("PastOrdersFragment", "UI updated for merchant role.");
         } else {
-            updateStatusButton.setVisibility(View.GONE);
-        }
-    }
-
-    private void showUpdateStatusDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Update Order Status")
-                .setMessage("Did the customer pick up and pay for the food?")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    // Handle "Yes" action
-                    updateOrderStatus(true);
-                })
-                .setNegativeButton("No", (dialog, which) -> {
-                    // Handle "No" action
-                    updateOrderStatus(false);
-                })
-                .setCancelable(false) // Ensure only one option is selectable
-                .show();
-    }
-
-    private void updateOrderStatus(boolean isCompleted) {
-        if (isCompleted) {
-            Toast.makeText(getContext(), "Order status updated to: Completed", Toast.LENGTH_SHORT).show();
-            // Logic to update Firebase order status to "Completed"
-        } else {
-            Toast.makeText(getContext(), "Order status updated to: Not Completed", Toast.LENGTH_SHORT).show();
-            // Logic to update Firebase order status to "Not Completed"
+            Log.d("PastOrdersFragment", "UI updated for customer role.");
         }
     }
 }
