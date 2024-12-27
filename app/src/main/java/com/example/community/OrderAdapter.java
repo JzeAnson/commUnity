@@ -41,7 +41,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.foodPrice.setText(String.format("RM %.2f", order.getFoodPrice()));
         holder.merchantName.setText(order.getMerchantName());
         holder.merchantAddress.setText(order.getMerchantAddress());
-        holder.quantity.setText(order.getQuantity());
+        holder.quantity.setText(String.valueOf(order.getQuantity()));
         holder.orderStatus.setText(order.getOrderStatus());
         holder.orderDate.setText(order.getOrderDate());
         holder.orderTime.setText(order.getOrderTime());
