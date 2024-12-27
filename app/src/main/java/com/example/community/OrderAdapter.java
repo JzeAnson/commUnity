@@ -76,16 +76,16 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             holder.updateStatusButton.setVisibility(View.GONE);
         }
 
-        // Check user role and show/hide the Update Status button
+        // Update button visibility based on order status and user role
         SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
-        String currentRole = sharedPreferences.getString("userRole", "customer"); // Default role is customer
-        if ("merchant".equals(currentRole)) {
+        String currentRole = sharedPreferences.getString("userRole", "customer");
+
+        if ("merchant".equals(currentRole) && "Pending".equals(order.getOrderStatus())) {
             holder.updateStatusButton.setVisibility(View.VISIBLE);
             holder.updateStatusButton.setOnClickListener(v -> showUpdateStatusDialog(order));
         } else {
             holder.updateStatusButton.setVisibility(View.GONE);
         }
-
     }
 
     @Override
@@ -96,7 +96,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     private void showUpdateStatusDialog(OrderItem order) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Update Order Status")
-                .setMessage("Did the customer pick up and pay for the food? \n\nTap outside the pop-up to close it without making a selection.")
+                .setMessage("Did the customer pick up and pay for the food? \n\nTap outside the pop-up to close it without making a selection. \n\nRemember that the No Option is at the Left, the Yes Option is at the right.")
                 .setPositiveButton("Yes", (dialog, which) -> updateOrderStatus(order, "Completed"))
                 .setNegativeButton("No", (dialog, which) -> updateOrderStatus(order, "Cancelled"))
                 .setCancelable(true); // Allow dismissing by tapping outside or pressing the back button.
@@ -130,7 +130,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                     }
                     Toast.makeText(context, "Order status updated to: " + newStatus, Toast.LENGTH_SHORT).show();
                     order.setOrderStatus(newStatus); // Update local object
-                    notifyDataSetChanged(); // Refresh RecyclerView
+                    int position = orderList.indexOf(order); // Get position of the updated order
+                    notifyItemChanged(position); // Refresh only this item
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(context, "Failed to update order status", Toast.LENGTH_SHORT).show();
