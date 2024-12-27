@@ -1,17 +1,22 @@
 package com.example.community;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -60,6 +65,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 holder.orderStatus.setTextColor(context.getResources().getColor(android.R.color.darker_gray));
                 break;
         }
+
+        // Update Status Button
+        holder.updateStatusButton.setOnClickListener(v -> showUpdateStatusDialog(order));
     }
 
     @Override
@@ -67,9 +75,33 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         return orderList.size();
     }
 
+    private void showUpdateStatusDialog(OrderItem order) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Update Order Status")
+                .setMessage("Did the customer pick up and pay for the food?")
+                .setPositiveButton("Yes", (dialog, which) -> updateOrderStatus(order, "Completed"))
+                .setNegativeButton("No", (dialog, which) -> updateOrderStatus(order, "Cancelled"))
+                .setCancelable(false)
+                .show();
+    }
+
+    private void updateOrderStatus(OrderItem order, String newStatus) {
+        DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("orders");
+        ordersRef.child(order.getOrderID()).child("orderStatus").setValue(newStatus)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(context, "Order status updated to: " + newStatus, Toast.LENGTH_SHORT).show();
+                    order.setOrderStatus(newStatus); // Update local object
+                    notifyDataSetChanged(); // Refresh the RecyclerView
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(context, "Failed to update order status", Toast.LENGTH_SHORT).show();
+                });
+    }
+
     public static class OrderViewHolder extends RecyclerView.ViewHolder {
-        TextView foodName, foodPrice, merchantName, merchantAddress, quantity, orderStatus, orderDate, orderTime, foodDesc, customerName, customerPhone;
+        TextView foodName, foodPrice, merchantName, quantity, orderStatus, orderDate, foodDesc;
         ImageView foodImage;
+        Button updateStatusButton;
 
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,6 +113,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             orderDate = itemView.findViewById(R.id.orderDate);
             foodDesc = itemView.findViewById(R.id.foodDesc);
             foodImage = itemView.findViewById(R.id.foodImage);
+            updateStatusButton = itemView.findViewById(R.id.update_status_button);
         }
     }
 }

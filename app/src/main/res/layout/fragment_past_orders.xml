@@ -12,6 +12,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="17dp"
         android:text="Past Orders"
+        android:textStyle="bold"
         android:textSize="24sp" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -21,19 +22,6 @@
         android:layout_above="@id/navigation_buttons"
         android:layout_below="@id/past_orders_label"
         android:layout_margin="8dp" />
-
-    <!-- Update Status Button (Visible for merchants) -->
-    <Button
-        android:id="@+id/update_status_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="80dp"
-        android:text="Update Status"
-        android:backgroundTint="#FF9800"
-        android:textColor="@android:color/white"
-        android:visibility="gone" />
 
     <!-- Bottom Navigation Buttons -->
     <LinearLayout
