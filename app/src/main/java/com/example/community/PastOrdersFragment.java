@@ -44,9 +44,6 @@ public class PastOrdersFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view_past_orders);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Initialize Update Status button
-        updateStatusButton = view.findViewById(R.id.update_status_button);
-
         // Fetch user ID dynamically using a utility similar to `userDocument` or arguments
         String documentID = userDocument.getInstance().getDocumentId();
 

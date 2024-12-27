@@ -2,6 +2,7 @@ package com.example.community;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,8 +67,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 break;
         }
 
-        // Update Status Button
-        holder.updateStatusButton.setOnClickListener(v -> showUpdateStatusDialog(order));
+        // Check user role and show/hide the Update Status button
+        SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+        String currentRole = sharedPreferences.getString("userRole", "customer"); // Default role is customer
+        if ("merchant".equals(currentRole)) {
+            holder.updateStatusButton.setVisibility(View.VISIBLE);
+            holder.updateStatusButton.setOnClickListener(v -> showUpdateStatusDialog(order));
+        } else {
+            holder.updateStatusButton.setVisibility(View.GONE);
+        }
     }
 
     @Override
