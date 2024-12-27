@@ -40,7 +40,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         Log.d("OrderAdapter", "Food Name: " + order.getFoodName());
         holder.foodPrice.setText(String.format("RM %.2f", order.getFoodPrice()));
         holder.merchantName.setText(order.getMerchantName());
-        holder.merchantAddress.setText(order.getMerchantAddress());
         holder.quantity.setText(String.valueOf(order.getQuantity()));
         holder.orderStatus.setText(order.getOrderStatus());
         holder.orderDate.setText(order.getOrderDate());
@@ -77,7 +76,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             foodName = itemView.findViewById(R.id.foodName);
             foodPrice = itemView.findViewById(R.id.foodPrice);
             merchantName = itemView.findViewById(R.id.merchantName);
-            merchantAddress = itemView.findViewById(R.id.merchantAddress);
             quantity = itemView.findViewById(R.id.quantity);
             orderStatus = itemView.findViewById(R.id.orderStatus);
             orderDate = itemView.findViewById(R.id.orderDate);

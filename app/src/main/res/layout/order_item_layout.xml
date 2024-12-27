@@ -90,25 +90,6 @@
         android:textSize="14sp"
         android:layout_marginBottom="4dp" />
 
-    <!-- Merchant Address -->
-    <TextView
-        android:id="@+id/merchantAddressLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Merchant Address:"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="4dp" />
-    <TextView
-        android:id="@+id/merchantAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Address not available"
-        android:textSize="14sp"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="4dp" />
-
     <!-- Quantity -->
     <TextView
         android:id="@+id/quantityLabel"
