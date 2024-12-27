@@ -26,7 +26,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class FoodDetailFragment extends Fragment {
@@ -153,29 +156,50 @@ public class FoodDetailFragment extends Fragment {
     }
 
     private void createOrder(String foodKey, int quantity, String customerName, String customerPhone) {
-        DatabaseReference databaseRef = FirebaseDatabase.getInstance()
-                .getReference();
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
 
         String orderKey = databaseRef.child("orders").push().getKey();
+        String orderDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()); // Current date
+        String orderTime = new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date()); // Current time
 
-        Map<String, Object> orderData = new HashMap<>();
-        orderData.put("orderID", orderKey);
-        orderData.put("foodID", foodKey);
-        orderData.put("customerName", customerName);
-        orderData.put("customerPhone", customerPhone);
-        orderData.put("quantity", quantity);
-        orderData.put("orderStatus", "Pending");
+        // Fetch food details from the database to include in the order
+        DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("foodItems").child(foodKey);
 
-        // Create the order
-        databaseRef.child("orders").child(orderKey).setValue(orderData)
-                .addOnSuccessListener(aVoid -> {
-                    // Update food quantity
-                    updateFoodQuantity(foodKey, quantity);
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(getContext(), "Failed to create order", Toast.LENGTH_SHORT).show();
-                    Log.e("RealtimeDB", "Error creating order", e);
-                });
+        foodRef.get().addOnSuccessListener(snapshot -> {
+            if (snapshot.exists()) {
+                String foodName = snapshot.child("foodName").getValue(String.class);
+                String foodPlace = snapshot.child("merchantName").getValue(String.class);
+
+                // Build order data
+                Map<String, Object> orderData = new HashMap<>();
+                orderData.put("orderID", orderKey);
+                orderData.put("customerName", customerName);
+                orderData.put("customerPhone", customerPhone);
+                orderData.put("foodID", foodKey);
+                orderData.put("foodName", foodName);
+                orderData.put("quantity", quantity);
+                orderData.put("foodPlace", foodPlace);
+                orderData.put("orderDate", orderDate);
+                orderData.put("orderTime", orderTime);
+                orderData.put("orderStatus", "Pending");
+
+                // Add order to the database
+                databaseRef.child("orders").child(orderKey).setValue(orderData)
+                        .addOnSuccessListener(aVoid -> {
+                            // Update food quantity after successful order creation
+                            updateFoodQuantity(foodKey, quantity);
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(getContext(), "Failed to create order", Toast.LENGTH_SHORT).show();
+                            Log.e("RealtimeDB", "Error creating order", e);
+                        });
+            } else {
+                Toast.makeText(getContext(), "Food item not found", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(e -> {
+            Toast.makeText(getContext(), "Error fetching food details", Toast.LENGTH_SHORT).show();
+            Log.e("Firebase", "Error fetching food details", e);
+        });
     }
 
     private void updateFoodQuantity(String foodKey, int quantity) {
