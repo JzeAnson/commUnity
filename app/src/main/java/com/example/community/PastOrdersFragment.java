@@ -1,11 +1,15 @@
 package com.example.community;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +32,7 @@ import java.util.List;
 public class PastOrdersFragment extends Fragment {
 
     private RecyclerView recyclerView;
+    private Button updateStatusButton;
 
     @Nullable
     @Override
@@ -38,6 +43,9 @@ public class PastOrdersFragment extends Fragment {
         // Initialize RecyclerView
         recyclerView = view.findViewById(R.id.recycler_view_past_orders);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Initialize Update Status button
+        updateStatusButton = view.findViewById(R.id.update_status_button);
 
         // Fetch user ID dynamically using a utility similar to `userDocument` or arguments
         String documentID = userDocument.getInstance().getDocumentId();
@@ -62,6 +70,11 @@ public class PastOrdersFragment extends Fragment {
         // Set click listeners for navigation
         btnFoodListing.setOnClickListener(v -> replaceFragment(new FoodListingFragment()));
         btnPastOrders.setOnClickListener(v -> Log.i("PastOrdersFragment", "Already on Past Orders fragment"));
+
+        // Check user role and update UI
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+        String currentRole = sharedPreferences.getString("userRole", "customer"); // Default role is customer
+        updateUIForRole(currentRole);
 
         return view;
     }
@@ -119,5 +132,40 @@ public class PastOrdersFragment extends Fragment {
 
         OrderAdapter adapter = new OrderAdapter(getContext(), orderList);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void updateUIForRole(String role) {
+        if ("merchant".equals(role)) {
+            updateStatusButton.setVisibility(View.VISIBLE);
+            updateStatusButton.setOnClickListener(v -> showUpdateStatusDialog());
+        } else {
+            updateStatusButton.setVisibility(View.GONE);
+        }
+    }
+
+    private void showUpdateStatusDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Update Order Status")
+                .setMessage("Did the customer pick up and pay for the food?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    // Handle "Yes" action
+                    updateOrderStatus(true);
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    // Handle "No" action
+                    updateOrderStatus(false);
+                })
+                .setCancelable(false) // Ensure only one option is selectable
+                .show();
+    }
+
+    private void updateOrderStatus(boolean isCompleted) {
+        if (isCompleted) {
+            Toast.makeText(getContext(), "Order status updated to: Completed", Toast.LENGTH_SHORT).show();
+            // Logic to update Firebase order status to "Completed"
+        } else {
+            Toast.makeText(getContext(), "Order status updated to: Not Completed", Toast.LENGTH_SHORT).show();
+            // Logic to update Firebase order status to "Not Completed"
+        }
     }
 }
