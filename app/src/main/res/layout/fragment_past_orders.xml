@@ -17,8 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:background="?attr/colorPrimary">
+        android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/btn_food_listing"
@@ -27,7 +26,7 @@
             android:layout_weight="1"
             android:text="Food Listing"
             android:textColor="@android:color/white"
-            android:backgroundTint="@android:color/holo_blue_dark"/>
+            android:backgroundTint="#AE0606"/>
 
         <Button
             android:id="@+id/btn_past_orders"
@@ -36,7 +35,7 @@
             android:layout_weight="1"
             android:text="Past Orders"
             android:textColor="@android:color/white"
-            android:backgroundTint="@android:color/holo_red_dark"/>
+            android:backgroundTint="#06287C"/>
     </LinearLayout>
 
 </RelativeLayout>

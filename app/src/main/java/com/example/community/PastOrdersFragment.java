@@ -27,20 +27,12 @@ public class PastOrdersFragment extends Fragment {
 
         // Set click listeners for navigation
         btnFoodListing.setOnClickListener(v -> {
-            btnFoodListing.setSelected(true);
-            btnPastOrders.setSelected(false);
             replaceFragment(new FoodListingFragment());
         });
 
         btnPastOrders.setOnClickListener(v -> {
-            btnFoodListing.setSelected(false);
-            btnPastOrders.setSelected(true);
             Log.i("PastOrdersFragment", "Already on Past Orders fragment");
         });
-
-// Set initial state
-        btnFoodListing.setSelected(false);
-        btnPastOrders.setSelected(true);
 
         return view;
     }
