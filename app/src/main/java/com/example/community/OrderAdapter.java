@@ -16,8 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -67,6 +70,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 break;
         }
 
+        if ("Pending".equals(order.getOrderStatus())) {
+            holder.updateStatusButton.setVisibility(View.VISIBLE);
+        } else {
+            holder.updateStatusButton.setVisibility(View.GONE);
+        }
+
         // Check user role and show/hide the Update Status button
         SharedPreferences sharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
         String currentRole = sharedPreferences.getString("userRole", "customer"); // Default role is customer
@@ -76,6 +85,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         } else {
             holder.updateStatusButton.setVisibility(View.GONE);
         }
+
     }
 
     @Override
@@ -96,11 +106,31 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
     private void updateOrderStatus(OrderItem order, String newStatus) {
         DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("orders");
+        DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("foodItems").child(order.getFoodID());
+
         ordersRef.child(order.getOrderID()).child("orderStatus").setValue(newStatus)
                 .addOnSuccessListener(aVoid -> {
+                    if ("Cancelled".equals(newStatus)) {
+                        foodRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                FoodItem foodItem = snapshot.getValue(FoodItem.class);
+                                if (foodItem != null) {
+                                    int updatedQuantity = foodItem.getQuantity() + order.getQuantity();
+                                    foodRef.child("quantity").setValue(updatedQuantity);
+                                    foodRef.child("status").setValue(updatedQuantity > 0 ? "Available" : "Out of Stock");
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.e("Firebase", "Failed to update food item", error.toException());
+                            }
+                        });
+                    }
                     Toast.makeText(context, "Order status updated to: " + newStatus, Toast.LENGTH_SHORT).show();
                     order.setOrderStatus(newStatus); // Update local object
-                    notifyDataSetChanged(); // Refresh the RecyclerView
+                    notifyDataSetChanged(); // Refresh RecyclerView
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(context, "Failed to update order status", Toast.LENGTH_SHORT).show();
