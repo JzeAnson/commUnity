@@ -61,23 +61,25 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             holder.foodQuantity.setTypeface(null, android.graphics.Typeface.BOLD);
         }
 
-        // Check if the item is reserved
-        if ("Reserved".equalsIgnoreCase(foodItem.getStatus())) {
-            // Show reserved overlay and label
-            holder.reservedOverlay.setVisibility(View.VISIBLE);
-            holder.reservedLabel.setVisibility(View.VISIBLE);
-            holder.itemView.setClickable(false); // Disable clicks
+        // Handle "Out of Stock" status
+        if (quantity == 0) {
+            foodItem.setStatus("Out of Stock");
+            holder.outOfStockOverlay.setVisibility(View.VISIBLE); // Updated ID
+            holder.outOfStockLabel.setVisibility(View.VISIBLE); // Updated ID
+            holder.itemView.setClickable(false);
         } else {
-            // Hide reserved overlay and label
-            holder.reservedOverlay.setVisibility(View.GONE);
-            holder.reservedLabel.setVisibility(View.GONE);
+            foodItem.setStatus("Available");
+            holder.outOfStockOverlay.setVisibility(View.GONE); // Updated ID
+            holder.outOfStockLabel.setVisibility(View.GONE); // Updated ID
             holder.itemView.setClickable(true);
-            holder.itemView.setOnClickListener(v -> {
-                if (listener != null) {
-                    listener.onFoodItemClick(foodItem, foodKeys.get(position));
-                }
-            });
         }
+
+        // Handle click for available items
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null && quantity > 0) {
+                listener.onFoodItemClick(foodItem, foodKeys.get(position));
+            }
+        });
     }
 
     @Override
@@ -88,8 +90,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     public static class FoodViewHolder extends RecyclerView.ViewHolder {
         TextView foodName, foodPrice, restaurantName, foodQuantity; // Ensure restaurantName is included
         ImageView foodImage;
-        View reservedOverlay;
-        TextView reservedLabel;
+        View outOfStockOverlay; // Updated ID
+        TextView outOfStockLabel; // Updated ID
 
         public FoodViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -98,8 +100,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             foodImage = itemView.findViewById(R.id.foodImage);
             restaurantName = itemView.findViewById(R.id.restaurantName); // Initialize restaurantName
             foodQuantity=itemView.findViewById(R.id.foodQuantity);
-            reservedOverlay = itemView.findViewById(R.id.reservedOverlay);
-            reservedLabel = itemView.findViewById(R.id.reservedLabel);
+            outOfStockOverlay = itemView.findViewById(R.id.outOfStockOverlay); // Updated ID
+            outOfStockLabel = itemView.findViewById(R.id.outOfStockLabel); // Updated ID
 
             Log.d("FoodViewHolder", "restaurantName: " + (restaurantName != null));
         }

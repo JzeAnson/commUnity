@@ -74,25 +74,26 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Reserved Overlay -->
-    <View
-        android:id="@+id/reservedOverlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#80000000"
-        android:visibility="gone" />
+        <!-- Out of Stock Overlay -->
+        <View
+            android:id="@+id/outOfStockOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#80000000"
+            android:visibility="gone" />
 
-    <!-- Reserved Label -->
-    <TextView
-        android:id="@+id/reservedLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@android:color/holo_red_dark"
-        android:padding="8dp"
-        android:text="Reserved"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:visibility="gone" />
+        <!-- Out of Stock Label -->
+        <TextView
+            android:id="@+id/outOfStockLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/holo_red_dark"
+            android:padding="8dp"
+            android:text="Out of Stock"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
 </FrameLayout>
 </androidx.cardview.widget.CardView>
