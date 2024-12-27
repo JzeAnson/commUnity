@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -72,9 +73,75 @@ public class GraphSelectionFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ImageButton btnPublicTransport = view.findViewById(R.id.transportusability_button);
+
+        btnPublicTransport.setOnClickListener(v -> {
+            // Create a new instance of RadarGraphFragment
+            Fragment radarGraphFragment = new RadarGraphFragment();
+
+            // Pass arguments to the fragment
+            Bundle args = new Bundle();
+            args.putString("graphCategory", "Public Transport Usability");
+            radarGraphFragment.setArguments(args);
+
+            // Perform the fragment transaction
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, radarGraphFragment);
+            transaction.addToBackStack(null); // Optional: allows back navigation
+            transaction.commit();
+        });
         ImageButton btnPopularity = view.findViewById(R.id.popularity_button);
+
+        btnPopularity.setOnClickListener(v -> {
+            // Create a new instance of RadarGraphFragment
+            Fragment radarGraphFragment = new RadarGraphFragment();
+
+            // Pass arguments to the fragment
+            Bundle args = new Bundle();
+            args.putString("graphCategory", "Popularity");
+            radarGraphFragment.setArguments(args);
+
+            // Perform the fragment transaction
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, radarGraphFragment);
+            transaction.addToBackStack(null); // Optional: allows back navigation
+            transaction.commit();
+        });
+
         ImageButton btnGreenInitiative = view.findViewById(R.id.greeninitiative_button);
+
+        btnGreenInitiative.setOnClickListener(v -> {
+            // Create a new instance of RadarGraphFragment
+            Fragment radarGraphFragment = new RadarGraphFragment();
+
+            // Pass arguments to the fragment
+            Bundle args = new Bundle();
+            args.putString("graphCategory", "Green Initiative Execution");
+            radarGraphFragment.setArguments(args);
+
+            // Perform the fragment transaction
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, radarGraphFragment);
+            transaction.addToBackStack(null); // Optional: allows back navigation
+            transaction.commit();
+        });
+
         ImageButton btnFoodWaste = view.findViewById(R.id.foodprevention_button);
+
+        btnFoodWaste.setOnClickListener(v -> {
+            // Create a new instance of RadarGraphFragment
+            Fragment radarGraphFragment = new RadarGraphFragment();
+
+            // Pass arguments to the fragment
+            Bundle args = new Bundle();
+            args.putString("graphCategory", "Food Waste Prevention");
+            radarGraphFragment.setArguments(args);
+
+            // Perform the fragment transaction
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, radarGraphFragment);
+            transaction.addToBackStack(null); // Optional: allows back navigation
+            transaction.commit();
+        });
     }
 
 }
