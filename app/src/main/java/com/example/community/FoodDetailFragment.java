@@ -158,8 +158,8 @@ public class FoodDetailFragment extends Fragment {
     private void createOrder(String foodKey, int quantity, String customerName, String customerPhone) {
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
 
-        String orderKey = databaseRef.child("orders").push().getKey();
-        String orderDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()); // Current date
+        String orderKey = databaseRef.child("orders").push().getKey(); // Generate a unique order ID
+        String orderDate = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(new Date()); // Date with spelled-out month
         String orderTime = new SimpleDateFormat("hh:mm a", Locale.getDefault()).format(new Date()); // Current time
 
         // Fetch food details from the database to include in the order
@@ -167,20 +167,27 @@ public class FoodDetailFragment extends Fragment {
 
         foodRef.get().addOnSuccessListener(snapshot -> {
             if (snapshot.exists()) {
+                // Fetch food details from the snapshot
                 String foodName = snapshot.child("foodName").getValue(String.class);
-                String foodPlace = snapshot.child("merchantName").getValue(String.class);
+                String foodDesc = snapshot.child("foodDesc").getValue(String.class);
+                String foodPic = snapshot.child("foodPic").getValue(String.class);
+                double foodPrice = snapshot.child("foodPrice").getValue(Double.class);
+                String merchantName = snapshot.child("merchantName").getValue(String.class);
 
-                // Build order data
+                // Build order data based on the required format
                 Map<String, Object> orderData = new HashMap<>();
                 orderData.put("orderID", orderKey);
-                orderData.put("customerName", customerName);
-                orderData.put("customerPhone", customerPhone);
                 orderData.put("foodID", foodKey);
                 orderData.put("foodName", foodName);
+                orderData.put("foodPrice", foodPrice);
                 orderData.put("quantity", quantity);
-                orderData.put("foodPlace", foodPlace);
+                orderData.put("merchantName", merchantName);
+                orderData.put("customerName", customerName);
+                orderData.put("customerPhone", customerPhone);
                 orderData.put("orderDate", orderDate);
                 orderData.put("orderTime", orderTime);
+                orderData.put("foodDesc", foodDesc);
+                orderData.put("foodPic", foodPic);
                 orderData.put("orderStatus", "Pending");
 
                 // Add order to the database

@@ -1,62 +1,65 @@
 {
-    "foodItems": {
-      "item1": {
-        "foodID": "item1",
-        "foodName": "Nasi Lemak",
-        "foodPic": "https://firebasestorage.googleapis.com/v0/b/community-1f007.firebasestorage.app/o/nasi%20lemak.png?alt=media&token=e2eac833-193b-4d92-93f6-86747ee42694",
-        "foodDesc": "8:00 AM - 10:00 AM",
-        "foodPrice": 4.00,
-        "merchantName": "AEON MALL AU2 Setiawangsa",
-        "merchantAddress": "No.6 Jalan Taman Setiawangsa (Jalan 37/56), AU2, Taman Keramat, 54200 Kuala Lumpur",
-        "status": "Available",
-        "quantity": 5
-      },
-      "item2": {
-        "foodID": "item2",
-        "foodName": "5 Pcs Mr Happy Donut",
-        "foodPic": "https://firebasestorage.googleapis.com/v0/b/community-1f007.firebasestorage.app/o/donut.png?alt=media&token=cbbc1639-8d0a-4c84-a893-c7bf9279e0b0",
-        "foodDesc": "10:00 AM - 12:00 PM",
-        "foodPrice": 10.00,
-        "merchantName": "Dunkin Donuts Aeon Big",
-        "merchantAddress": "Level 1, Lot F1-62, Section 5, Jalan 8/27a, Wangsa Maju, 53300 Kuala Lumpur, Wilayah Persekutuan",
-        "status": "Available",
-        "quantity": 5
-      },
-      "item3": {
-        "foodID": "item3",
-        "foodName": "Sushi Combo Set",
-        "foodPic": "https://firebasestorage.googleapis.com/v0/b/community-1f007.firebasestorage.app/o/sushi.png?alt=media&token=49bdd436-adae-41a7-afc2-5f34adc4abb5",
-        "foodDesc": "12:00 PM - 2:00 PM",
-        "foodPrice": 30.00,
-        "merchantName": "Empire Sushi Melawati Mall",
-        "merchantAddress": "Lot G-23A, Melawati Mall, 355 Jalan Bandar, Taman Melawati, 53100 Kuala Lumpur, Wilayah Persekutuan",
-        "status": "Available",
-        "quantity": 5
-      },
-      "item4": {
-        "foodID": "item4",
-        "foodName": "5 Pcs Sausage Bread",
-        "foodPic": "https://firebasestorage.googleapis.com/v0/b/community-1f007.firebasestorage.app/o/sausage%20bread.png?alt=media&token=f5c4df61-a698-49c2-b82a-4598648a535a",
-        "foodDesc": "2:00 PM - 4:00 PM",
-        "foodPrice": 5.00,
-        "merchantName": "Bakers’ Cottage Taman Melawati",
-        "merchantAddress": "No. 15 Jalan Bandar 12, Taman Melawati, 53100 Kuala Lumpur, Wilayah Persekutuan",
-        "status": "Available",
-        "quantity": 5
-      }
+  "foodItems": {
+    "item1": {
+      "foodID": "item1",
+      "foodName": "Nasi Lemak",
+      "foodPic": "https://firebasestorage.googleapis.com/v0/b/community-1f007.firebasestorage.app/o/nasi%20lemak.png?alt=media&token=e2eac833-193b-4d92-93f6-86747ee42694",
+      "foodDesc": "8:00 AM - 10:00 AM",
+      "foodPrice": 4.00,
+      "merchantName": "AEON MALL AU2 Setiawangsa",
+      "merchantAddress": "No.6 Jalan Taman Setiawangsa (Jalan 37/56), AU2, Taman Keramat, 54200 Kuala Lumpur",
+      "status": "Available",
+      "quantity": 5
     },
-    "orders": {
-      "order1": {
-        "orderID": "order1",
-        "customerName": "Jian Wen",
-        "customerPhone": "0123456789",
-        "foodID": "item3",
-        "foodName": "Sushi Combo Set",
-        "quantity": 2,
-        "foodPlace": "Empire Sushi Melawati Mall",
-        "orderDate": "2024-12-27",
-        "orderTime": "12:30 PM",
-        "orderStatus": "Pending"
-      }
+    "item2": {
+      "foodID": "item2",
+      "foodName": "5 Pcs Mr Happy Donut",
+      "foodPic": "https://firebasestorage.googleapis.com/v0/b/community-1f007.firebasestorage.app/o/donut.png?alt=media&token=cbbc1639-8d0a-4c84-a893-c7bf9279e0b0",
+      "foodDesc": "10:00 AM - 12:00 PM",
+      "foodPrice": 10.00,
+      "merchantName": "Dunkin Donuts Aeon Big",
+      "merchantAddress": "Level 1, Lot F1-62, Section 5, Jalan 8/27a, Wangsa Maju, 53300 Kuala Lumpur, Wilayah Persekutuan",
+      "status": "Available",
+      "quantity": 5
+    },
+    "item3": {
+      "foodID": "item3",
+      "foodName": "Sushi Combo Set",
+      "foodPic": "https://firebasestorage.googleapis.com/v0/b/community-1f007.firebasestorage.app/o/sushi.png?alt=media&token=49bdd436-adae-41a7-afc2-5f34adc4abb5",
+      "foodDesc": "12:00 PM - 2:00 PM",
+      "foodPrice": 30.00,
+      "merchantName": "Empire Sushi Melawati Mall",
+      "merchantAddress": "Lot G-23A, Melawati Mall, 355 Jalan Bandar, Taman Melawati, 53100 Kuala Lumpur, Wilayah Persekutuan",
+      "status": "Available",
+      "quantity": 5
+    },
+    "item4": {
+      "foodID": "item4",
+      "foodName": "5 Pcs Sausage Bread",
+      "foodPic": "https://firebasestorage.googleapis.com/v0/b/community-1f007.firebasestorage.app/o/sausage%20bread.png?alt=media&token=f5c4df61-a698-49c2-b82a-4598648a535a",
+      "foodDesc": "2:00 PM - 4:00 PM",
+      "foodPrice": 5.00,
+      "merchantName": "Bakers’ Cottage Taman Melawati",
+      "merchantAddress": "No. 15 Jalan Bandar 12, Taman Melawati, 53100 Kuala Lumpur, Wilayah Persekutuan",
+      "status": "Available",
+      "quantity": 5
     }
-  }  
+  },
+  "orders": {
+    "order1": {
+      "orderID": "order1",
+      "foodID": "item3",
+      "foodName": "Sushi Combo Set",
+      "foodPrice": 30.00,
+      "quantity": 1,
+      "merchantName": "Empire Sushi Melawati Mall",
+      "customerName": "Jian Wen",
+      "customerPhone": "0123456789",
+      "orderDate": "2024-12-27",
+      "orderTime": "12:30 PM",
+      "foodDesc": "12:00 PM - 2:00 PM",
+      "foodPic": "https://firebasestorage.googleapis.com/v0/b/community-1f007.firebasestorage.app/o/sushi.png?alt=media&token=49bdd436-adae-41a7-afc2-5f34adc4abb5",
+      "orderStatus": "Pending"
+    }
+  }
+}
