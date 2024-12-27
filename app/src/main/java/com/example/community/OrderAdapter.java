@@ -84,10 +84,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             quantity = itemView.findViewById(R.id.quantity);
             orderStatus = itemView.findViewById(R.id.orderStatus);
             orderDate = itemView.findViewById(R.id.orderDate);
-            orderTime = itemView.findViewById(R.id.orderTime);
             foodDesc = itemView.findViewById(R.id.foodDesc);
-            customerName = itemView.findViewById(R.id.customerName);
-            customerPhone = itemView.findViewById(R.id.customerPhone);
             foodImage = itemView.findViewById(R.id.foodImage);
         }
     }
