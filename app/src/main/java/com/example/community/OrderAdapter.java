@@ -86,11 +86,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     private void showUpdateStatusDialog(OrderItem order) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Update Order Status")
-                .setMessage("Did the customer pick up and pay for the food?")
+                .setMessage("Did the customer pick up and pay for the food? \n\nTap outside the pop-up to close it without making a selection.")
                 .setPositiveButton("Yes", (dialog, which) -> updateOrderStatus(order, "Completed"))
                 .setNegativeButton("No", (dialog, which) -> updateOrderStatus(order, "Cancelled"))
-                .setCancelable(false)
-                .show();
+                .setCancelable(true); // Allow dismissing by tapping outside or pressing the back button.
+
+        builder.show();
     }
 
     private void updateOrderStatus(OrderItem order, String newStatus) {
