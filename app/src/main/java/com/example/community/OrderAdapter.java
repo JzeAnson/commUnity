@@ -1,6 +1,7 @@
 package com.example.community;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         OrderItem order = orderList.get(position);
 
         // Bind data to UI components
-        holder.foodName.setText(order.getFoodName());
+        holder.foodName.setText(String.valueOf(order.getFoodName()));
+        Log.d("OrderAdapter", "Food Name: " + order.getFoodName());
         holder.foodPrice.setText(String.format("RM %.2f", order.getFoodPrice()));
         holder.merchantName.setText(order.getMerchantName());
         holder.merchantAddress.setText(order.getMerchantAddress());
