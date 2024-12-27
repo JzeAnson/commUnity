@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class FoodListingFragment extends Fragment {
     private List<String> foodKeys; // List to hold keys for food items
     private DatabaseReference databaseRef;
     private FoodAdapter adapter;
+    private Button btnFoodListing, btnPastOrders;
 
     @Nullable
     @Override
@@ -58,6 +60,8 @@ public class FoodListingFragment extends Fragment {
         profileButton = view.findViewById(R.id.profileButton);
         recyclerView = view.findViewById(R.id.recyclerView);
         fab = view.findViewById(R.id.addButton);
+        btnFoodListing = view.findViewById(R.id.btn_food_listing);
+        btnPastOrders = view.findViewById(R.id.btn_past_orders);
 
         if (fab != null) {
             Log.d("FoodListingFragment", "Setting up FAB click listener.");
@@ -131,6 +135,10 @@ public class FoodListingFragment extends Fragment {
                 fetchFoodData(); // Fetch data again to refresh the view
             }
         });
+
+        // Set click listeners for navigation
+        btnFoodListing.setOnClickListener(v -> replaceFragment(new FoodListingFragment()));
+        btnPastOrders.setOnClickListener(v -> replaceFragment(new PastOrdersFragment()));
 
         return view;
     }

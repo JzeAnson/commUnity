@@ -69,4 +69,32 @@
         app:tint="@android:color/white"
         android:onClick="pressAdd"
         android:visibility="gone"/>
+
+    <!-- Bottom Navigation Buttons -->
+    <LinearLayout
+        android:id="@+id/navigation_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="?attr/colorPrimary">
+
+        <Button
+            android:id="@+id/btn_food_listing"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Food Listing"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_blue_dark"/>
+
+        <Button
+            android:id="@+id/btn_past_orders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Past Orders"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_red_dark"/>
+    </LinearLayout>
 </RelativeLayout>
