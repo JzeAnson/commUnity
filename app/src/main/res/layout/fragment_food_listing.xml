@@ -76,23 +76,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:padding="8dp">  <!-- Added padding -->
 
-        <Button
+    <Button
             android:id="@+id/btn_food_listing"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Food Listing"
+            android:layout_marginEnd="4dp"
             android:textColor="@android:color/white"
-            android:backgroundTint="#06287C
-"/>
+            android:backgroundTint="#06287C"/>
 
         <Button
             android:id="@+id/btn_past_orders"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="4dp"
             android:text="Past Orders"
             android:textColor="@android:color/white"
             android:backgroundTint="#AE0606"/>
