@@ -19,109 +19,203 @@
 
     <!-- Food Name -->
     <TextView
+        android:id="@+id/foodNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food Name:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
         android:id="@+id/foodName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Food Name"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
+        android:text="Nasi Lemak"
+        android:textSize="14sp"
         android:layout_marginBottom="4dp" />
 
     <!-- Food Description -->
     <TextView
+        android:id="@+id/foodDescLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Availability:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
         android:id="@+id/foodDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Available: 8:00 AM - 10:00 AM"
+        android:text="8:00 AM - 10:00 AM"
         android:textSize="14sp"
-        android:textColor="@android:color/black"
         android:layout_marginBottom="4dp" />
 
     <!-- Food Price -->
     <TextView
+        android:id="@+id/foodPriceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Price:"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
         android:id="@+id/foodPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RM 0.00"
+        android:text="RM 4.00"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:textColor="@android:color/holo_red_dark"
+        android:textColor="@android:color/black"
         android:layout_marginBottom="4dp" />
 
     <!-- Merchant Name -->
     <TextView
+        android:id="@+id/merchantNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Merchant:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
         android:id="@+id/merchantName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Merchant Name"
+        android:text="AEON MALL AU2 Setiawangsa"
         android:textSize="14sp"
-        android:textColor="@android:color/black"
         android:layout_marginBottom="4dp" />
 
     <!-- Merchant Address -->
     <TextView
+        android:id="@+id/merchantAddressLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
         android:id="@+id/merchantAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Address: No.6 Jalan Taman Setiawangsa..."
+        android:text="Address not available"
         android:textSize="14sp"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@android:color/black"
         android:layout_marginBottom="4dp" />
 
     <!-- Customer Name -->
     <TextView
+        android:id="@+id/customerNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Customer:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
         android:id="@+id/customerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Customer: Jian Wen"
+        android:text="JohnnyRobs19"
         android:textSize="14sp"
         android:layout_marginBottom="4dp" />
 
     <!-- Customer Phone -->
     <TextView
+        android:id="@+id/customerPhoneLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
         android:id="@+id/customerPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Phone: 0123456789"
+        android:text="01165589681"
         android:textSize="14sp"
         android:layout_marginBottom="4dp" />
 
     <!-- Quantity -->
     <TextView
+        android:id="@+id/quantityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantity:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
         android:id="@+id/quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quantity: 0"
+        android:text="1"
         android:textSize="14sp"
         android:layout_marginBottom="4dp" />
 
     <!-- Order Date -->
     <TextView
+        android:id="@+id/orderDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
         android:id="@+id/orderDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date: 2024-12-27"
+        android:text="27 December 2024"
         android:textSize="14sp"
         android:layout_marginBottom="4dp" />
 
     <!-- Order Time -->
     <TextView
+        android:id="@+id/orderTimeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
         android:id="@+id/orderTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Time: 12:30 PM"
+        android:text="04:04 PM"
         android:textSize="14sp"
         android:layout_marginBottom="4dp" />
 
     <!-- Order Status -->
     <TextView
+        android:id="@+id/orderStatusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
         android:id="@+id/orderStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Status: Pending"
+        android:text="Pending"
         android:textSize="14sp"
-        android:layout_marginBottom="8dp"
         android:textStyle="bold"
-        android:textColor="@android:color/holo_red_dark" />
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_marginBottom="8dp" />
 </LinearLayout>
