@@ -171,15 +171,22 @@ public class FoodDetailFragment extends Fragment {
                 String foodName = snapshot.child("foodName").getValue(String.class);
                 String foodDesc = snapshot.child("foodDesc").getValue(String.class);
                 String foodPic = snapshot.child("foodPic").getValue(String.class);
-                double foodPrice = snapshot.child("foodPrice").getValue(Double.class);
+                Double individualFoodPrice = snapshot.child("foodPrice").getValue(Double.class); // Fetch price per item
                 String merchantName = snapshot.child("merchantName").getValue(String.class);
+
+                if (individualFoodPrice == null) {
+                    Toast.makeText(getContext(), "Error: Food price is missing.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                double totalFoodPrice = individualFoodPrice * quantity; // Calculate total price
 
                 // Build order data based on the required format
                 Map<String, Object> orderData = new HashMap<>();
                 orderData.put("orderID", orderKey);
                 orderData.put("foodID", foodKey);
                 orderData.put("foodName", foodName);
-                orderData.put("foodPrice", foodPrice);
+                orderData.put("foodPrice", totalFoodPrice); // Store total price in the order
                 orderData.put("quantity", quantity);
                 orderData.put("merchantName", merchantName);
                 orderData.put("customerName", customerName);
