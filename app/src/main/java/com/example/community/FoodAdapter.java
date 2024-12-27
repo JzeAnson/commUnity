@@ -1,6 +1,9 @@
 package com.example.community;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +47,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         FoodItem foodItem = foodList.get(position);
         String foodKey = foodKeys.get(position); // Get the corresponding key
 
+        // Firebase reference for this food item
+        DatabaseReference foodRef = FirebaseDatabase.getInstance().getReference("foodItems").child(foodKey);
+
         holder.foodName.setText(foodItem.getFoodName());
         holder.foodPrice.setText(String.format("RM %.2f", foodItem.getFoodPrice()));
         holder.restaurantName.setText(foodItem.getMerchantName()); // Set merchant name
@@ -67,11 +73,17 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             holder.outOfStockOverlay.setVisibility(View.VISIBLE); // Updated ID
             holder.outOfStockLabel.setVisibility(View.VISIBLE); // Updated ID
             holder.itemView.setClickable(false);
+
+            // Update Firebase status to "Out of Stock"
+            foodRef.child("status").setValue("Out of Stock");
         } else {
             foodItem.setStatus("Available");
             holder.outOfStockOverlay.setVisibility(View.GONE); // Updated ID
             holder.outOfStockLabel.setVisibility(View.GONE); // Updated ID
             holder.itemView.setClickable(true);
+
+            // Update Firebase status to "Available"
+            foodRef.child("status").setValue("Available");
         }
 
         // Handle click for available items
