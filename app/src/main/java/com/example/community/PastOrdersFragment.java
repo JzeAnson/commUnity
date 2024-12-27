@@ -12,14 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -36,27 +35,33 @@ public class PastOrdersFragment extends Fragment {
         // Inflate the layout
         View view = inflater.inflate(R.layout.fragment_past_orders, container, false);
 
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        FirebaseFirestore.getInstance().collection("users").document(userId)
+        // Initialize RecyclerView
+        recyclerView = view.findViewById(R.id.recycler_view_past_orders);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Fetch user ID dynamically using a utility similar to `userDocument` or arguments
+        String documentID = userDocument.getInstance().getDocumentId();
+
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        firestore.collection("users").document(documentID)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
-                    String customerName = documentSnapshot.getString("userName");
-                    fetchOrders(customerName);
+                    if (documentSnapshot.exists()) {
+                        String customerName = documentSnapshot.getString("userName");
+                        fetchOrders(customerName); // Fetch orders based on the customer's name
+                    } else {
+                        Log.e("PastOrdersFragment", "User not found in Firestore");
+                    }
                 })
-                .addOnFailureListener(e -> Log.e("PastOrders", "Error fetching user data", e));
+                .addOnFailureListener(e -> Log.e("Firestore", "Error fetching user data", e));
 
         // Initialize navigation buttons
         Button btnFoodListing = view.findViewById(R.id.btn_food_listing);
         Button btnPastOrders = view.findViewById(R.id.btn_past_orders);
 
         // Set click listeners for navigation
-        btnFoodListing.setOnClickListener(v -> {
-            replaceFragment(new FoodListingFragment());
-        });
-
-        btnPastOrders.setOnClickListener(v -> {
-            Log.i("PastOrdersFragment", "Already on Past Orders fragment");
-        });
+        btnFoodListing.setOnClickListener(v -> replaceFragment(new FoodListingFragment()));
+        btnPastOrders.setOnClickListener(v -> Log.i("PastOrdersFragment", "Already on Past Orders fragment"));
 
         return view;
     }
@@ -76,7 +81,7 @@ public class PastOrdersFragment extends Fragment {
     private void fetchOrders(String customerName) {
         DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference("orders");
         ordersRef.orderByChild("customerName").equalTo(customerName)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+                .addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         List<OrderItem> orderList = new ArrayList<>();
@@ -90,7 +95,7 @@ public class PastOrdersFragment extends Fragment {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        Log.e("PastOrders", "Error fetching orders", error.toException());
+                        Log.e("PastOrdersFragment", "Error fetching orders", error.toException());
                     }
                 });
     }
@@ -106,5 +111,4 @@ public class PastOrdersFragment extends Fragment {
         OrderAdapter adapter = new OrderAdapter(getContext(), orderList);
         recyclerView.setAdapter(adapter);
     }
-
 }
