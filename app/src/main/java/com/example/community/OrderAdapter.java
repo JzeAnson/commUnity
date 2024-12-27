@@ -44,10 +44,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.quantity.setText(String.valueOf(order.getQuantity()));
         holder.orderStatus.setText(order.getOrderStatus());
         holder.orderDate.setText(order.getOrderDate());
-        holder.orderTime.setText(order.getOrderTime());
         holder.foodDesc.setText(order.getFoodDesc());
-        holder.customerName.setText(order.getCustomerName());
-        holder.customerPhone.setText(order.getCustomerPhone());
 
         // Load food image using Glide
         Glide.with(context).load(order.getFoodPic()).into(holder.foodImage);
