@@ -87,7 +87,16 @@ public class PastOrdersFragment extends Fragment {
                         List<OrderItem> orderList = new ArrayList<>();
                         for (DataSnapshot orderSnapshot : snapshot.getChildren()) {
                             OrderItem order = orderSnapshot.getValue(OrderItem.class);
-                            if (order != null) orderList.add(order);
+                            if (order != null) {
+                                // Additional null-check for new fields
+                                if (order.getFoodDesc() == null) {
+                                    order.setFoodDesc("No description available");
+                                }
+                                if (order.getMerchantAddress() == null) {
+                                    order.setMerchantAddress("Address not available");
+                                }
+                                orderList.add(order);
+                            }
                         }
                         // Sort and bind data to RecyclerView
                         bindOrders(orderList);

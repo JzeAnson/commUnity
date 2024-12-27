@@ -34,15 +34,20 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         OrderItem order = orderList.get(position);
 
+        // Bind data to UI components
         holder.foodName.setText(order.getFoodName());
         holder.foodPrice.setText(String.format("RM %.2f", order.getFoodPrice()));
         holder.merchantName.setText(order.getMerchantName());
+        holder.merchantAddress.setText(order.getMerchantAddress());
         holder.quantity.setText("Quantity: " + order.getQuantity());
         holder.orderStatus.setText(order.getOrderStatus());
         holder.orderDate.setText(order.getOrderDate());
         holder.orderTime.setText(order.getOrderTime());
+        holder.foodDesc.setText(order.getFoodDesc());
+        holder.customerName.setText("Customer: " + order.getCustomerName());
+        holder.customerPhone.setText("Phone: " + order.getCustomerPhone());
 
-        // Load food image
+        // Load food image using Glide
         Glide.with(context).load(order.getFoodPic()).into(holder.foodImage);
 
         // Set color for order status
@@ -65,7 +70,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     }
 
     public static class OrderViewHolder extends RecyclerView.ViewHolder {
-        TextView foodName, foodPrice, merchantName, quantity, orderStatus, orderDate, orderTime;
+        TextView foodName, foodPrice, merchantName, merchantAddress, quantity, orderStatus, orderDate, orderTime, foodDesc, customerName, customerPhone;
         ImageView foodImage;
 
         public OrderViewHolder(@NonNull View itemView) {
@@ -73,10 +78,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             foodName = itemView.findViewById(R.id.foodName);
             foodPrice = itemView.findViewById(R.id.foodPrice);
             merchantName = itemView.findViewById(R.id.merchantName);
+            merchantAddress = itemView.findViewById(R.id.merchantAddress);
             quantity = itemView.findViewById(R.id.quantity);
             orderStatus = itemView.findViewById(R.id.orderStatus);
             orderDate = itemView.findViewById(R.id.orderDate);
             orderTime = itemView.findViewById(R.id.orderTime);
+            foodDesc = itemView.findViewById(R.id.foodDesc);
+            customerName = itemView.findViewById(R.id.customerName);
+            customerPhone = itemView.findViewById(R.id.customerPhone);
             foodImage = itemView.findViewById(R.id.foodImage);
         }
     }

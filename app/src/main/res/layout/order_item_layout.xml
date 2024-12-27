@@ -28,6 +28,16 @@
         android:textColor="@android:color/black"
         android:layout_marginBottom="4dp" />
 
+    <!-- Food Description -->
+    <TextView
+        android:id="@+id/foodDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Available: 8:00 AM - 10:00 AM"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+
     <!-- Food Price -->
     <TextView
         android:id="@+id/foodPrice"
@@ -47,6 +57,34 @@
         android:text="Merchant Name"
         android:textSize="14sp"
         android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Merchant Address -->
+    <TextView
+        android:id="@+id/merchantAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address: No.6 Jalan Taman Setiawangsa..."
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Customer Name -->
+    <TextView
+        android:id="@+id/customerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Customer: Jian Wen"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Customer Phone -->
+    <TextView
+        android:id="@+id/customerPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone: 0123456789"
+        android:textSize="14sp"
         android:layout_marginBottom="4dp" />
 
     <!-- Quantity -->
