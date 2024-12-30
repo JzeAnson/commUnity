@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.CommUnity" parent="Base.Theme.CommUnity" />
+    <style name="DialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">250dp</item>
+        <item name="android:windowMinWidthMinor">350dp</item>
+    </style>
 </resources>
