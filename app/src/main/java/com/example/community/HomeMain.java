@@ -16,7 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.community.databinding.ActivityHomeMainBinding;
 
 public class HomeMain extends AppCompatActivity {
-
+    //hi
     ActivityHomeMainBinding binding;
 
     @Override
