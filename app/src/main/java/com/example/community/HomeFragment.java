@@ -18,7 +18,7 @@ import android.widget.Toast;
 public class HomeFragment extends Fragment {
 
 
-    private ImageButton btnCalendar;
+    private ImageButton btnCalendar, btnEmergency;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +38,16 @@ public class HomeFragment extends Fragment {
             Fragment eventsFragment = new EventsFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.frame_layout, eventsFragment);
+            transaction.addToBackStack(null);  // Add this transaction to back stack
+            transaction.commit();
+        });
+
+        btnEmergency = view.findViewById(R.id.reportlogo);
+
+        btnEmergency.setOnClickListener(v -> {
+            Fragment emergencyHomeFragment = new EmergencyHomeFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, emergencyHomeFragment);
             transaction.addToBackStack(null);  // Add this transaction to back stack
             transaction.commit();
         });

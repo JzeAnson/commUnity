@@ -23,5 +23,6 @@
     <string name="transportation_logo">Public Transport Logo</string>
     <string name="transportation_title">Public Transport</string>
     <string name="emergency_prank_warning"> Prank calls to emergency services are serious offenses that put lives at risk by delaying critical assistance for real emergencies.\n Misuse of emergency lines can lead to fines, criminal charges, and other legal consequences.\n\n Use emergency numbers only for real emergencies.\n Protect your community and help ensure that emergency responders are available for those in urgent need.\n\n Thank you for helping keep our community safe. </string>
-
+    <string name="map_api_key">AIzaSyCTgo7lAVeZ9UEOonrUGcpAOavIGHteYaI</string>
+    <string name="met_api_key">METToken e069e92eb518b1bd67084d5a1afec4f39329e760</string>
 </resources>
