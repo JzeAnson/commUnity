@@ -131,4 +131,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        // Get the fragment manager
+        androidx.fragment.app.FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // Check if there are fragments in the back stack
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            // If there are fragments, pop the top fragment from the back stack
+            fragmentManager.popBackStack();
+        } else {
+            // If no fragments in back stack, finish the activity
+            super.onBackPressed();
+        }
+    }
+
 }

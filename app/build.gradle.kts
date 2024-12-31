@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.community"
-        minSdk = 24
+        minSdk = 33
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -38,6 +38,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+
 }
 
 dependencies {
@@ -58,5 +60,5 @@ dependencies {
     implementation(libs.rome)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-    implementation(libs.slidinguppanel)
+    implementation("com.sothree.slidinguppanel:library:3.4.0")
 }

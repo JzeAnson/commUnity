@@ -14,7 +14,7 @@
         android:gravity="bottom"
         umano:umanoClipPanel="true"
         umano:umanoOverlay="true"
-        umano:umanoPanelHeight="500dp"
+        umano:umanoPanelHeight="480dp"
         umano:umanoShadowHeight="4dp">
 
         <!--First Screen-->
