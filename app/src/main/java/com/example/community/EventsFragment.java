@@ -51,7 +51,8 @@ public class EventsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         txtDateView = view.findViewById(R.id.txtViewTodayDate);
-        setCurrentDate();
+        String todayDate = setCurrentDate();
+        String dayAfterTomorrowDate = calculateDayAfterTomorrow(todayDate);
 
         // Initialize Firestore
         tabLayout = view.findViewById(R.id.tabLayout);
@@ -71,7 +72,7 @@ public class EventsFragment extends Fragment {
                     tab.setText("Tomorrow");
                     break;
                 case 2:
-                    tab.setText("Day After Tomorrow");
+                    tab.setText(dayAfterTomorrowDate);
                     break;
             }
         }).attach();
@@ -103,9 +104,6 @@ public class EventsFragment extends Fragment {
             transaction.addToBackStack(null);  // Add this transaction to back stack
             transaction.commit();
         });
-
-
-
     }
 
     @Override
@@ -133,6 +131,26 @@ public class EventsFragment extends Fragment {
         return dayMonthYear;
     }
 
+    // Helper method to calculate the "Day After Tomorrow" date
+    private String calculateDayAfterTomorrow(String todayDate) {
+        try {
+            // Parse today's date from "dd.MM.yyyy" format
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+            Date today = sdf.parse(todayDate);
+
+            // Add 2 days to the date
+            java.util.Calendar calendar = java.util.Calendar.getInstance();
+            calendar.setTime(today);
+            calendar.add(java.util.Calendar.DAY_OF_YEAR, 2);
+
+            // Format the new date as "dd MMM" (e.g., "17 NOV")
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
+            return outputFormat.format(calendar.getTime()).toUpperCase(); // Return in uppercase
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return ""; // Return empty string in case of error
+        }
+    }
 
 //    private void fetchEventsForSpecificDate(String date) {
 //        eventsCollection.whereEqualTo("date", date)  // Filter events by date

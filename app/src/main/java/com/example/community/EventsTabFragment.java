@@ -66,33 +66,46 @@ public class EventsTabFragment extends Fragment {
         int layoutType = getArguments() != null ? getArguments().getInt("layout_type", 0) : 0;
         String selectedDate = getArguments() != null ? getArguments().getString("selected_date") : "";
 
+        // Fetch events for the selected date
+        fetchEventsForSpecificDate(selectedDate);
+
         // Initialize the adapter and set it to the RecyclerView
         eventAdapter = new EventAdapter(this, eventList, layoutType);
         recyclerView.setAdapter(eventAdapter);
 
-        // Fetch events for the selected date
-        fetchEventsForSpecificDate(selectedDate);
+
     }
 
     private void fetchEventsForSpecificDate(String date) {
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);  // Show progress bar
         eventsCollection.whereEqualTo("date", date)  // Filter events by date
                 .get()
                 .addOnCompleteListener(task -> {
-                    progressBar.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);  // Hide progress bar after task completes
                     if (task.isSuccessful()) {
                         eventList.clear();  // Clear existing data
+
+                        // Add new events to the list
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Event event = document.toObject(Event.class);
                             eventList.add(event);
                         }
 
+                        // Log the events that were fetched
+                        Log.d("EventList", "Fetched " + eventList.size() + " events.");
+                        for (Event event : eventList) {
+                            Log.d("EventList", "Event: " + event.getTitle());
+                        }
+
                         // Sort the list in ascending order based on timeStart (hh:mm a)
                         eventList.sort((event1, event2) -> {
                             try {
+                                // Create SimpleDateFormat with 12-hour format (AM/PM)
                                 SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
                                 Date date1 = sdf.parse(event1.getTimeStart());
                                 Date date2 = sdf.parse(event2.getTimeStart());
+
+                                // Compare the parsed Date objects
                                 return date1.compareTo(date2);
                             } catch (ParseException e) {
                                 e.printStackTrace();
@@ -100,21 +113,29 @@ public class EventsTabFragment extends Fragment {
                             }
                         });
 
-                        if (eventList.isEmpty()) {
-                            noEventsText.setVisibility(View.VISIBLE); // Show "No Events" text
-                            recyclerView.setVisibility(View.GONE); // Hide RecyclerView
-                        } else {
-                            noEventsText.setVisibility(View.GONE); // Hide "No Events" text
-                            recyclerView.setVisibility(View.VISIBLE); // Show RecyclerView
+                        // Log sorted events
+                        Log.d("SortedEventList", "Sorted events by time:");
+                        for (Event event : eventList) {
+                            Log.d("SortedEventList", "Event: " + event.getTitle() + ", Time: " + event.getTimeStart());
                         }
 
-                        Log.d("EventsTabFragment", "Fetched " + eventList.size() + " events.");
-                        eventAdapter.notifyDataSetChanged();  // Notify adapter to update the list
+                        // Update UI visibility based on events fetched
+                        if (eventList.isEmpty()) {
+                            noEventsText.setVisibility(View.VISIBLE);  // Show "No Events" text
+                            recyclerView.setVisibility(View.GONE);  // Hide RecyclerView
+                        } else {
+                            noEventsText.setVisibility(View.GONE);  // Hide "No Events" text
+                            recyclerView.setVisibility(View.VISIBLE);  // Show RecyclerView
+                        }
+
+                        // Notify adapter to update the list after sorting
+                        eventAdapter.notifyDataSetChanged();
                     } else {
                         Log.w("EventsTabFragment", "Error getting documents.", task.getException());
-                        noEventsText.setVisibility(View.VISIBLE); // Show "No Events" text if error
+                        noEventsText.setVisibility(View.VISIBLE);  // Show "No Events" text if error
                         recyclerView.setVisibility(View.GONE);
                     }
                 });
     }
+
 }
