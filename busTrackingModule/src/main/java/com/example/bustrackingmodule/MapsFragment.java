@@ -38,10 +38,12 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
@@ -282,7 +284,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         // Start periodic updates
         handler.post(fetchBusDataRunnable);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MRT_PintuA_Start, 17));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MRT_PintuA_Start, 15));
+        if ("T789".equals(extractedBusLine))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LRT, 15));
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
         // Load static markers and routes
@@ -377,18 +381,19 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                         String routeId = entity.getVehicle().getTrip().getRouteId();
                         String licensePlate = entity.getVehicle().getVehicle().getLicensePlate();
                         double speed = entity.getVehicle().getPosition().getSpeed();
+                        double formattedSpeed = Double.parseDouble(String.format("%.2f", speed));
 
                         if ("T815".equals(routeId)) {
                             LatLng position = new LatLng(latitude, longitude);
                             requireActivity().runOnUiThread(() -> updateBusMarker(licensePlate, position));
-                            requireActivity().runOnUiThread(() ->updateBusDetails(licensePlate, speed));
+                            requireActivity().runOnUiThread(() ->updateBusDetails(licensePlate, formattedSpeed));
                             calculateETA(position, userLocation, MRTLatLng);
                         }
 
                         if ("T7890".equals(routeId)) {
                             LatLng position = new LatLng(latitude, longitude);
                             requireActivity().runOnUiThread(() -> updateBusMarker(licensePlate, position));
-                            requireActivity().runOnUiThread(() ->updateBusDetails(licensePlate, speed));
+                            requireActivity().runOnUiThread(() ->updateBusDetails(licensePlate, formattedSpeed));
                             calculateETA(position, userLocation, MRTLatLng);
                         }
                     }
@@ -537,7 +542,13 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                             long etaMillis = currentTimeMillis + (totalDuration * 1000L);
                             Date eta = new Date(etaMillis);
 
-                            updateBusEta(eta.toString());
+                            // Format the time for Malaysia timezone
+                            SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+                            timeFormatter.setTimeZone(TimeZone.getTimeZone("Asia/Kuala_Lumpur"));
+                            String formattedTime = timeFormatter.format(eta);
+
+                            // Update the ETA
+                            updateBusEta(formattedTime);
 
                             Log.d("MapsActivity", "ETA to final destination: " + eta.toString());
                         } else {
