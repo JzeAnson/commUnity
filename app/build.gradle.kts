@@ -1,3 +1,5 @@
+import org.apache.tools.ant.util.JavaEnvUtils.VERSION_11
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.gms.google.services)
@@ -15,6 +17,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        multiDexEnabled = true  // Fixed syntax
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -23,7 +26,6 @@ android {
     }
 
     buildFeatures {
-
         viewBinding = true
     }
 
@@ -50,7 +52,15 @@ android {
 }
 
 dependencies {
-
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+    implementation("androidx.multidex:multidex:2.0.1")
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation ("androidx.cardview:cardview:1.0.0")
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
+    implementation(libs.firebase.ui.database)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -68,8 +78,8 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.google.android.play:core-ktx:1.8.1")
-    implementation("com.google.android.play:core:1.10.3")
-
+    implementation ("com.google.android.play:core:1.10.3")
+    implementation ("com.google.j2objc:j2objc-annotations:2.8")
 }
 
 secrets {
