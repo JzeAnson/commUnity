@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:umano="http://schemas.android.com/apk/res-auto"
+    tools:context=".EventsFragment">
+
+    <!--Sliding Up Screen-->
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:id="@+id/sliding_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        umano:umanoClipPanel="true"
+        umano:umanoOverlay="true"
+        umano:umanoPanelHeight="480dp"
+        umano:umanoShadowHeight="4dp">
+
+        <!--First Screen-->
+        <include
+            layout="@layout/layout_calendar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF" />
+
+
+        <!--Second Screen-->
+        <include
+            layout="@layout/layout_list_events"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FF0000" />
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+</RelativeLayout>

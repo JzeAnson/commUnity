@@ -13,6 +13,9 @@ navigationFragment = "2.8.5"
 navigationUi = "2.8.5"
 googleGmsGoogleServices = "4.4.2"
 firebaseFirestore = "25.1.1"
+playServicesLocation = "21.3.0"
+retrofit = "2.9.0"
+viewpager2 = "1.0.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -29,6 +32,13 @@ firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version = "21.0.0" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version = "21.0.1" }
 firebase-ui-database = { group = "com.firebaseui", name = "firebase-ui-database", version = "8.0.2" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
+rome = { group = "com.rometools", name = "rome", version = "1.15.0" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
