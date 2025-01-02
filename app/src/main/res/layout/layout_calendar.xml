@@ -32,7 +32,7 @@
         android:layout_marginBottom="11dp"
         android:background="@drawable/rectangle_gray"
         android:padding="15dp"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_add_2"
         android:textColor="@color/darkgrey"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toTopOf="@+id/layoutTodayDate"

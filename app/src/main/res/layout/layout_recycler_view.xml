@@ -6,32 +6,35 @@
     android:layout_height="match_parent">
 
     <ProgressBar
+        android:visibility="gone"
         android:id="@+id/progressBar2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_centerInParent="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.143" />
 
     <TextView
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:visibility="gone"
         android:id="@+id/noEventText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:visibility="gone"
         android:text="No events for this day."
+        android:textColor="@color/white"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.113" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"
