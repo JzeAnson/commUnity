@@ -1,7 +1,16 @@
 <resources>
-    <string name="app_name">CommUnity</string>
+    <string name="app_name">commUnity</string>
+    <string-array name="locations_array">
+        <item>Main Gate</item>
+        <item>Library</item>
+        <item>Sports Complex</item>
+        <item>Science Faculty</item>
+        <item>Engineering Faculty</item>
+    </string-array>
+    <string name="title_activity_maps">MapsActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_bustrackingmodule">busTrackingModule</string>
     <string name="home_logo">Home Logo</string>
     <string name="home_title">Home</string>
     <string name="profile_title">Profile</string>
@@ -23,5 +32,4 @@
     <string name="transportation_logo">Public Transport Logo</string>
     <string name="transportation_title">Public Transport</string>
     <string name="price_format">RM%s</string>
-
 </resources>

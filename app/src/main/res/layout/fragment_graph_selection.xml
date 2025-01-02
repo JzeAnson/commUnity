@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GraphSelectionFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/gs_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/transportusability_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="56dp"
+            android:contentDescription="Public Transport Usability"
+            android:src="@drawable/category_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
+        <ImageButton
+            android:id="@+id/popularity_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="56dp"
+            android:contentDescription="Popularity"
+            android:src="@drawable/category_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/transportusability_button" />
+
+        <ImageButton
+            android:id="@+id/greeninitiative_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="56dp"
+            android:contentDescription="Green Initiative Execution"
+            android:src="@drawable/category_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/popularity_button" />
+
+        <ImageButton
+            android:id="@+id/foodprevention_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="56dp"
+            android:contentDescription="Food Waste Prevention"
+            android:src="@drawable/category_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/greeninitiative_button" />
+
+        <TextView
+            android:id="@+id/ptu_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Public Transport Usability"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/transportusability_button"
+            app:layout_constraintEnd_toEndOf="@+id/transportusability_button"
+            app:layout_constraintStart_toStartOf="@+id/transportusability_button"
+            app:layout_constraintTop_toTopOf="@+id/transportusability_button" />
+
+        <TextView
+            android:id="@+id/popularity_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Popularity"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/popularity_button"
+            app:layout_constraintEnd_toEndOf="@+id/popularity_button"
+            app:layout_constraintStart_toStartOf="@+id/popularity_button"
+            app:layout_constraintTop_toTopOf="@+id/popularity_button" />
+
+        <TextView
+            android:id="@+id/gie_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Green Initiative Execution"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/greeninitiative_button"
+            app:layout_constraintEnd_toEndOf="@+id/greeninitiative_button"
+            app:layout_constraintStart_toStartOf="@+id/greeninitiative_button"
+            app:layout_constraintTop_toTopOf="@+id/greeninitiative_button" />
+
+        <TextView
+            android:id="@+id/fwp_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Food Waste Prevention"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/foodprevention_button"
+            app:layout_constraintEnd_toEndOf="@+id/foodprevention_button"
+            app:layout_constraintStart_toStartOf="@+id/foodprevention_button"
+            app:layout_constraintTop_toTopOf="@+id/foodprevention_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
