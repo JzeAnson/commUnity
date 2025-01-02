@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="@android:color/white"
+    android:layout_margin="8dp"
+    android:elevation="4dp">
+
+    <!-- Food Image -->
+    <ImageView
+        android:id="@+id/foodImage"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Food Name -->
+    <TextView
+        android:id="@+id/foodNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food Name:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
+        android:id="@+id/foodName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nasi Lemak"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Food Description -->
+    <TextView
+        android:id="@+id/foodDescLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Availability:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
+        android:id="@+id/foodDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="8:00 AM - 10:00 AM"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Food Price -->
+    <TextView
+        android:id="@+id/foodPriceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Price:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
+        android:id="@+id/foodPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RM 4.00"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Merchant Name -->
+    <TextView
+        android:id="@+id/merchantNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Merchant Name:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
+        android:id="@+id/merchantName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AEON MALL AU2 Setiawangsa"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Quantity -->
+    <TextView
+        android:id="@+id/quantityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantity:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
+        android:id="@+id/quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Order Date -->
+    <TextView
+        android:id="@+id/orderDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
+        android:id="@+id/orderDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="27 December 2024"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Order Status -->
+    <TextView
+        android:id="@+id/orderStatusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status:"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="4dp" />
+    <TextView
+        android:id="@+id/orderStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pending"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Update Status Button (Visible for merchants) -->
+    <Button
+        android:id="@+id/update_status_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FF9800"
+        android:text="Update Status"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="8dp"/>
+
+</LinearLayout>

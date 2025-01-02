@@ -1,0 +1,56 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/past_orders_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="17dp"
+        android:text="Past Orders"
+        android:textStyle="bold"
+        android:textSize="24sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_past_orders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/navigation_buttons"
+        android:layout_below="@id/past_orders_label"
+        android:layout_margin="8dp" />
+
+    <!-- Bottom Navigation Buttons -->
+    <LinearLayout
+        android:id="@+id/navigation_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:padding="8dp">  <!-- Added padding -->
+
+        <Button
+            android:id="@+id/btn_food_listing"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:text="Food Listing"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#AE0606"/>
+
+        <Button
+            android:id="@+id/btn_past_orders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:text="Past Orders"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#06287C"/>
+    </LinearLayout>
+
+</RelativeLayout>
