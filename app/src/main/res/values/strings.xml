@@ -22,5 +22,6 @@
     <string name="calendar_title">Event Calendar</string>
     <string name="transportation_logo">Public Transport Logo</string>
     <string name="transportation_title">Public Transport</string>
+    <string name="price_format">RM%s</string>
 
 </resources>

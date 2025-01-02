@@ -1,0 +1,14 @@
+{
+    "orders": {
+      "orderID": "order1",
+      "customerName": "Jian Wen",
+      "customerPhone": "0123456789",
+      "foodID": "item3",
+      "foodName": "Sushi Combo Set",
+      "quantity": 2,
+      "foodPlace": "Empire Sushi Melawati Mall",
+      "orderDate": "2024-12-27",
+      "orderTime": "12:30 PM",
+      "orderStatus": "Pending"
+    }
+  }

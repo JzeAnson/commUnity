@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,22 +15,29 @@
         android:roundIcon="@drawable/community"
         android:supportsRtl="true"
         android:theme="@style/Theme.CommUnity"
-        tools:targetApi="31">
-        <activity
-            android:name=".HomeMain"
-            android:exported="false" />
-        <activity
-            android:name=".Register"
-            android:exported="false" />
+        tools:targetApi="31"
+        android:enableOnBackInvokedCallback="true"> <!-- Add this line -->
+
+        <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Other Activities -->
+        <activity
+            android:name=".Register"
+            android:exported="false" />
+        <activity
+            android:name=".HomeMain"
+            android:exported="false" />
+
     </application>
 
+    <!-- Required permission for accessing media images -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 </manifest>
