@@ -21,6 +21,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+
+
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         FirebaseApp.initializeApp(this);
         FirebaseDatabase.getInstance("https://community-1f007-default-rtdb.asia-southeast1.firebasedatabase.app");
+
+        // Create notification channel
+        createNotificationChannel();
+
+        // Check and request notification permissions for Android 13+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkNotificationPermission();
+        }
 
         SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String userId = prefs.getString("userId", null);
@@ -120,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
 
 
 
@@ -212,5 +233,55 @@ public class MainActivity extends AppCompatActivity {
     }
 
  */
+
+    @Override
+    public void onBackPressed() {
+        // Get the fragment manager
+        androidx.fragment.app.FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // Check if there are fragments in the back stack
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            // If there are fragments, pop the top fragment from the back stack
+            fragmentManager.popBackStack();
+        } else {
+            // If no fragments in back stack, finish the activity
+            super.onBackPressed();
+        }
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Warnings Channel";
+            String description = "Channel for displaying emergency warnings";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("warnings_channel", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
+    }
+
+    private void checkNotificationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            // Request permission
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
+        }
+    }
+
+    // Handle the permission request result
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted
+            } else {
+                // Permission denied - you can show a message explaining why the permission is needed
+            }
+        }
+    }
 
 }

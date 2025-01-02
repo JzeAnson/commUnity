@@ -42,6 +42,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+
     buildFeatures {
         viewBinding = true
     }
@@ -49,6 +51,7 @@ android {
         buildConfig = true
     }
     dynamicFeatures += setOf(":busTrackingModule")
+
 }
 
 dependencies {
@@ -80,7 +83,16 @@ dependencies {
     implementation("com.google.android.play:core-ktx:1.8.1")
     implementation ("com.google.android.play:core:1.10.3")
     implementation ("com.google.j2objc:j2objc-annotations:2.8")
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
+    implementation(libs.viewpager2)
+    implementation(libs.rome)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation("com.sothree.slidinguppanel:library:3.4.0")
 }
+
+
 
 secrets {
     // To add your Maps API key to this project:

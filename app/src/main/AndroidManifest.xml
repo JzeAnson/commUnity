@@ -2,9 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-feature android:name="android.hardware.telephony" android:required="false"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Permissions -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -19,41 +24,41 @@
         android:theme="@style/Theme.CommUnity"
         tools:targetApi="31"
         android:enableOnBackInvokedCallback="true"> <!-- Add this line -->
-    <activity
-        android:name=".HomeMain"
-        android:exported="false" />
-    <activity
-        android:name=".Register"
-        android:exported="false" />
-    <!--
-         TODO: Before you run your application, you need a Google Maps API key.
+        <activity
+            android:name=".HomeMain"
+            android:exported="false" />
+        <activity
+            android:name=".Register"
+            android:exported="false" />
+        <!--
+             TODO: Before you run your application, you need a Google Maps API key.
 
-         To get one, follow the directions here:
+             To get one, follow the directions here:
 
-            https://developers.google.com/maps/documentation/android-sdk/get-api-key
+                https://developers.google.com/maps/documentation/android-sdk/get-api-key
 
-         Once you have your API key (it starts with "AIza"), define a new property in your
-         project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
-         "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
-    -->
-    <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyBBgJ7CggoyCxdRHZsBq3lkzGwNHNtOuC8" />
+             Once you have your API key (it starts with "AIza"), define a new property in your
+             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
+             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/map_api_key" />
 
-    <!-- Main Activity -->
-    <activity
-        android:name=".MainActivity"
-        android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-    <activity
-        android:name=".RadarChartActivity"
-        android:exported="true">
-    </activity>
-</application>
+        <!-- Main Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".RadarChartActivity"
+            android:exported="true">
+        </activity>
+    </application>
 
     <!-- Required permission for accessing media images -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
