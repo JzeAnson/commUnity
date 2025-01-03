@@ -1,0 +1,119 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="30dp"
+        android:elevation="6dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- User Info -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="14dp">
+
+            <TextView
+                android:id="@+id/usernamePosts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="shawn"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/postTimestamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="timestamp"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!--Post Category-->
+        <TextView
+            android:id="@+id/postCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textSize="18sp"
+            />
+
+        <!-- Post Title -->
+        <TextView
+            android:id="@+id/postTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Post Description -->
+        <TextView
+            android:id="@+id/postDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="8dp"
+            android:textColor="#8c8c8c"
+            android:textSize="14sp" />
+
+        <!-- Time, Likes, and Comments -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <!-- Likes -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/likeIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/likeicon"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+                <TextView
+                    android:id="@+id/likesCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="0"
+                    android:textSize="13dp" />
+            </LinearLayout>
+
+            <!-- Comments -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginStart="20dp">
+
+                <ImageView
+                    android:id="@+id/commentIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/chaticon" />
+
+                <TextView
+                    android:id="@+id/commentsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="0"
+                    android:textSize="13dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
