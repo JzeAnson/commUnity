@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     android:id="@+id/main">
 
-    <include
-        layout="@layout/activity_home_main"
-        android:id="@+id/activity_home_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+<!--    <include-->
+<!--        layout="@layout/activity_home_main"-->
+<!--        android:id="@+id/activity_home_main"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"/>-->
 
     <include
         layout="@layout/navigate_forum"

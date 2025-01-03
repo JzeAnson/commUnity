@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.google.firebase.Timestamp;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class CreatePostActivity extends AppCompatActivity {
 
     private FirebaseFirestore firestore;
-    private FirebaseAuth auth;
+//    private FirebaseAuth auth;
     private EditText titleInput, descriptionInput;
     private RadioGroup categoryRadioGroup;
     private String postId;
@@ -32,7 +32,7 @@ public class CreatePostActivity extends AppCompatActivity {
         setContentView(R.layout.create_post);
 
         // Initialize Firebase instances
-        auth = FirebaseAuth.getInstance();
+//        auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
         // Initialize UI elements
@@ -108,7 +108,7 @@ public class CreatePostActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Post successfully created", Toast.LENGTH_SHORT).show();
 
                         // Navigate to CommentActivity after the post is created
-                        Intent intent = new Intent(CreatePostActivity.this, CommentActivity.class);
+                        Intent intent = new Intent(CreatePostActivity.this, CommentFragment.class);
                         intent.putExtra("postId", postId); // Pass the postId to the next activity
                         startActivity(intent); // Start the activity
                     })

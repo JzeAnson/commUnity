@@ -2,31 +2,39 @@ package com.example.community;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import android.text.Editable;
-import android.text.TextWatcher;
 import java.util.stream.Collectors;
 
-public class PostActivity extends AppCompatActivity {
+public class PostFragment extends Fragment {
 
-    private static final String TAG = "PostActivity";
+    private static final String TAG = "PostFragment";
     private RecyclerView postRecyclerView;
     private PostAdapter postAdapter;
     private List<Post> postList = new ArrayList<>();
@@ -36,32 +44,36 @@ public class PostActivity extends AppCompatActivity {
     private RadioGroup sortRadioGroup;
     private RadioButton radioLatest, radioPopular;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.forum_activity, container, false);
+    }
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.forum_activity);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         firestore = FirebaseFirestore.getInstance();
         Log.d(TAG, "Firestore initialized: " + (firestore != null));
 
         // Initialize RecyclerView
         postAdapter = new PostAdapter(postList);
-        postRecyclerView = findViewById(R.id.recyclerView);
-        postRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        postRecyclerView = view.findViewById(R.id.recyclerView);
+        postRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         postRecyclerView.setHasFixedSize(true);
         postRecyclerView.setAdapter(postAdapter);
 
         fetchPosts();  // Fetch posts initially
 
-        Button createPostButton = findViewById(R.id.createPostButton);
+        Button createPostButton = view.findViewById(R.id.createPostButton);
         createPostButton.setOnClickListener(v -> {
-            Intent intent = new Intent(PostActivity.this, CreatePostActivity.class);
+            Intent intent = new Intent(getActivity(), CreatePostActivity.class);
             startActivity(intent);
         });
 
-        searchBar = findViewById(R.id.search_bar);
+        searchBar = view.findViewById(R.id.search_bar);
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -79,18 +91,18 @@ public class PostActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
-        activitiesButton = findViewById(R.id.activities);
-        academicButton = findViewById(R.id.academic);
-        emergencyButton = findViewById(R.id.emergency);
+        activitiesButton = view.findViewById(R.id.activities);
+        academicButton = view.findViewById(R.id.academic);
+        emergencyButton = view.findViewById(R.id.emergency);
 
         activitiesButton.setOnClickListener(v -> filterPostsByCategory("Activities"));
         academicButton.setOnClickListener(v -> filterPostsByCategory("Academic"));
         emergencyButton.setOnClickListener(v -> filterPostsByCategory("Emergency"));
 
         // Initialize views
-        sortRadioGroup = findViewById(R.id.sortRadioGroup);
-        radioLatest = findViewById(R.id.radioLatest);
-        radioPopular = findViewById(R.id.radioPopular);
+        sortRadioGroup = view.findViewById(R.id.sortRadioGroup);
+        radioLatest = view.findViewById(R.id.radioLatest);
+        radioPopular = view.findViewById(R.id.radioPopular);
 
         // Set listener for RadioGroup
         sortRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
@@ -102,7 +114,6 @@ public class PostActivity extends AppCompatActivity {
         });
     }
 
-    // Method to fetch posts from Firestore
     private void fetchPosts() {
         firestore.collection("post")
                 .get()
@@ -116,6 +127,8 @@ public class PostActivity extends AppCompatActivity {
                                 postList.add(post);
                             }
                         }
+                        Log.d("testting", firestore.collection("post")
+                                .get().toString());
                         postAdapter.notifyDataSetChanged();  // Notify adapter to update views
                         Log.d(TAG, "Posts fetched successfully: " + postList.size());
                     } else {
@@ -125,7 +138,6 @@ public class PostActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> Log.e(TAG, "Error fetching posts: ", e));
     }
 
-    // Method to search posts based on the search query
     private void searchPosts(String query) {
         List<Post> filteredPosts = postList.stream()
                 .filter(post -> post.getTitle() != null && post.getTitle().toLowerCase().contains(query))
@@ -137,7 +149,6 @@ public class PostActivity extends AppCompatActivity {
         Log.d(TAG, "Filtered posts count: " + filteredPosts.size());
     }
 
-    // Method to filter posts by category
     private void filterPostsByCategory(String category) {
         firestore.collection("post")
                 .whereEqualTo("selectedCategory", category)
@@ -145,21 +156,30 @@ public class PostActivity extends AppCompatActivity {
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         postList.clear(); // Clear old data
-                        postList.addAll(queryDocumentSnapshots.toObjects(Post.class));
+                        for (var doc : queryDocumentSnapshots.getDocuments()) {
+                            Post post = doc.toObject(Post.class);
+                            if (post != null) {
+                                post.setId(doc.getId());  // Set document ID to postID
+                                postList.add(post);
+                            }
+                        }
                         postAdapter.notifyDataSetChanged();  // Notify adapter to update views
+                        Log.d("postss", postList.toString());
                         Log.d(TAG, "Filtered posts by category: " + category);
                     } else {
-                        Toast.makeText(this, "No posts found in " + category, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "No posts found in " + category, Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "No posts found in category: " + category);
                     }
                 })
-                .addOnFailureListener(e -> Log.e(TAG, "Error filtering posts by category: ", e));
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error filtering posts by category: ", e);
+                    Toast.makeText(getContext(), "Error filtering posts", Toast.LENGTH_SHORT).show();
+                });
     }
 
-    // Method to sort posts based on selected criteria (latest/popular)
+
     private void sortPostsBy(String sortOption) {
         if (sortOption.equals("latest")) {
-            // Sort posts by timestamp (latest first)
             Collections.sort(postList, (p1, p2) -> Long.compare(
                     p2.getTimestamp().getSeconds(),
                     p1.getTimestamp().getSeconds()
@@ -167,7 +187,6 @@ public class PostActivity extends AppCompatActivity {
             postAdapter.notifyDataSetChanged();
             Log.d(TAG, "Posts sorted by latest.");
         } else if (sortOption.equals("popular")) {
-            // Sort posts by likesCount (most popular first)
             Collections.sort(postList, (p1, p2) -> Integer.compare(
                     p2.getLikesCount(),
                     p1.getLikesCount()
@@ -175,34 +194,5 @@ public class PostActivity extends AppCompatActivity {
             postAdapter.notifyDataSetChanged();
             Log.d(TAG, "Posts sorted by popularity.");
         }
-    }
-
-    // Method to add a new post
-    public void addPost(Post post) {
-        firestore.collection("post")
-                .add(post)
-                .addOnSuccessListener(documentReference ->
-                        Log.d(TAG, "Post added with ID: " + documentReference.getId()))
-                .addOnFailureListener(e ->
-                        Log.e(TAG, "Error adding post", e));
-    }
-
-    // Method to test fetching a specific post
-    private void testPosts() {
-        firestore.collection("post")
-                .document("wptnGpFmjLZhFyi7R2gg")
-                .get()
-                .addOnSuccessListener(document -> {
-                    if (document.exists()) {
-                        Log.d(TAG, "Document Data: " + document.getData());
-                        Post post = document.toObject(Post.class);
-                        if (post != null) {
-                            Log.d(TAG, "Post Object: " + post.toString());
-                        }
-                    } else {
-                        Log.d(TAG, "No such document.");
-                    }
-                })
-                .addOnFailureListener(e -> Log.e(TAG, "Error fetching document: ", e));
     }
 }

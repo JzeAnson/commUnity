@@ -5,13 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import java.util.List;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
+
     private Context context;
     private List<Comment> commentList;
 
@@ -30,13 +31,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
         Comment comment = commentList.get(position);
-        holder.description.setText(comment.getComment());
-        holder.userName.setText(comment.getUserName());
+
+        // Ensure that the comment text and username are not null
+        String commentText = comment.getComment() != null ? comment.getComment() : "No comment";
+        String userNameText = comment.getUserName() != null ? comment.getUserName() : "Anonymous";
+
+        holder.description.setText(commentText);
+        holder.userName.setText(userNameText);
     }
 
     @Override
     public int getItemCount() {
-        return commentList.size();
+        return commentList != null ? commentList.size() : 0;
     }
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {

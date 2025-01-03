@@ -1,7 +1,7 @@
 package com.example.community;
 
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
@@ -29,6 +31,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private static final String TAG = "PostAdapter";
     private FirebaseFirestore firestore;
     private List<Post> postList;
+    ImageView btn_comment;
 
     public PostAdapter(List<Post> postList) {
         this.postList = postList;
@@ -48,34 +51,46 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.bind(post);
         holder.setupCommentListener(post); // Add real-time listener for comments count
 
-        //like implementation
         // Like button click listener
         holder.likeIcon.setOnClickListener(v -> {
-            // Reference to the specific post in Firestore
-            DocumentReference postRef = FirebaseFirestore.getInstance()
-                    .collection("post")
-                    .document(post.getId()); // Ensure postId is part of your Post model
-
-            // Increment the likesCount field in Firestore
+            DocumentReference postRef = firestore.collection("post").document(post.getId());
             postRef.update("likesCount", FieldValue.increment(1))
                     .addOnSuccessListener(aVoid -> {
-                        // Optionally update the UI, e.g., change the icon
                         holder.likeIcon.setImageResource(R.drawable.likedicon);
-
-                        // Fetch updated likesCount and set it in TextView
                         postRef.get().addOnSuccessListener(documentSnapshot -> {
                             if (documentSnapshot.exists()) {
-                                int likesCount = documentSnapshot.getLong("likesCount").intValue(); // Retrieve likesCount
-                                holder.likesCount.setText(String.valueOf(likesCount)); // Update TextView
+                                int likesCount = documentSnapshot.getLong("likesCount").intValue();
+                                holder.likesCount.setText(String.valueOf(likesCount));
                             }
-                        }).addOnFailureListener(e -> {
-                            Log.e("FirestoreError", "Error fetching updated likesCount", e);
-                        });
+                        }).addOnFailureListener(e -> Log.e(TAG, "Error fetching updated likesCount", e));
                     })
-                    .addOnFailureListener(e -> {
-                        // Handle failure (optional)
-                        Log.e("Firestore", "Error updating likesCount", e);
-                    });
+                    .addOnFailureListener(e -> Log.e(TAG, "Error updating likesCount", e));
+        });
+
+        // Comment icon click listener
+        holder.commentIcon.setOnClickListener(v -> {
+            FragmentActivity activity = (FragmentActivity) holder.itemView.getContext();
+            int position1 = holder.getAdapterPosition();
+            if (position1 != RecyclerView.NO_POSITION) {
+                Post clickedPost = postList.get(position1);
+                String postId = clickedPost.getId();
+
+                if (postId != null && !postId.isEmpty()) {
+                    // Navigate to CommentFragment
+                    CommentFragment fragment = new CommentFragment();
+                    Bundle args = new Bundle();
+                    args.putString("postId", postId);
+                    fragment.setArguments(args);
+
+                    activity.getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.frame_layout, fragment)
+                            .addToBackStack(null) // Allows back navigation
+                            .commit();
+                } else {
+                    Log.e(TAG, "Post ID is null or empty for the clicked post.");
+                    Toast.makeText(activity, "Error: Invalid Post ID", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
     }
 
@@ -109,34 +124,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             category = itemView.findViewById(R.id.postCategory);
             likeIcon = itemView.findViewById(R.id.likeIcon);
             likesCount = itemView.findViewById(R.id.likesCount);
-
-            // Handle comment icon click
-            commentIcon.setOnClickListener(v -> {
-                Context context = itemView.getContext();
-                Intent commentIntent = new Intent(context, CommentActivity.class);
-
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    Post clickedPost = postList.get(position);
-                    String postId = clickedPost.getId();
-                    if (postId != null && !postId.isEmpty()) {
-                        commentIntent.putExtra("postId", postId);
-                        context.startActivity(commentIntent);
-                    } else {
-                        Log.e(TAG, "Post ID is null or empty for the clicked post.");
-                        Toast.makeText(context, "Error: Invalid Post ID", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
         }
 
         public void bind(Post post) {
-            // Bind data to views with proper null checks
+            // Bind data to views
             title.setText(post.getTitle() != null ? post.getTitle() : "Untitled");
             description.setText(post.getDescription() != null ? post.getDescription() : "No Description");
             userName.setText(post.getUserName() != null ? post.getUserName() : "Anonymous");
 
-            // Format timestamp
             if (post.getTimestamp() != null) {
                 Date date = post.getTimestamp().toDate();
                 SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy, HH:mm", Locale.getDefault());
@@ -145,41 +140,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 timestamp.setText("Unknown Time");
             }
 
-            // Set comments count
             Integer comments = post.getCommentsCount();
             commentsCount.setText(comments != null ? String.valueOf(post.getCommentsCount()) : "0");
-
             category.setText(post.getSelectedCategory() != null ? post.getSelectedCategory() : "Uncategorized");
-
-            // Retrieve likesCount from Firestore
-            if (post.getId() == null || post.getId().isEmpty()) {
-                Log.e(TAG, "Post ID is null or empty for post: " + post.getTitle());
-                return;
-            }
 
             firestore.collection("post").document(post.getId())
                     .get()
                     .addOnSuccessListener(documentSnapshot -> {
                         if (documentSnapshot.exists()) {
                             Long likesCountValue = documentSnapshot.getLong("likesCount");
-                            if (likesCountValue != null) {
-                                likesCount.setText(String.valueOf(likesCountValue)); // Update the TextView
-                            } else {
-                                likesCount.setText("0"); // Default to 0 if likesCount is null
-                            }
+                            likesCount.setText(likesCountValue != null ? String.valueOf(likesCountValue) : "0");
                         }
                     })
-                    .addOnFailureListener(e -> {
-                        Log.e(TAG, "Error retrieving likesCount: " + e.getMessage());
-                    });
-
-
-            // Tag the view with the post for retrieval
-            itemView.setTag(post);
+                    .addOnFailureListener(e -> Log.e(TAG, "Error retrieving likesCount: " + e.getMessage()));
         }
 
         public void setupCommentListener(Post post) {
-            // Real-time listener for comments count
             commentListener = firestore.collection("post")
                     .document(post.getId())
                     .addSnapshotListener((snapshot, error) -> {
@@ -187,12 +163,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                             Log.e(TAG, "Error fetching post data: " + error.getMessage());
                             return;
                         }
-
                         if (snapshot != null && snapshot.exists()) {
                             Long updatedCommentCount = snapshot.getLong("commentsCount");
                             commentsCount.setText(updatedCommentCount != null ? updatedCommentCount.toString() : "0");
 
-                            //update like count
                             Long updatedLikesCount = snapshot.getLong("likesCount");
                             likesCount.setText(updatedLikesCount != null ? updatedLikesCount.toString() : "0");
                         }
