@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="radio_button_tint">#AE0606</color>
     <color name="dark_blue">#06287C</color>
-    <color name="light_blue">#dde3f1</color>
-    <color name="red">#ae0606</color>
-    <color name="light_red">#deb4b4</color>
+    <color name="blue">#06287C</color>
+    <color name="red">#AE0606</color>
+    <color name="lightblue">#DDE3F1</color>
+    <color name="lightred">#DEB4B4</color>
+    <color name="darkgrey">#363B41</color>
+    <color name="grey">#D9D9D9</color>
+    <color name="grayfont">#979797</color>
+    <color name="darkergrayfont">#50555C</color>
+    <color name="shinierRed">#CF0000</color>
 </resources>

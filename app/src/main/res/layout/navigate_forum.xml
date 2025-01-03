@@ -113,14 +113,14 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="Latest"
-                android:background="@color/light_blue"/>
+                android:background="@color/lightblue"/>
 
             <RadioButton
                 android:id="@+id/radioPopular"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:text="Popular"
-                android:background="@color/light_blue"/>
+                android:background="@color/lightblue"/>
 
         </RadioGroup>
 
