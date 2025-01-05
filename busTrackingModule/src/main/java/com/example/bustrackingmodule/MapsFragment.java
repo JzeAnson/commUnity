@@ -1,5 +1,6 @@
 package com.example.bustrackingmodule;
 
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -350,7 +351,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         if (marker == null) {
             marker = mMap.addMarker(new MarkerOptions()
                     .position(position)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus_icon))
+                    .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(requireContext().getResources(), R.drawable.bus_icon)))
                     .title("Bus ID: " + licensePlate));
             busMarkers.put(licensePlate, marker);
         } else {
