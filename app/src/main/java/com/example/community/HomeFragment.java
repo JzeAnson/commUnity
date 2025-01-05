@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.multidex.BuildConfig;
-
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -127,6 +125,7 @@ public class HomeFragment extends Fragment {
                         Intent intent = new Intent();
                         intent.setClassName(BuildConfig.APPLICATION_ID, "com.example.bustrackingmodule.BusTrackingMainActivity");
                         startActivity(intent);
+                        break;
                     case SplitInstallSessionStatus.CANCELED:
                         Toast.makeText(requireContext(),"Canceled",Toast.LENGTH_SHORT).show();
                         break;
