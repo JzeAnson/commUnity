@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.multidex.BuildConfig;
 
 
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.play.core.splitinstall.SplitInstallManager;
@@ -28,10 +30,12 @@ import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
  * Use the {@link HomeFragment} factory method to
  * create an instance of this fragment.
  */
+
 public class HomeFragment extends Fragment {
 
     ImageButton btn_busTracking;
-    ImageButton btn_graphSelection;
+    ImageButton btn_graphSelection, btn_forum;
+    ImageView btn_comment;
     private int mySessionId;
 
     private ImageButton btnCalendar, btnEmergency;
@@ -89,6 +93,23 @@ public class HomeFragment extends Fragment {
             transaction.addToBackStack(null); // Optional: allows back navigation
             transaction.commit();
         });
+
+        btn_forum = view.findViewById(R.id.announcementslogo);
+
+        btn_forum.setOnClickListener(v -> {
+            // Create a new instance of RadarGraphFragment
+            Fragment forumFragment = new PostFragment();
+
+            // Perform the fragment transaction
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_layout, forumFragment);
+            transaction.addToBackStack(null); // Optional: allows back navigation
+            transaction.commit();
+        });
+
+
+
+
 
     }
     private void startDownloading() {

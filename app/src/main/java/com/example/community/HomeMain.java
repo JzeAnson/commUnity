@@ -91,6 +91,12 @@
 package com.example.community;
 
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -101,6 +107,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.community.databinding.ActivityHomeMainBinding;
 import com.google.firebase.FirebaseApp;
+
+//import com.example.community.databinding.ActivityHomeMainBinding;
 
 public class HomeMain extends AppCompatActivity {
 
