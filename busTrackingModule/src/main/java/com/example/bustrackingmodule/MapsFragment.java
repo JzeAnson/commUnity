@@ -182,8 +182,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     );
     private BusDetailsViewModel detailsViewModel;
     private BusEtaViewModel etaViewModel;
-    private BusLineViewModel buslineViewModel;
-    private OriginDestinationViewModel origindestinationViewModel;
     private TravelDistanceViewModel travelDistanceViewModel;
     private String extractedBusLine;
     private int routeId;
@@ -242,8 +240,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        origindestinationViewModel = new ViewModelProvider(requireActivity()).get(OriginDestinationViewModel.class);
-        buslineViewModel = new ViewModelProvider(requireActivity()).get(BusLineViewModel.class);
         detailsViewModel = new ViewModelProvider(requireActivity()).get(BusDetailsViewModel.class);
         etaViewModel = new ViewModelProvider(requireActivity()).get(BusEtaViewModel.class);
         travelDistanceViewModel = new ViewModelProvider(requireActivity()).get(TravelDistanceViewModel.class);
@@ -256,26 +252,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         } else {
             Log.e("MapsFragment", "SupportMapFragment is null");
         }
-
-        /*
-        buslineViewModel.getBusLine().observe(getViewLifecycleOwner(), busLine -> {
-            if (extractedBusLine != null) {
-                // Use the bus line information, for example, to load bus stops
-                busline = busLine;
-                Log.d("MapsFragment", "Bus Line: " + busLine);
-            }
-            else
-                Log.d("MapsFragment","Bus Line is null");
-        });
-
-        origindestinationViewModel.getOrigin().observe(getViewLifecycleOwner(), origin -> {
-            UserLocation = origin;
-        });
-        origindestinationViewModel.getDestination().observe(getViewLifecycleOwner(), destination -> {
-            UserDestination = destination;
-        });
-
-         */
     }
 
     @Override
@@ -470,21 +446,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                                     .put("latLng", destinationLocation))
                             .put("vehicleStopover", true) // VehicleStopover set to true
                     );
-/*
-                    // Intermediates
-                    JSONArray intermediateStops = new JSONArray();
-                    for (LatLng stop : intermediates) {
-                        JSONObject stopLocation = new JSONObject();
-                        stopLocation.put("latitude", stop.latitude);
-                        stopLocation.put("longitude", stop.longitude);
-                        intermediateStops.put(new JSONObject()
-                                .put("location", new JSONObject()
-                                        .put("latLng", stopLocation))
-                                .put("vehicleStopover", true) // VehicleStopover for intermediate stops
-                        );
-                    }
-                    payload.put("intermediates", intermediateStops);
-*/
+
                     // Additional routing preferences
                     payload.put("travelMode", "DRIVE");
                     payload.put("routingPreference", "TRAFFIC_AWARE");

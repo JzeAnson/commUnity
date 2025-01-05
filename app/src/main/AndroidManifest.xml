@@ -45,7 +45,6 @@
 
         <activity android:name=".HomeMain" android:exported="false" />
         <activity android:name=".Register" android:exported="false" />
-        <activity android:name=".RadarChartActivity" android:exported="true" />
         <activity android:name="com.example.community.CreatePostActivity" />
 
         <!-- Google Maps API -->
