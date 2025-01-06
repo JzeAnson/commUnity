@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center">
 
+    <include
+        layout="@layout/activity_home_main"
+        android:id="@+id/activity_home_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
+        android:layout_marginTop="100dp"
         android:layout_height="500dp"
         android:text="Create Post"
         android:layout_gravity="center_vertical"
@@ -17,7 +24,7 @@
             android:layout_marginTop="-5dp"
             android:layout_width="match_parent"
             android:layout_height="1.7dp"
-            android:background="#000000"/>
+            android:background="#000000" />
 
         <TextView
             android:layout_width="match_parent"
@@ -27,7 +34,7 @@
             android:background="#06287c"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="22dp"/>
+            android:textSize="22dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -35,34 +42,45 @@
             android:text="Choose Your Category:"
             android:paddingLeft="25dp"
             android:paddingTop="5dp"
-            android:textSize="22dp"/>
+            android:textSize="22dp" />
 
-        <LinearLayout
+        <RadioGroup
+            android:id="@+id/categoryRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <RadioButton
+                android:id="@+id/radio_activities"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#80ef80"
                 android:text="Activities"
                 android:textColor="@color/white"
-                android:layout_margin="5dp"/>
-            <Button
-                android:layout_width="wrap_content"
+                android:background="#80ef80"
+                android:layout_margin="5dp"
+                android:buttonTint="@color/white" />
+
+            <RadioButton
+                android:id="@+id/radio_academic"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#0096c7"
                 android:text="Academic"
                 android:textColor="@color/white"
-                android:layout_margin="5dp"/>
-            <Button
-                android:layout_width="wrap_content"
+                android:background="#0096c7"
+                android:layout_margin="5dp"
+                android:buttonTint="@color/white" />
+
+            <RadioButton
+                android:id="@+id/radio_emergency"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#f0102c"
                 android:text="Emergency"
                 android:textColor="@color/white"
-                android:layout_margin="5dp"/>
-        </LinearLayout>
+                android:background="#f0102c"
+                android:layout_margin="5dp"
+                android:buttonTint="@color/white" />
+        </RadioGroup>
 
         <EditText
             android:paddingStart="10dp"
@@ -70,8 +88,7 @@
             android:id="@+id/titleinput"
             android:layout_width="400dp"
             android:layout_gravity="center"
-            android:layout_height="50dp"/>
-
+            android:layout_height="50dp" />
 
         <LinearLayout
             android:layout_width="400dp"
@@ -79,7 +96,7 @@
             android:background="@drawable/boxbackground"
             android:orientation="vertical"
             android:padding="10dp"
-            android:layout_gravity="center" >
+            android:layout_gravity="center">
 
             <EditText
                 android:paddingStart="10dp"
@@ -88,8 +105,7 @@
                 android:id="@+id/descriptioninput"
                 android:layout_width="400dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="start"/>
-
+                android:layout_gravity="start" />
         </LinearLayout>
 
         <LinearLayout
@@ -108,7 +124,7 @@
                 android:shadowColor="#000000"
                 android:text="POST"
                 android:textSize="12dp"
-                android:layout_marginRight="3dp"/>
+                android:layout_marginRight="3dp" />
 
             <Button
                 android:id="@+id/cancel_button"
@@ -119,9 +135,7 @@
                 android:shadowColor="#000000"
                 android:text="CANCEL"
                 android:textSize="12dp"
-                android:layout_marginLeft="3dp"/>
+                android:layout_marginLeft="3dp" />
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
-
-
+</RelativeLayout>
