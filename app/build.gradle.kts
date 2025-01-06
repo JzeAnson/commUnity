@@ -66,6 +66,7 @@ dependencies {
 
     // Glide for image loading
     implementation("com.github.bumptech.glide:glide:4.16.0")
+//    implementation(libs.firebase.auth)
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 
     // Other utilities

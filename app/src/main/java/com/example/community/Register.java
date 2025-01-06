@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
+import android.content.SharedPreferences;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -122,6 +122,12 @@ public class Register extends AppCompatActivity {
     }
 
     public void openActivity(){
+        //save username locally
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("userName", txt_username.getText().toString().trim());
+        editor.apply();
+
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

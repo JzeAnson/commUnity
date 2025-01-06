@@ -19,6 +19,7 @@ firebaseFirestore = "25.1.1"
 playServicesLocation = "21.3.0"
 retrofit = "2.9.0"
 viewpager2 = "1.0.0"
+firebaseAuth = "23.1.0"
 
 
 [libraries]
@@ -44,6 +45,7 @@ viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref =
 rome = { group = "com.rometools", name = "rome", version = "1.15.0" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 
 
 
