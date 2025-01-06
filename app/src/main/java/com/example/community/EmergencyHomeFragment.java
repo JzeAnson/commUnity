@@ -32,9 +32,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.SyndFeedInput;
+//import com.rometools.rome.feed.synd.SyndEntry;
+//import com.rometools.rome.feed.synd.SyndFeed;
+//import com.rometools.rome.io.SyndFeedInput;
 
 import java.net.URL;
 
@@ -47,9 +47,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.rometools.rome.feed.rss.Channel;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
+//import com.rometools.rome.feed.rss.Channel;
+//import com.rometools.rome.io.SyndFeedInput;
+//import com.rometools.rome.io.XmlReader;
 
 import java.net.URL;
 import java.time.LocalDate;
