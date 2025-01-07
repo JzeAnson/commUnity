@@ -1,5 +1,6 @@
 package com.example.community;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -142,6 +143,11 @@ public class GraphSelectionFragment extends Fragment {
             transaction.addToBackStack(null); // Optional: allows back navigation
             transaction.commit();
         });
-    }
 
+        ImageButton btn_GraphSelectionBack = view.findViewById(R.id.btn_back);
+
+        btn_GraphSelectionBack.setOnClickListener(v -> {
+            requireActivity().onBackPressed();
+        });
+    }
 }

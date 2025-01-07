@@ -10,6 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageButton
+            android:id="@+id/button_radargraphback"
+            android:layout_width="63dp"
+            android:layout_height="40dp"
+            android:background="@drawable/rectangle_gray"
+            android:src="@drawable/ic_back"
+            app:layout_constraintBottom_toTopOf="@+id/spinner_timeline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <Spinner
             android:id="@+id/spinner_timeline"
             android:layout_width="406dp"
@@ -19,13 +29,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_radargraphback"
             app:layout_constraintVertical_bias="0.0" />
 
         <com.github.mikephil.charting.charts.RadarChart
             android:id="@+id/radar_graph"
             android:layout_width="0dp"
-            android:layout_height="613dp"
+            android:layout_height="577dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

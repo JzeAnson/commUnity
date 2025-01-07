@@ -110,5 +110,14 @@
             app:layout_constraintEnd_toEndOf="@+id/foodprevention_button"
             app:layout_constraintStart_toStartOf="@+id/foodprevention_button"
             app:layout_constraintTop_toTopOf="@+id/foodprevention_button" />
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="63dp"
+            android:layout_height="40dp"
+            android:background="@drawable/rectangle_gray"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

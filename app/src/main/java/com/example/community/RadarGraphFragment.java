@@ -101,6 +101,11 @@ public class RadarGraphFragment extends Fragment {
                 requestStoragePermission();
             }
         });
+
+        ImageButton btn_RadarGraphBack = view.findViewById(R.id.button_radargraphback);
+        btn_RadarGraphBack.setOnClickListener(v -> {
+            requireActivity().onBackPressed();
+        });
     }
 
     private List<String> getMonthsList() {
@@ -400,7 +405,7 @@ public class RadarGraphFragment extends Fragment {
                         entries.add(new RadarEntry(260f));
                         break;
                 }
-                chartLabel = "Public Transport Usability (" + timeline + ")";
+                chartLabel = "Green Initiative Execution (" + timeline + ")";
                 labels = new String[]{"Ease of Use", "Availability", "Punctuality", "Coverage", "Comfort"};
                 break;
 
@@ -491,7 +496,7 @@ public class RadarGraphFragment extends Fragment {
                         entries.add(new RadarEntry(260f));
                         break;
                 }
-                chartLabel = "Public Transport Usability (" + timeline + ")";
+                chartLabel = "Food Waste Prevention (" + timeline + ")";
                 labels = new String[]{"Ease of Use", "Availability", "Punctuality", "Coverage", "Comfort"};
                 break;
 
@@ -499,10 +504,30 @@ public class RadarGraphFragment extends Fragment {
 
 
         RadarDataSet radarDataSet = new RadarDataSet(entries, chartLabel);
-        radarDataSet.setColor(Color.BLUE);
-        radarDataSet.setLineWidth(2f);
-        radarDataSet.setValueTextColor(Color.BLUE);
-        radarDataSet.setValueTextSize(14f);
+        if (category.equals("Public Transport Usability")){
+            radarDataSet.setColor(Color.BLUE);
+            radarDataSet.setLineWidth(2f);
+            radarDataSet.setValueTextColor(Color.BLUE);
+            radarDataSet.setValueTextSize(14f);
+        }
+        else if (category.equals("Popularity")){
+            radarDataSet.setColor(Color.RED);
+            radarDataSet.setLineWidth(2f);
+            radarDataSet.setValueTextColor(Color.RED);
+            radarDataSet.setValueTextSize(14f);
+        }
+        else if (category.equals("Green Initiative Execution")){
+            radarDataSet.setColor(Color.GREEN);
+            radarDataSet.setLineWidth(2f);
+            radarDataSet.setValueTextColor(Color.GREEN);
+            radarDataSet.setValueTextSize(14f);
+        }
+        else {
+            radarDataSet.setColor(Color.MAGENTA);
+            radarDataSet.setLineWidth(2f);
+            radarDataSet.setValueTextColor(Color.MAGENTA);
+            radarDataSet.setValueTextSize(14f);
+        }
 
         ArrayList<IRadarDataSet> dataSets = new ArrayList<>();
         dataSets.add(radarDataSet);
