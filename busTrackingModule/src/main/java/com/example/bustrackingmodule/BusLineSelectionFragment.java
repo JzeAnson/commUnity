@@ -76,14 +76,11 @@ public class BusLineSelectionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //BusLineViewModel buslineViewModel = new ViewModelProvider(requireActivity()).get(BusLineViewModel.class);
-
         // Button for T789 bus line
         ImageButton t789Button = view.findViewById(R.id.t789_button);
         ImageButton t815Button = view.findViewById(R.id.t815_button);
 
         t789Button.setOnClickListener(v -> {
-            //buslineViewModel.setBusLine("T789");
             NavController navController = Navigation.findNavController(v);
             Bundle args = new Bundle();
             args.putString("busLine", "T789");
@@ -91,14 +88,10 @@ public class BusLineSelectionFragment extends Fragment {
         });
 
         t815Button.setOnClickListener(v -> {
-            //buslineViewModel.setBusLine("T815");
             NavController navController = Navigation.findNavController(v);
             Bundle args = new Bundle();
             args.putString("busLine", "T815");
             navController.navigate(R.id.action_busLineSelectionFragment_to_originDestinationFragment, args);
         });
     }
-
-
-
 }

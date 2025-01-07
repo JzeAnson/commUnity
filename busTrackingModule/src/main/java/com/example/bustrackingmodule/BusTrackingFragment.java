@@ -29,8 +29,6 @@ public class BusTrackingFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String origin;
-    private String destination;
 
     public BusTrackingFragment() {
         // Required empty public constructor
@@ -57,7 +55,6 @@ public class BusTrackingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //OriginDestinationViewModel origindestinationViewModel = new ViewModelProvider(requireActivity()).get(OriginDestinationViewModel.class);
 
         if (getArguments() != null) {
             String busline = getArguments().getString("busLine");
@@ -95,10 +92,6 @@ public class BusTrackingFragment extends Fragment {
             }
             else
                 Log.d("Bus tracking Fragment","mapsFragment is null");
-
-            //origindestinationViewModel.setBusLine(busline);
-            //origindestinationViewModel.setOrigin(origin);
-            //origindestinationViewModel.setDestination(destination);
         }
         else
             Log.d("Bus tracking Fragment","getArgument() is null");
@@ -125,7 +118,6 @@ public class BusTrackingFragment extends Fragment {
                 Button reachedButton = view.findViewById(R.id.btn_reached);
 
                 reachedButton.setOnClickListener(v -> {
-                    //buslineViewModel.setBusLine("T789");
                     NavController navController = Navigation.findNavController(v);
                     Bundle args = new Bundle();
                     args.putInt("travelDistance", distance);
