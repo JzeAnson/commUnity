@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -24,22 +24,21 @@ public class CreatePostActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private EditText titleInput, descriptionInput;
     private RadioGroup categoryRadioGroup;
-    private String userDocumentID, userName;
+    private String userDocumentID, userName = "Anonymous"; // Default value
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_post);
 
-        // Initialize Firebase Firestore
+        // Initialize Firestore
         firestore = FirebaseFirestore.getInstance();
 
         // Retrieve stored user document ID
         userDocumentID = userDocument.getInstance().getDocumentId();
 
-        // Retrieve username from SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        userName = sharedPreferences.getString("userName", "Anonymous");
+        // Fetch the username from Firestore
+        fetchUserNameFromFirestore();
 
         // Initialize UI elements
         titleInput = findViewById(R.id.titleinput);
@@ -82,8 +81,8 @@ public class CreatePostActivity extends AppCompatActivity {
             createPost.put("title", title);
             createPost.put("description", description);
             createPost.put("selectedCategory", selectedCategory);
-            createPost.put("userName", userName);
-            createPost.put("userDocumentID", userDocumentID); // Store userDocumentID for future queries
+            createPost.put("userName", userName); // Correctly set the username
+            createPost.put("userDocumentID", userDocumentID); // Store userDocumentID for reference
             createPost.put("timestamp", Timestamp.now());
             createPost.put("commentsCount", 0);
             createPost.put("likesCount", 0);
@@ -112,5 +111,25 @@ public class CreatePostActivity extends AppCompatActivity {
             setResult(RESULT_CANCELED);
             finish();
         });
+    }
+
+    // Function to fetch the user's username from Firestore
+    private void fetchUserNameFromFirestore() {
+        if (userDocumentID == null || userDocumentID.isEmpty()) {
+            Log.e("CreatePostActivity", "User Document ID is null or empty");
+            return;
+        }
+
+        firestore.collection("users").document(userDocumentID)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        userName = documentSnapshot.getString("userName");
+                        Log.d("CreatePostActivity", "Fetched userName: " + userName);
+                    } else {
+                        Log.e("CreatePostActivity", "User document does not exist");
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("CreatePostActivity", "Error fetching userName", e));
     }
 }
