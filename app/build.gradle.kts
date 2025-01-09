@@ -78,7 +78,9 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.sothree.slidinguppanel:library:3.4.0")
-
+    // Google Play Services Core
+    implementation ("com.google.android.gms:play-services-base:18.3.0")
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
     implementation ("com.google.maps.android:android-maps-utils:3.4.0")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -95,6 +97,12 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    // Firebase Services (Ensure Proper Integration)
+    implementation platform("com.google.firebase:firebase-bom:33.7.0")
+    implementation ("com.google.firebase:firebase-firestore")
+    implementation ("com.google.firebase:firebase-auth")
+    implementation ("com.google.firebase:firebase-database")
+    implementation ("com.google.firebase:firebase-analytics")
 }
 
 secrets {

@@ -33,6 +33,16 @@
         android:enableOnBackInvokedCallback="true"
         tools:targetApi="31">
 
+        <!-- Google Play Services Metadata -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!-- Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/map_api_key" />
+
         <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
