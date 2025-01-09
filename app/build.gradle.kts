@@ -84,8 +84,9 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
 
     // Fix for duplicate classes in Google Play Core
-    implementation("com.google.android.play:core:2.0.3") // Updated to latest version
-    implementation("com.google.android.play:core-ktx:2.0.3")
+    // Google Play Core (Latest Stable)
+    implementation("com.google.android.play:core:1.10.3")
+    implementation("com.google.android.play:core-ktx:1.8.1")
 
     // Other dependencies
     implementation("com.google.j2objc:j2objc-annotations:2.8")
