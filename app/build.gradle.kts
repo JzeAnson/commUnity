@@ -88,6 +88,11 @@ dependencies {
     implementation("com.google.android.play:core:1.10.3")
     implementation("com.google.android.play:core-ktx:1.8.1")
 
+    // Optional: If you still get duplicate class issues, exclude core-common:
+    implementation("com.google.android.play:core:1.10.3") {
+        exclude(group = "com.google.android.play", module = "core-common")
+    }
+
     // Other dependencies
     implementation("com.google.j2objc:j2objc-annotations:2.8")
     implementation(libs.play.services.maps)
