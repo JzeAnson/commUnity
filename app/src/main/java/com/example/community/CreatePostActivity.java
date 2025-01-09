@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class CreatePostActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private EditText titleInput, descriptionInput;
     private RadioGroup categoryRadioGroup;
-    private String postId, userName;
+    private String userDocumentID, userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +34,12 @@ public class CreatePostActivity extends AppCompatActivity {
         // Initialize Firebase Firestore
         firestore = FirebaseFirestore.getInstance();
 
+        // Retrieve stored user document ID
+        userDocumentID = userDocument.getInstance().getDocumentId();
+
         // Retrieve username from SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
-        userName = sharedPreferences.getString("userName", "Anonymous"); // Default to "Anonymous" if username is not found
+        userName = sharedPreferences.getString("userName", "Anonymous");
 
         // Initialize UI elements
         titleInput = findViewById(R.id.titleinput);
@@ -78,23 +82,24 @@ public class CreatePostActivity extends AppCompatActivity {
             createPost.put("title", title);
             createPost.put("description", description);
             createPost.put("selectedCategory", selectedCategory);
-            createPost.put("userName", userName); // Use the username from SharedPreferences
+            createPost.put("userName", userName);
+            createPost.put("userDocumentID", userDocumentID); // Store userDocumentID for future queries
             createPost.put("timestamp", Timestamp.now());
-            createPost.put("commentsCount", 0); // Initialize with 0 comments
-            createPost.put("likesCount", 0);    // Initialize with 0 likes
-            createPost.put("likedBy", new HashMap<>()); // Empty map for likedBy
+            createPost.put("commentsCount", 0);
+            createPost.put("likesCount", 0);
+            createPost.put("likedBy", new HashMap<>());
 
             // Save to Firestore
             firestore.collection("post")
                     .add(createPost)
                     .addOnSuccessListener(documentReference -> {
-                        postId = documentReference.getId();
-                        Log.d("Testing", "Post ID: " + postId);
+                        String postId = documentReference.getId();
+                        Log.d("CreatePostActivity", "Post ID: " + postId);
                         Toast.makeText(getApplicationContext(), "Post successfully created", Toast.LENGTH_SHORT).show();
 
                         // Navigate to CommentActivity after the post is created
                         Intent intent = new Intent(CreatePostActivity.this, CommentFragment.class);
-                        intent.putExtra("postId", postId); // Pass the postId to the next activity
+                        intent.putExtra("postId", postId);
                         startActivity(intent);
                     })
                     .addOnFailureListener(e -> {
