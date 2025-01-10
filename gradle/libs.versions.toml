@@ -20,6 +20,7 @@ playServicesLocation = "21.3.0"
 retrofit = "2.9.0"
 viewpager2 = "1.0.0"
 firebaseAuth = "23.1.0"
+fragment = "1.5.4"
 
 
 [libraries]
@@ -46,6 +47,7 @@ rome = { group = "com.rometools", name = "rome", version = "1.15.0" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
 
 
 
