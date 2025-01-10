@@ -104,7 +104,11 @@ public class AddFoodFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data != null) {
             imageUri = data.getData();
-            foodImage.setImageURI(imageUri); // Display selected image
+            if (imageUri != null) {
+                foodImage.setImageURI(imageUri); // Display selected image
+            } else {
+                Toast.makeText(getContext(), "Failed to get image", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
