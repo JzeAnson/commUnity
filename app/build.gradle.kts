@@ -45,6 +45,13 @@ android {
     dynamicFeatures += setOf(":busTrackingModule")
 }
 
+configurations.all {
+    resolutionStrategy {
+        force("com.google.android.play:core:1.10.3")
+        force("com.google.android.play:core-ktx:1.8.1")
+    }
+}
+
 dependencies {
     // Core dependencies
     implementation("androidx.multidex:multidex:2.0.1")
