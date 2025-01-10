@@ -47,6 +47,8 @@ configurations.all {
 }
 
 dependencies {
+    implementation ("com.sothree.slidinguppanel:library:3.4.0")
+
     // Use BOM for Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-database")
