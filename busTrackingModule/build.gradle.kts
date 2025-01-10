@@ -11,12 +11,6 @@ android {
         minSdk = 26  // Match with app module
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-        }
-    }
 }
 
 dependencies {
