@@ -21,6 +21,8 @@ retrofit = "2.9.0"
 viewpager2 = "1.0.0"
 firebaseAuth = "23.1.0"
 fragment = "1.5.4"
+#noinspection RiskyLibrary
+core = "1.10.3"
 
 
 [libraries]
@@ -48,6 +50,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
+core = { group = "com.google.android.play", name = "core", version.ref = "core" }
 
 
 

@@ -49,16 +49,20 @@ configurations.all {
 dependencies {
     implementation ("com.sothree.slidinguppanel:library:3.4.0")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    // Replace this line
-    //noinspection RiskyLibrary
-    implementation("com.google.android.play:core:1.10.3")
+//    // Replace this line
+//    implementation("com.google.android.play:core:1.10.3") {
+//        exclude(group = "com.google.android.play", module = "core-common")
+//    }
+//    implementation("com.google.android.play:core-ktx:1.8.1") {
+//        exclude(group = "com.google.android.play", module = "core-common")
+//    }
 
-// With this
-    implementation("com.google.android.play:core:1.10.3") {
-        exclude(group = "com.google.android.play", module = "core-common")
-    }
+    // Add these instead
+    implementation("com.google.android.play:app-update:2.1.0")
+    implementation("com.google.android.play:feature-delivery:2.1.0")
+    implementation("com.google.android.play:core-common:2.0.3")
 
-    implementation ("com.google.android.play:core-ktx:1.8.1")
+//    implementation ("com.google.android.play:core-ktx:1.8.1")
 
     // Use BOM for Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
@@ -94,4 +98,14 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+}
+
+configurations {
+    all {
+        resolutionStrategy {
+            force("com.google.android.play:core-common:2.0.3")
+            // Exclude duplicate classes
+            exclude(group = "com.google.android.play", module = "core")
+        }
+    }
 }

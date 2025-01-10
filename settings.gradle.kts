@@ -8,21 +8,20 @@ pluginManagement {
             }
         }
         mavenCentral()
-        maven ("https://jitpack.io")
+        maven("https://jitpack.io")
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
-        maven ("https://jitpack.io")
+        maven("https://jitpack.io")
     }
 }
 
 rootProject.name = "CommUnity"
 include(":app")
-
 include(":busTrackingModule")
-

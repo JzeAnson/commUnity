@@ -21,6 +21,10 @@ android {
 dependencies {
     implementation(project(":app")) // Ensure this is included to link with the base module
     // AndroidX and Material
+    // Replace the Play Core implementation with these
+    implementation("com.google.android.play:app-update:2.1.0")
+    implementation("com.google.android.play:feature-delivery:2.1.0")
+    implementation("com.google.android.play:core-common:2.0.3")
     implementation("androidx.navigation:navigation-fragment:2.5.3")
     implementation("androidx.navigation:navigation-ui:2.5.3")
     implementation("androidx.fragment:fragment:1.6.1")
@@ -42,6 +46,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("org.mobilitydata:gtfs-realtime-bindings:0.0.8")
     implementation(libs.fragment)
+    implementation(libs.core)
 
     // Testing
     testImplementation("junit:junit:4.13.2")
