@@ -15,12 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,10 +34,9 @@ public class CommentFragment extends Fragment {
     private EditText addComment;
     private Button postButton;
     private FirebaseFirestore firestore;
-    private String postId;
+    private String postId, userDocumentID, userName = "Anonymous"; // Default username
 
-    public CommentFragment() {
-    }
+    public CommentFragment() {}
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,13 +47,10 @@ public class CommentFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Debug log to confirm the view is created
-        Log.d(TAG, "onViewCreated: View created successfully");
-
         // Initialize Firestore
         firestore = FirebaseFirestore.getInstance();
 
-        // Get postId from arguments
+        // Retrieve postId from arguments
         if (getArguments() != null) {
             postId = getArguments().getString("postId");
         }
@@ -75,7 +69,7 @@ public class CommentFragment extends Fragment {
         postButton = view.findViewById(R.id.commentPostButton);
 
         if (commentRecyclerView == null) {
-            Log.e(TAG, "RecyclerView not found in the forum_activity layout");
+            Log.e(TAG, "RecyclerView not found in the fragment_comments layout");
             return;
         }
 
@@ -88,17 +82,40 @@ public class CommentFragment extends Fragment {
         // Fetch comments for the post
         loadComments(postId);
 
+        // Fetch the user's document ID (Assuming it's stored in SharedPreferences or similar)
+        userDocumentID = userDocument.getInstance().getDocumentId();
+        fetchUserNameFromFirestore(userDocumentID);
+
         // Handle comment posting
         postButton.setOnClickListener(v -> {
             String newCommentText = addComment.getText().toString().trim();
-            String username = "Anonymous"; // Replace with actual username logic if available
 
             if (newCommentText.isEmpty()) {
                 Toast.makeText(getContext(), "Comment cannot be empty", Toast.LENGTH_SHORT).show();
             } else {
-                addComment(postId, username, newCommentText);
+                // Ensure the username is retrieved before posting the comment
+                addComment(postId, userName, newCommentText);
             }
         });
+    }
+
+    private void fetchUserNameFromFirestore(String userDocumentID) {
+        if (userDocumentID == null || userDocumentID.isEmpty()) {
+            Log.e(TAG, "User Document ID is null or empty");
+            return;
+        }
+
+        firestore.collection("users").document(userDocumentID)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        userName = documentSnapshot.getString("userName");
+                        Log.d(TAG, "Fetched userName: " + userName);
+                    } else {
+                        Log.e(TAG, "User document does not exist");
+                    }
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "Error fetching userName", e));
     }
 
     private void loadComments(String postId) {
