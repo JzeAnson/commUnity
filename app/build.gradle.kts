@@ -15,11 +15,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         multiDexEnabled = true
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        renderscriptTargetApi = 19
-        renderscriptSupportModeEnabled = true
     }
 
     buildFeatures {
@@ -29,7 +25,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -45,14 +42,15 @@ android {
     dynamicFeatures += setOf(":busTrackingModule")
 }
 
-configurations.all {
-    resolutionStrategy {
-        force("com.google.android.play:core:1.10.3")
-        force("com.google.android.play:core-ktx:1.8.1")
-    }
-}
-
 dependencies {
+    // Use BOM for Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-storage")
+    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-analytics")
+
     // Core dependencies
     implementation("androidx.multidex:multidex:2.0.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -62,56 +60,21 @@ dependencies {
     implementation("androidx.navigation:navigation-ui:2.5.3")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
-    // Firebase dependencies (Fixed versions)
-    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
-    implementation("com.google.firebase:firebase-database")
-    implementation("com.google.firebase:firebase-storage")
-    implementation("com.google.firebase:firebase-firestore")
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-analytics")
-
-    // Glide for image loading
+    // Image Loading
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 
-    // Other utilities
-    implementation("org.jsoup:jsoup:1.14.3")
-    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
-    implementation("com.mikhaellopez:circularprogressbar:3.1.0")
-    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    // Maps and Location
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.google.maps.android:android-maps-utils:3.4.0")
+
+    // Network
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.sothree.slidinguppanel:library:3.4.0")
 
-    // Google Play Services Core
-    implementation("com.google.android.gms:play-services-base:18.3.0")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
-
-    // Google Play Core with fix for duplicate classes
-    implementation("com.google.android.play:core:1.10.3")
-    implementation("com.google.android.play:core-ktx:1.8.1") {
-        exclude(group = "com.google.android.play", module = "core")
-    }
-
-    // Other dependencies
-    implementation("com.google.j2objc:j2objc-annotations:2.8")
-    implementation(libs.play.services.maps)
-    implementation(libs.play.services.location)
-    implementation(libs.viewpager2)
-    implementation(libs.rome)
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-
-    // Test dependencies
+    // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-}
-
-secrets {
-    propertiesFileName = "secrets.properties"
-    defaultPropertiesFileName = "local.defaults.properties"
-    ignoreList.add("keyToIgnore")
-    ignoreList.add("sdk.*")
 }
