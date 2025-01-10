@@ -42,6 +42,10 @@ android {
     dynamicFeatures += setOf(":busTrackingModule")
 }
 
+configurations.all {
+    exclude(group = "com.google.j2objc", module = "j2objc-annotations")
+}
+
 dependencies {
     // Use BOM for Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
