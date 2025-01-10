@@ -1,5 +1,3 @@
-import org.apache.tools.ant.util.JavaEnvUtils.VERSION_11
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.gms.google.services)
@@ -83,14 +81,10 @@ dependencies {
     implementation("com.google.android.gms:play-services-base:18.3.0")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
 
-    // Fix for duplicate classes in Google Play Core
-    // Google Play Core (Latest Stable)
+    // Google Play Core with fix for duplicate classes
     implementation("com.google.android.play:core:1.10.3")
-    implementation("com.google.android.play:core-ktx:1.8.1")
-
-    // Optional: If you still get duplicate class issues, exclude core-common:
-    implementation("com.google.android.play:core:1.10.3") {
-        exclude(group = "com.google.android.play", module = "core-common")
+    implementation("com.google.android.play:core-ktx:1.8.1") {
+        exclude(group = "com.google.android.play", module = "core")
     }
 
     // Other dependencies
