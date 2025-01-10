@@ -48,6 +48,10 @@ configurations.all {
 
 dependencies {
     implementation ("com.sothree.slidinguppanel:library:3.4.0")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    //noinspection RiskyLibrary
+    implementation ("com.google.android.play:core:1.10.3")
+    implementation ("com.google.android.play:core-ktx:1.8.1")
 
     // Use BOM for Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))

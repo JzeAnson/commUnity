@@ -14,8 +14,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":app"))
-
+    implementation(project(":app")) // Ensure this is included to link with the base module
+    implementation("com.google.android.play:core:1.10.3") {
+        exclude("com.google.android.play", "core-common")
+    }
     // AndroidX and Material
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
