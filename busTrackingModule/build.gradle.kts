@@ -20,16 +20,16 @@ android {
 
 dependencies {
     implementation(project(":app")) // Ensure this is included to link with the base module
-    implementation("com.google.android.play:core:1.10.3") {
-        exclude("com.google.android.play", "core-common")
-    }
     // AndroidX and Material
     implementation("androidx.navigation:navigation-fragment:2.5.3")
     implementation("androidx.navigation:navigation-ui:2.5.3")
     implementation("androidx.fragment:fragment:1.6.1")
     implementation("androidx.activity:activity:1.8.0")
 
-
+    // Google Maps Dependencies
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.maps.android:android-maps-utils:3.4.0")
 
 
     // Maps and Location

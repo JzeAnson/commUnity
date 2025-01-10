@@ -49,8 +49,15 @@ configurations.all {
 dependencies {
     implementation ("com.sothree.slidinguppanel:library:3.4.0")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    // Replace this line
     //noinspection RiskyLibrary
-    implementation ("com.google.android.play:core:1.10.3")
+    implementation("com.google.android.play:core:1.10.3")
+
+// With this
+    implementation("com.google.android.play:core:1.10.3") {
+        exclude(group = "com.google.android.play", module = "core-common")
+    }
+
     implementation ("com.google.android.play:core-ktx:1.8.1")
 
     // Use BOM for Firebase
