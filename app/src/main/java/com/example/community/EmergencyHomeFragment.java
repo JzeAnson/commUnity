@@ -189,6 +189,10 @@ public class EmergencyHomeFragment extends Fragment {
                     .enqueue(new Callback<WarningResponse>() {
                         @Override
                         public void onResponse(Call<WarningResponse> call, Response<WarningResponse> response) {
+                            if (!isAdded()) {
+                                Log.e("EmergencyHomeFragment", "Fragment not attached. Skipping response handling.");
+                                return;
+                            }
 
                             if (response.isSuccessful()) {
                                 Log.d("EmergencyHomeFragment", "Received response for type: " + warningType);
@@ -224,6 +228,11 @@ public class EmergencyHomeFragment extends Fragment {
     }
 
     private void updateRecyclerView(List<WarningResponse.Warning> allWarnings, String selectedLanguage) {
+        if (!isAdded()) {
+            Log.e("EmergencyHomeFragment", "Fragment not attached. Skipping UI update.");
+            return;
+        }
+
         List<WarningResponse.Warning> latestWarnings = getLatestWarningsByTypeAndLocation(allWarnings, "Terengganu");
 
         if (adapter == null) {
@@ -268,29 +277,29 @@ public class EmergencyHomeFragment extends Fragment {
 
         return new ArrayList<>(latestWarningsMap.values());
     }
-
     private void showNotification(String title, String message) {
+        if (!isAdded()) {
+            Log.e("EmergencyHomeFragment", "Fragment not attached. Skipping notification.");
+            return;
+        }
+
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(requireContext());
 
-        // Create an Intent to open the desired activity
-        Intent intent = new Intent(requireContext(), EmergencyHomeFragment.class); // Replace TargetActivity with your actual activity
+        Intent intent = new Intent(requireContext(), EmergencyHomeFragment.class); // Replace with your target activity
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 requireContext(),
                 0,
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE // Adjust flags as needed
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        // Build the notification with BigTextStyle and an Action Button
         NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_alert) // Replace with your icon
+                .setSmallIcon(R.drawable.ic_alert)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(message)) // Expanded style for the message
-                .setPriority(NotificationCompat.PRIORITY_HIGH) // High priority for better visibility
-                .setAutoCancel(true) // Dismiss notification when tapped
-                .addAction(R.drawable.ic_alert, "View Details", pendingIntent); // Add action button
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true)
+                .addAction(R.drawable.ic_alert, "View Details", pendingIntent);
 
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -313,8 +322,6 @@ public class EmergencyHomeFragment extends Fragment {
         }
     }
 
-
-
     public static String getCurrentDate() {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -322,6 +329,10 @@ public class EmergencyHomeFragment extends Fragment {
     }
 
     private void showError(String message) {
+        if (!isAdded()) {
+            Log.e("EmergencyHomeFragment", "Fragment not attached. Skipping error display.");
+            return;
+        }
         Toast.makeText(requireContext(), "Error: " + message, Toast.LENGTH_SHORT).show();
         noAlertsText.setVisibility(View.VISIBLE);
         noAlertsText.setText("Failed to load warnings. Please try again.");
