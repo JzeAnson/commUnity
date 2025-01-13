@@ -224,7 +224,7 @@ public class EmergencyHomeFragment extends Fragment {
     }
 
     private void updateRecyclerView(List<WarningResponse.Warning> allWarnings, String selectedLanguage) {
-        List<WarningResponse.Warning> latestWarnings = getLatestWarningsByTypeAndLocation(allWarnings, "Selangor");
+        List<WarningResponse.Warning> latestWarnings = getLatestWarningsByTypeAndLocation(allWarnings, "Terengganu");
 
         if (adapter == null) {
             adapter = new WarningAdapter(latestWarnings, selectedLanguage);
